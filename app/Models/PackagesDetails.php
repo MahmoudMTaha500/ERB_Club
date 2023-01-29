@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PackagesDetails extends Model
 {
     use HasFactory;
+    protected $guarded=[];
+
+    public function sports(){
+        return $this->belongsTo('App\Models\Sports','sport_id','id');
+    }
 }

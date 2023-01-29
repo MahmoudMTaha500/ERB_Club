@@ -7,12 +7,12 @@
         <div class="content-wrapper">
             <div class="content-header row">
                 <div class="content-header-left col-md-6 col-12 mb-2">
-                    <h3 class="content-header-title">قسم المستويات</h3>
+                    <h3 class="content-header-title">قسم الباكدجات</h3>
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="">لوحة التحكم</a></li>
-                                <li class="breadcrumb-item active">اضافة مستوي</li>
+                                <li class="breadcrumb-item active">اضافة باكدج</li>
                             </ol>
                         </div>
                     </div>
@@ -25,34 +25,23 @@
                     <div class="col-lg-10">
                         <div class="card" style="zoom: 1;">
                             <div class="card-header">
-                                <h4 class="card-title" id="bordered-layout-card-center">اضافة مستوي جديد</h4>
+                                <h4 class="card-title" id="bordered-layout-card-center">اضافة باكدج جديد</h4>
                                 <a href="/sat/courses/create.php" class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('level.store')}}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" action="{{route('package.store')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">  اسم المستوي </label>
+                                                        <label for="projectinput2">  اسم باكدج </label>
                                                         <input type="text" class="form-control" name="name"  required>
 
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="projectinput2">  الفرع</label>
-                                                        <select class=" form-control" id="branch_id" name="sport_id" >
-                                                            @foreach($sports as $sport)
-                                                                <option value="{{$sport->id}}">{{$sport->name}}</option>
 
-                                                            @endforeach
-                                                        </select>
-
-                                                    </div>
-                                                </div>
                                             </div>
 
 
@@ -83,7 +72,7 @@
                                                                 <div class=" col-md-3">
                                                                     <div class="form-group">
                                                                         <label>عدد التمرينه </label>
-                                                                        <input class="form-control form-control-sm " name="number_of_training[]"
+                                                                        <input class="form-control form-control-sm  num_of_training" name="number_of_training[]"
                                                                                onchange="getTotal(this)"
                                                                                type="number" placeholder="عدد التمرينات">
                                                                     </div>
@@ -105,6 +94,21 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label> اجمالي الباكدج </label>
+                                                            <input class="form-control form-control-sm " id="total_price" name="total_price"
+                                                                   type="number" placeholder=" اجمالي الباكدج">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput8">تفاصيل الباكدج  </label>
+                                                        <textarea id="projectinput8" rows="5" class="form-control" name="desc" placeholder="   "></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
 
 
                                               </div>
@@ -134,9 +138,16 @@
                     type: 'GET',  // http method
                     data: { "sport_id": value },
                     success: function (data, status, xhr) {// success callback function
-                        $(selectObject).parent().parent().parent().find('.price_list').val(data.price);
+                          $(selectObject).parent().parent().parent().find('.price_list').val(data.price);
 
+                        var total = 0;
+                        $('.total_amount').each(function() {
+                            var  price = $(this).val()*1;
+                            total += price;
+                        });
+                        $("#total_price").val(total);
                     }
+
                 });
         }
                 function getTotal(object){
@@ -145,9 +156,17 @@
                   var total_price = num*price;
                     $(object).parent().parent().parent().find('.total_amount').val(total_price);
 
+                       var total = 0;
+                    $('.total_amount').each(function() {
+                        var  price = $(this).val()*1;
+                        total += price;
+                    });
+                    $("#total_price").val(total);
 
 
                 }
+
+
 
         $(function() {
             $(document).on('click', '.btn-add', function(e) {

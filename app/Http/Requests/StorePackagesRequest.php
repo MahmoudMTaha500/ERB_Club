@@ -13,7 +13,7 @@ class StorePackagesRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,28 @@ class StorePackagesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "name"=>"required",
+            "sport_id"=>"required",
+            "price"=>"required",
+            "number_of_training"=>"required",
+            "total_of_training"=>"required",
+            "total_price"=>"required",
+
+
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'sport_id.required'=>' اللعبه مطلويه ',
+            'name.required'=>' اسم اللاعب مطلوب  ',
+            'price.required'=>'  السعر مطلوب  ',
+            'number_of_training.required'=>'  عدد المرات مطلوب  ',
+            'total_of_training.required'=>'  اجمالي المبلغ ف الفئه مطلوب  ',
+            'total_price.required'=>'  اجمالي سعر الباكدج  مطلوب  ',
+
+
         ];
     }
 }

@@ -9,6 +9,7 @@ use App\Models\PriceList;
 use App\Models\Sports;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
+use App\Models\PackagesDetails;
 
 class PackagesController extends Controller
 {
@@ -19,7 +20,11 @@ class PackagesController extends Controller
      */
     public function index()
     {
-        //
+        $packages = Packages::with('packages_details.sports')->paginate(10);
+//        dd($packages);
+
+         return view('Dashboard.Packages.index',compact('packages'));
+
     }
 
     /**
@@ -42,7 +47,25 @@ class PackagesController extends Controller
      */
     public function store(StorePackagesRequest $request)
     {
-        //
+//dd($request->all());
+        $package = Packages::create([
+            'name'=>$request->name,
+            'total_package'=>$request->total_price,
+            'desc'=>$request->desc,
+        ]);
+        for($x=0; $x < count($request->sport_id); $x++)
+        {
+
+            PackagesDetails::create([
+                'package_id'=>$package->id,
+                'sport_id'=>$request->sport_id[$x],
+                'price'=>$request->price[$x],
+                'number_of_training'=>$request->number_of_training[$x],
+                'total_price_of_training'=>$request->total_of_training[$x],
+            ]);
+        }
+        return redirect()->route('package.index')->with('message','تم اضافه الباكدج  بنجاح ');
+
     }
 
     /**
@@ -85,9 +108,12 @@ class PackagesController extends Controller
      * @param  \App\Models\Packages  $packages
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Packages $packages)
+    public function destroy(Packages $package)
     {
-        //
+        $package->packages_details()->delete();
+        $package->delete();
+        return redirect()->route('package.index')->with('error','تم حذف الباكدج  بنجاح ');
+
     }
 
 

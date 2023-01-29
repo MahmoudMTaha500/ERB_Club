@@ -15,10 +15,12 @@ class CreatePackagesDetailsTable extends Migration
     {
         Schema::create('packages_details', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('price_list_id');
+            $table->bigInteger('package_id');
+
+            $table->bigInteger('sport_id');
+            $table->integer('price');
             $table->integer('number_of_training');
             $table->integer('total_price_of_training');
-            $table->longText('description_of_package');
 
             $table->timestamps();
         });
