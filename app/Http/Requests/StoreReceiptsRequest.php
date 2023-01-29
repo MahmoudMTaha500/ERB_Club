@@ -13,7 +13,7 @@ class StoreReceiptsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,23 @@ class StoreReceiptsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "player_id"=>"required",
+            "amount"=>"required",
+            "date"=>"required",
+
+
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'branch_id.required'=>'الفرع مطلوب ',
+            'sport_id.required'=>' اللعبه مطلويه ',
+            'name.required'=>' اسم اللاعب مطلوب  ',
+            'date.required'=>' تاريخ الميلاد مطلوب  ',
+
+
         ];
     }
 }

@@ -97,6 +97,17 @@
                     </li>
 
                 </ul>
+            </li>           <li class=" nav-item"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
+                                                                              data-i18n="nav.flot_charts.main"> الايصالات </span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{route('receipt.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            كل الايصالات</a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('receipt.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">
+                            انشاء ايصال  جديد</a>
+                    </li>
+
+                </ul>
             </li>
 
 
