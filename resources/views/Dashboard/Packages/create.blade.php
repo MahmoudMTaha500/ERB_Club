@@ -34,39 +34,45 @@
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  اسم باكدج </label>
-                                                        <input type="text" class="form-control" name="name"  required>
+                                                        <input type="text" class="form-control" name="name"  placeholder="اسم الباكدج" required>
 
                                                     </div>
                                                 </div>
+                                                <div class=" col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">  الالعاب</label>
+                                                        <select class=" form-control sport_val"  name="sport_id" onchange="getPriceList(this)" >
+                                                            <option  selected value="0">حدد اللعبه</option>
 
+                                                            @foreach($sports as $sport)
+                                                                <option value="{{$sport->id}}">{{$sport->name}}</option>
+
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-
-
-
                                                 <div class="row targetDiv" id="div0">
                                                     <div class="col-md-12">
                                                         <div id="group1" class="fvrduplicate">
                                                             <div class="row entry">
                                                                 <div class=" col-md-3">
                                                                     <div class="form-group">
-                                                                        <label for="projectinput2">  الالعاب</label>
-                                                                        <select class=" form-control sport_val"  name="sport_id[]" onchange="getPrice( this)" >
-                                                                            <option  selected value="0">حدد اللعبه</option>
+                                                                        <label for="projectinput2">  قائمه الاسعار</label>
+                                                                        <select class=" form-control price_list"  name="price_list_id[]" onchange="getPrice( this)" >
+                                                                            <option  selected value="0">حدد قائمه السعر</option>
 
-                                                                        @foreach($sports as $sport)
-                                                                                <option value="{{$sport->id}}">{{$sport->name}}</option>
 
-                                                                            @endforeach
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <div class="form-group price_row">
                                                                         <label>سعر اللعبه</label>
-                                                                        <input class="form-control form-control-sm price_list" name="price[]" type="number" placeholder="سعر اللعبه">
+                                                                        <input class="form-control form-control-sm price  " name="price[]" type="number" placeholder="سعر اللعبه">
                                                                     </div>
                                                                 </div>
                                                                 <div class=" col-md-3">
@@ -95,11 +101,18 @@
                                                     </div>
                                                 </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label> اجمالي الباكدج </label>
-                                                            <input class="form-control form-control-sm " id="total_price" name="total_price"
+                                                            <input class="form-control form-control-sm " readonly id="total_price" name="total_price"
                                                                    type="number" placeholder=" اجمالي الباكدج">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label> السعر اليدوي </label>
+                                                        <input class="form-control form-control-sm "  name="manuel_price"
+                                                               type="number" placeholder="  السعر اليدوي ">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -130,15 +143,32 @@
 
     <script>
 
+        function  getPriceList(object){
+        var value = object.value;
+        var  route = "{{route('get-price-list')}}";
+            $.ajax(route,   // request url
+            {
+                type: 'GET',  // http method
+                data: { "sport_id": value },
+                success: function (data, status, xhr) {// success callback function
+                $('.price_list').html(data.price_list);
+                $('.price').val(0);
+                $('.num_of_training').val(0);
+                $('.total_amount').val(0);
+                $('#total_price').val(0);
+                }
+            });
+        }
+
         function getPrice(selectObject){
             var value = selectObject.value;
             var  route = "{{route('get-price')}}";
             $.ajax(route,   // request url
                 {
                     type: 'GET',  // http method
-                    data: { "sport_id": value },
+                    data: { "id": value },
                     success: function (data, status, xhr) {// success callback function
-                          $(selectObject).parent().parent().parent().find('.price_list').val(data.price);
+                          $(selectObject).parent().parent().parent().find('.price').val(data.price);
 
                         var total = 0;
                         $('.total_amount').each(function() {
@@ -152,7 +182,7 @@
         }
                 function getTotal(object){
                    var num  =object.value*1;
-                  var price =   $(object).parent().parent().parent().find('.price_list').val()*1;
+                  var price =   $(object).parent().parent().parent().find('.price').val()*1;
                   var total_price = num*price;
                     $(object).parent().parent().parent().find('.total_amount').val(total_price);
 

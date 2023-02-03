@@ -20,7 +20,7 @@ class PackagesController extends Controller
      */
     public function index()
     {
-        $packages = Packages::with('packages_details.sports')->paginate(10);
+        $packages = Packages::with('packages_details.price_list')->paginate(10);
 //        dd($packages);
 
          return view('Dashboard.Packages.index',compact('packages'));
@@ -48,22 +48,28 @@ class PackagesController extends Controller
     public function store(StorePackagesRequest $request)
     {
 //dd($request->all());
+
+
         $package = Packages::create([
             'name'=>$request->name,
             'total_package'=>$request->total_price,
+            'manuel_price'=>$request->manuel_price,
             'desc'=>$request->desc,
-        ]);
-        for($x=0; $x < count($request->sport_id); $x++)
-        {
+            'sport_id'=>$request->sport_id,
 
+        ]);
+
+        for($x=0; $x < count($request->price_list_id); $x++)
+        {
             PackagesDetails::create([
                 'package_id'=>$package->id,
-                'sport_id'=>$request->sport_id[$x],
+                'price_list_id'=>$request->price_list_id[$x],
                 'price'=>$request->price[$x],
                 'number_of_training'=>$request->number_of_training[$x],
-                'total_price_of_training'=>$request->total_of_training[$x],
+                'total_price_of_training'=>$request->total_of_training[$x]
             ]);
         }
+
         return redirect()->route('package.index')->with('message','تم اضافه الباكدج  بنجاح ');
 
     }
@@ -116,11 +122,44 @@ class PackagesController extends Controller
 
     }
 
+/*
+ *  get price Lists
+ *
+ * */
+    public function getPriceList(Request $request){
+        $sport_id = $request->sport_id;
+        $price_lists =PriceList::where('sport_id',$sport_id)->get();
+        if($price_lists){
+//            dd($price_lists);
+            $option  = "
+      <option value=0  > حدد قائمه سعر  </option> ";
+
+            foreach ($price_lists as $list){
+
+                $option .= "
+      <option value=$list->id  > $list->name </option> ";
+            }
+
+
+
+        } else{
+            $option  = "
+      <option value=0  > حدد قائمه سعر  </option> ";
+        }
+        return  Response()->json(['price_list'=>$option]);
+
+    }
+    /*
+ *  get prices
+ *
+ * */
 
     public function getPrice(Request $request){
-        $sport_id = $request->sport_id;
-        $price_list =PriceList::where('sport_id',$sport_id)->first();
+
+        $price_list_id = $request->id;
+        $price_list =PriceList::where('id',$price_list_id)->first();
         if($price_list){
+
             return  Response()->json(['price'=>$price_list->price]);
         }
         return 0;

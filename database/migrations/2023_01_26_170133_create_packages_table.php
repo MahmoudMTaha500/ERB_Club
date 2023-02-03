@@ -16,8 +16,10 @@ class CreatePackagesTable extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('sport_id');
             $table->longText('desc')->nullable();
             $table->integer('total_package');
+            $table->integer('manuel_price');
             $table->timestamps();
         });
     }

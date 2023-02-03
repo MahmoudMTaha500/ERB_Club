@@ -35,6 +35,14 @@
                                         <div class="form-body">
                                             <div class="row">
 
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">     اسم القائمه  </label>
+                                                        <input type="text" class="form-control"  name="name" >
+
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">   قوائم  الاسعار</label>
@@ -47,6 +55,9 @@
 
                                                     </div>
                                                 </div>
+
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  سعر اللعبه  </label>
@@ -54,8 +65,6 @@
 
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2"> وصف  </label>

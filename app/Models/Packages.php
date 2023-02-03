@@ -13,6 +13,10 @@ class Packages extends Model
     public function packages_details(){
         return $this->hasMany("App\Models\PackagesDetails","package_id",'id');
     }
+    public function sports(){
+        return $this->belongsTo("App\Models\Sports","sport_id",'id');
+    }
+
 
 
 }

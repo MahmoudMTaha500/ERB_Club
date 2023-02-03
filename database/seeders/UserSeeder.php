@@ -14,26 +14,26 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-//        $super_admin = User::create([
-//            "name" => 'مدير عام',
-//            "email" => 'super_admin@app.com',
-//            "password" => bcrypt('123'),
-//        ]);
-//        $super_admin->attachRole('superadministrator');
-//
-//        $admin = User::create([
-//            "name" => 'مدير',
-//            "email" => 'admin@app.com',
-//            "password" => bcrypt('123'),
-//        ]);
-//
-//        $admin->attachRole('administrator');
-//        $employee = User::create([
-//            "name" => 'موظف',
-//            "email" => 'employee@app.com',
-//            "password" => bcrypt('123'),
-//        ]);
-//        $admin->attachRole('user');
+        $super_admin = User::create([
+            "name" => 'مدير عام',
+            "email" => 'super_admin@app.com',
+            "password" => bcrypt('123'),
+        ]);
+        $super_admin->attachRole('superadministrator');
+
+        $admin = User::create([
+            "name" => 'مدير',
+            "email" => 'admin@app.com',
+            "password" => bcrypt('123'),
+        ]);
+
+        $admin->attachRole('administrator');
+        $employee = User::create([
+            "name" => 'موظف',
+            "email" => 'employee@app.com',
+            "password" => bcrypt('123'),
+        ]);
+        $admin->attachRole('user');
 
         $createPost = Permission::create(
             [

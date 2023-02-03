@@ -56,6 +56,7 @@
                                             <th class="border-top-0"> الهاتف</th>
                                             <th class="border-top-0"> المدينه</th>
                                             <th class="border-top-0"> العنوان</th>
+                                            <th class="border-top-0"> لوكشان</th>
 
                                             <th class="border-top-0">التحكم</th>
                                         </tr>
@@ -68,6 +69,7 @@
                                                 <td>{{$branch->phone}}</td>
                                                 <td>{{$branch->city}}</td>
                                                 <td>{{$branch->address}}</td>
+                                                <td>{{$branch->location}}</td>
 
                                                 <td class="text-truncate">
                                                     <div class="btn-group" role="group" aria-label="Basic example">

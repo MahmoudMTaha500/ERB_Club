@@ -72,6 +72,12 @@
                                                         <input type="text" class="form-control" name="address"  required>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">لوكشان</label>
+                                                        <input type="text" class="form-control" name="location"  required>
+                                                    </div>
+                                                </div>
 
 
                                             </div>

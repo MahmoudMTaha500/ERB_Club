@@ -52,6 +52,7 @@
                                         <thead>
                                         <tr>
                                             <th class="border-top-0">  اسم الباكدج</th>
+                                            <th class="border-top-0">   اللعبه</th>
                                             <th class="border-top-0">  وصف الباكدج</th>
                                             <th>
                                                 تفاصيل الباكدج
@@ -69,6 +70,7 @@
 
                                             <tr class="row1" data-id="{{ $package->id }}" >
                                                 <td>{{$package->name}}</td>
+                                                <td>{{$package->sports->name}}</td>
                                                 <td>{{$package->desc}}</td>
 
 
@@ -91,7 +93,7 @@
                                                                                 {{-- {{dump( $comm) }} --}}
 
                                                                                 <p >
-                                                                                  <span style="color:#1E9FF2;">  اللعبه: </span> <strong> {{$details->sports->name}}</strong>
+                                                                                  <span style="color:#1E9FF2;">  قائمه السعر: </span> <strong> {{$details->price_list->name}}</strong>
 
                                                                                     <span style="color:#1E9FF2;" > سعر اللعبه : </span> <strong> {{$details->price}}</strong>
                                                                                     <span style="color:#1E9FF2;"> عدد المرات :</span> <strong> {{$details->number_of_training}}</strong>

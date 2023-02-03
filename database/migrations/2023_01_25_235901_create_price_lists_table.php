@@ -16,6 +16,7 @@ class CreatePriceListsTable extends Migration
         Schema::create('price_lists', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('sport_id');
+            $table->string('name');
             $table->bigInteger('price');
             $table->longText('desc');
             $table->timestamps();

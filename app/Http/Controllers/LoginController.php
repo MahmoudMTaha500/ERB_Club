@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -15,7 +17,7 @@ class LoginController extends Controller
     {
         if(auth()->check()){
 
-            return redirect('dashboard');
+            return redirect('/admin');
         } else{
             return view('Dashboard.Login.login');
 
@@ -47,7 +49,7 @@ class LoginController extends Controller
         ]);
         $remember = $request->has('remember') ? true : false;
         if (\Auth::guard()->attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
-            return redirect()->route('dashboard');
+            return redirect('/admin');
         } else {
             return back()->withErrors(['login_error' =>'البريد الالكتروني او كلمة المرور غير صحيحين']);
         }
@@ -96,5 +98,18 @@ class LoginController extends Controller
     public function destroy($id)
     {
         //
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(){
+        Session::flush();
+
+        Auth::logout();
+
+        return redirect('login');
     }
 }

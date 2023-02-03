@@ -41,6 +41,7 @@ class PriceListController extends Controller
     public function store(StorePriceListRequest $request)
     {
         PriceList::create([
+            'name'=>$request->name,
             'price'=>$request->price,
             'sport_id'=>$request->sport_id,
             'desc'=>$request->desc,
@@ -84,6 +85,7 @@ class PriceListController extends Controller
      */
     public function update(UpdatePriceListRequest $request, PriceList $priceList)
     {
+        $priceList->name = $request->name;
         $priceList->price = $request->price;
         $priceList->sport_id = $request->sport_id;
         $priceList->desc = $request->desc;

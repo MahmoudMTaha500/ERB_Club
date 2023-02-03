@@ -10,7 +10,8 @@ class PackagesDetails extends Model
     use HasFactory;
     protected $guarded=[];
 
-    public function sports(){
-        return $this->belongsTo('App\Models\Sports','sport_id','id');
+    public function price_list(){
+        return $this->belongsTo('App\Models\PriceList','price_list_id','id');
     }
+
 }

@@ -30,6 +30,7 @@ class StorePackagesRequest extends FormRequest
             "number_of_training"=>"required",
             "total_of_training"=>"required",
             "total_price"=>"required",
+            "manuel_price"=>"required",
 
 
         ];
@@ -44,6 +45,7 @@ class StorePackagesRequest extends FormRequest
             'number_of_training.required'=>'  عدد المرات مطلوب  ',
             'total_of_training.required'=>'  اجمالي المبلغ ف الفئه مطلوب  ',
             'total_price.required'=>'  اجمالي سعر الباكدج  مطلوب  ',
+            'manuel_price.required'=>'  اجمالي سعر اليدوي الباكدج  مطلوب  ',
 
 
         ];

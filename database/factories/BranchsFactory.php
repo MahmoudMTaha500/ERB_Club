@@ -21,6 +21,7 @@ class BranchsFactory extends Factory
             'phone' => rand(1,10000),
             'city' => Str::random(10),
             'address' => Str::random(10),
+            'location' => Str::random(50),
         ];
     }
 }

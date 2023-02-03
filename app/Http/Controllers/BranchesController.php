@@ -51,6 +51,7 @@ class BranchesController extends Controller
              'phone'=>$request->phone,
              'address'=>$request->address,
              'city'=>$request->city,
+             'location'=>$request->location,
 
          ]);
         return redirect()-> route('branch.index')->with('message', ' تم اضافه فرع جديد ');
@@ -96,6 +97,7 @@ class BranchesController extends Controller
         $branch->phone = $request->phone;
         $branch->city = $request->city;
         $branch->address = $request->address;
+        $branch->location = $request->location;
         $branch->save();
         return redirect()-> route('branch.index')->with('message', 'تم تعديل الفرع');
 

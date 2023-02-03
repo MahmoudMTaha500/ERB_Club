@@ -58,6 +58,18 @@
                                                             <input type="date" id="" class="form-control"  name="join_date">
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput3"> العنوان</label>
+                                                            <input type="text" id="" class="form-control"  name="address" placeholder="اكتب العنوان">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput3"> الدراسه</label>
+                                                            <input type="text" id="" class="form-control"  name="study" placeholder="اكتب الدراسه">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <h4 class="form-section"><i class="ft-user"></i> بيانات ولي الامر</h4>
                                                 <div class="row">

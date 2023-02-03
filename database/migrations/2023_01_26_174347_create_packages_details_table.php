@@ -17,7 +17,7 @@ class CreatePackagesDetailsTable extends Migration
             $table->id();
             $table->bigInteger('package_id');
 
-            $table->bigInteger('sport_id');
+            $table->bigInteger('price_list_id');
             $table->integer('price');
             $table->integer('number_of_training');
             $table->integer('total_price_of_training');

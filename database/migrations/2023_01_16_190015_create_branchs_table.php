@@ -20,6 +20,7 @@ class CreateBranchsTable extends Migration
             $table->integer('phone');
             $table->string('city');
             $table->string('address');
+            $table->string('location');
             $table->timestamps();
         });
     }

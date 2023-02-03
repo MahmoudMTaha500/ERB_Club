@@ -18,6 +18,8 @@ class CreateReceiptsTable extends Migration
             $table->integer('user_id');
             $table->integer('amount');
             $table->integer('player_id');
+            $table->enum('type', ['part', 'full'])->default('part');
+
             $table->date('date_receipt');
 
             $table->timestamps();

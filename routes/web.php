@@ -13,17 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', "App\Http\Controllers\LoginController@index");
+
+
+
 Route::resource('login',"App\Http\Controllers\LoginController");
 
+
 Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], function() {
+
     Route::get('/', function () {
         return view('Dashboard.dashboard');
-    })->name('dashboard');
+    })->name('admin');
 /*
  *  Ajax Route
  * */
 
     route::get('get-sports', "\App\Http\Controllers\LevelsController@getSports")->name('get-sports');
+    route::get('get-price-list', "\App\Http\Controllers\PackagesController@getPriceList")->name('get-price-list');
     route::get('get-price', "\App\Http\Controllers\PackagesController@getPrice")->name('get-price');
 
 
@@ -41,6 +48,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('employee', "\App\Http\Controllers\EmployeesController");
     Route::resource('player', "\App\Http\Controllers\PlayersController");
 
+Route::get('logout',"App\Http\Controllers\LoginController@logout")->name('logout');
 });
 
 //Auth::routes();
