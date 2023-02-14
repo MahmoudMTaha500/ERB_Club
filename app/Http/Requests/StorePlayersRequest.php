@@ -33,6 +33,8 @@ class StorePlayersRequest extends FormRequest
             "father_phone"=>"required",
             "father_job"=>"required",
             "father_email"=>"required",
+            "address"=>"required",
+            "study"=>"required",
 
         ];
     }
@@ -49,6 +51,8 @@ class StorePlayersRequest extends FormRequest
             'father_phone.required'=>' رقم الهاتف مطلوب  ',
             'father_job.required'=>' الزظيفه مطلوب  ',
             'father_email.required'=>' البريد الالكتروني مطلوب  ',
+            'address.required'=>' العنوان مطلوب  ',
+            'study.required'=>' الدراسه مطلوب  ',
 
 
         ];

@@ -10,8 +10,8 @@
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{route('dashboard')}}">لوحة التحكم</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('employee.index')}}"> الموظفين</a></li>
+                                <li class="breadcrumb-item"><a >لوحة التحكم</a></li>
+                                <li class="breadcrumb-item"><a > الموظفين</a></li>
                                 <li class="breadcrumb-item active">اضافة موظف</li>
                             </ol>
                         </div>

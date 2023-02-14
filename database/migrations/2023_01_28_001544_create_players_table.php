@@ -18,11 +18,12 @@ class CreatePlayersTable extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('study');
-            $table->longText('note');
+            $table->longText('note')->nullable();
             $table->dateTime('birth_day');
             $table->dateTime('join_day');
             $table->string('father_name');
-            $table->string('father_phone');
+            $table->integer('father_phone');
+            $table->integer('anther_phone')->nullable();
             $table->string('father_job');
             $table->string('father_email')->unique();
             $table->integer('branch_id');

@@ -46,9 +46,12 @@ class PlayersController extends Controller
       $player =  Players::create([
             'name'=>$request->name,
             'birth_day'=>$request->birth_day,
-            'join_day'=>$request->join_date,
+          'join_day'=>$request->join_date,
+          'address'=>$request->address,
+          'study'=>$request->study,
             'father_name'=>$request->father_name,
             'father_phone'=>$request->father_phone,
+            'anther_phone'=>$request->anther_phone,
             'father_job'=>$request->father_job,
             'father_email'=>$request->father_email,
             'branch_id'=>$request->branch_id,
@@ -56,6 +59,7 @@ class PlayersController extends Controller
             'anther_sport'=>$request->anther_sports,
             'join_by'=>$request->join_by,
             'goal_of_sport'=>$request->goal_of_sport,
+            'note'=>$request->note,
         ]);
         if($request->file){
 
@@ -118,8 +122,11 @@ class PlayersController extends Controller
         $player->name = $request->name;
         $player->birth_day = $request->birth_day;
         $player->join_day = $request->join_date;
+        $player->address = $request->address;
+        $player->study = $request->study;
         $player->father_name = $request->father_name;
         $player->father_phone = $request->father_phone;
+        $player->anther_phone = $request->anther_phone;
         $player->father_job = $request->father_job;
         $player->father_email = $request->father_email;
         $player->branch_id = $request->branch_id;
@@ -127,6 +134,7 @@ class PlayersController extends Controller
         $player->anther_sport = $request->anther_sports;
         $player->join_by = $request->join_by;
         $player->goal_of_sport = $request->goal_of_sport;
+        $player->note = $request->note;
         $player->save();
         if($request->file){
 

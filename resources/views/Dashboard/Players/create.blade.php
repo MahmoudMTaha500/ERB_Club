@@ -80,11 +80,18 @@
                                                            name="father_name">
                                                 </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="companyName">رقم الهاتف </label>
-                                                    <input type="text" id="" class="form-control" placeholder="رقم هاتف  الاب"
+                                                    <input type="number" id="" class="form-control" placeholder="رقم هاتف  الاب"
                                                            name="father_phone">
+                                                </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="companyName">رقم الهاتف اخر </label>
+                                                    <input type="number" id="" class="form-control" placeholder="رقم هاتف  الاب"
+                                                           name="anther_phone">
                                                 </div>
                                                     </div>
                                                 </div>
@@ -111,6 +118,7 @@
                                                         <div class="form-group">
                                                             <label for="projectinput2">  الفرع</label>
                                                             <select class=" form-control" id="branch_id"  name="branch_id" >
+                                                                <option value="0"> حدد الفرع</option>
                                                                 @foreach($branches as $branch)
                                                                     <option value="{{$branch->id}}">{{$branch->name}}</option>
 
@@ -149,13 +157,13 @@
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label for="" class="control-label mb-1"> اسم الملف:</label>
-                                                            <input  name="name_of_file[]" type="text" class="form-control" required   value="" placeholder="type your File">
+                                                            <input  name="name_of_file[]" type="text" class="form-control"    value="" placeholder="type your File">
                                                         </div>
                                                     </div>
                                                     <div class="col-5">
                                                         <div class="form-group">
                                                             <label for="cc-payment" class="control-label mb-1">الملف/صوره:</label>
-                                                            <input  name="file[]" type="file" class="form-control" required  value="">
+                                                            <input  name="file[]" type="file" class="form-control"   value="">
 
                                                         </div>
                                                     </div>
@@ -168,10 +176,22 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="projectinput8">الهدف من اللعبه </label>
-                                                    <textarea id="projectinput8" rows="5" class="form-control" name="goal_of_sport" placeholder="الهدف من اللعبه "></textarea>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput8">الهدف من اللعبه </label>
+                                                            <textarea id="projectinput8" rows="5" class="form-control" name="goal_of_sport" placeholder="الهدف من اللعبه "></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput8"> ملاحظات  </label>
+                                                            <textarea id="projectinput8" rows="5" class="form-control" name="note" placeholder=" ملاحظات "></textarea>
+                                                        </div>
+                                                    </div>
                                                 </div>
+
+
                                             </div>
                                             <div class="form-actions">
 

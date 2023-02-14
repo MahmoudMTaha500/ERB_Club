@@ -47,6 +47,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('receipt', "\App\Http\Controllers\ReceiptsController");
     Route::resource('employee', "\App\Http\Controllers\EmployeesController");
     Route::resource('player', "\App\Http\Controllers\PlayersController");
+    Route::resource('item', "\App\Http\Controllers\ItemsController");
+    Route::resource('contract', "\App\Http\Controllers\ContractController");
+    Route::resource('trainer', "\App\Http\Controllers\TrainerController");
+    Route::resource('trainer-and-player', "\App\Http\Controllers\TrainerAndPlayerController");
+    Route::resource('attendance-player', "\App\Http\Controllers\AttendancePlayersController");
+
 
 Route::get('logout',"App\Http\Controllers\LoginController@logout")->name('logout');
 });
