@@ -32,6 +32,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     route::get('get-sports', "\App\Http\Controllers\LevelsController@getSports")->name('get-sports');
     route::get('get-price-list', "\App\Http\Controllers\PackagesController@getPriceList")->name('get-price-list');
     route::get('get-price', "\App\Http\Controllers\PackagesController@getPrice")->name('get-price');
+    Route::post('trainer-and-player/ajax/store', "\App\Http\Controllers\TrainerAndPlayerController@store")->name('store-event');
+    Route::post('trainer-and-player/ajax/update', "\App\Http\Controllers\TrainerAndPlayerController@update")->name('update-event');
+    Route::post('trainer-and-player/ajax/delete', "\App\Http\Controllers\TrainerAndPlayerController@update")->name('delete-event');
+
 
 
     #################################################.
@@ -52,6 +56,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('trainer', "\App\Http\Controllers\TrainerController");
     Route::resource('trainer-and-player', "\App\Http\Controllers\TrainerAndPlayerController");
     Route::resource('attendance-player', "\App\Http\Controllers\AttendancePlayersController");
+    Route::resource('stadium', "\App\Http\Controllers\StadiumController");
+
 
 
 Route::get('logout',"App\Http\Controllers\LoginController@logout")->name('logout');

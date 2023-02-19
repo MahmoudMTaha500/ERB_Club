@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTrainerAndPlayersTable extends Migration
+class CreateStadiaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateTrainerAndPlayersTable extends Migration
      */
     public function up()
     {
-        Schema::create('trainer_and_players', function (Blueprint $table) {
+        Schema::create('stadia', function (Blueprint $table) {
             $table->id();
-            $table->integer('trainer_id');
-            $table->integer('stadium_id');
-            $table->timestamp('date')->nullable();
-            $table->timestamp('time_from')->nullable();
-            $table->timestamp('time_to')->nullable();
+            $table->string('name');
+            $table->integer('branch_id');
+            $table->integer('sport_id');
+            $table->enum('type',[0,1])->default(0);
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateTrainerAndPlayersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trainer_and_players');
+        Schema::dropIfExists('stadia');
     }
 }

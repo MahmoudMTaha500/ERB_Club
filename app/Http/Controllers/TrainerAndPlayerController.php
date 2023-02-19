@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Players;
 use App\Models\Sports;
+use App\Models\Stadium;
 use App\Models\TrainerAndPlayer;
 use App\Http\Requests\StoreTrainerAndPlayerRequest;
 use App\Http\Requests\UpdateTrainerAndPlayerRequest;
 use App\Models\User;
+use http\Env\Request;
 
 class TrainerAndPlayerController extends Controller
 {
@@ -18,7 +20,11 @@ class TrainerAndPlayerController extends Controller
      */
     public function index()
     {
-        return  view('Dashboard.TrainerAndPlayers.index');
+        $players = Players::get();
+        $users = User::where('is_trainer' ,'1')->get();
+        $sports = Sports::get();
+        $stadiums = Stadium::get();
+        return  view('Dashboard.TrainerAndPlayers.index',compact('players','users','sports','stadiums'));
 
     }
 
@@ -27,12 +33,25 @@ class TrainerAndPlayerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(StoreTrainerAndPlayerRequest $request)
     {
-        $players = Players::get();
-        $users = User::where('is_trainer' ,'1')->get();
-        $sports = Sports::get();
-        return  view('Dashboard.TrainerAndPlayers.create',compact('players','users','sports'));
+
+        if($request->ajax())
+        {
+            $events=[];
+            $data = TrainerAndPlayer::get();
+            foreach ($data as $event){
+                $events[]=[
+                    "id"=>$event->id,
+                    'title'=> $event->stadiums->name,
+                    'start'=>$event->time_from,
+                    'end'=>$event->time_to,
+                    ];
+
+            }
+            return response()->json($events);
+        }
+//        return  view('Dashboard.TrainerAndPlayers.create');
     }
 
     /**
@@ -43,7 +62,17 @@ class TrainerAndPlayerController extends Controller
      */
     public function store(StoreTrainerAndPlayerRequest $request)
     {
-        //
+//        dd($request->all());
+        TrainerAndPlayer::create([
+            'stadium_id'=>$request->stadium_id,
+            'trainer_id'=>$request->user_id,
+            'player_id'=>$request->player_id,
+            'date'=>$request->day,
+            'time_from'=>$request->from,
+            'time_to'=>$request->to,
+        ]);
+        $data = TrainerAndPlayer::get();
+        return response()->json($data);
     }
 
     /**
@@ -52,9 +81,14 @@ class TrainerAndPlayerController extends Controller
      * @param  \App\Models\TrainerAndPlayer  $trainerAndPlayer
      * @return \Illuminate\Http\Response
      */
-    public function show(TrainerAndPlayer $trainerAndPlayer)
+    public function show(TrainerAndPlayer $trainerAndPlayer,StoreTrainerAndPlayerRequest $request)
     {
-        //
+        $event = TrainerAndPlayer::find($request->id);
+        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
+        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
+        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
+        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
+
     }
 
     /**
@@ -75,9 +109,15 @@ class TrainerAndPlayerController extends Controller
      * @param  \App\Models\TrainerAndPlayer  $trainerAndPlayer
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTrainerAndPlayerRequest $request, TrainerAndPlayer $trainerAndPlayer)
+    public function update(StoreTrainerAndPlayerRequest $request, TrainerAndPlayer $trainerAndPlayer)
     {
-        //
+        $event = TrainerAndPlayer::find($request->id);
+        $event->time_from =$request->start;
+        $event->time_to =$request->end;
+        $event->save();
+        return response()->json($event);
+
+
     }
 
     /**
@@ -86,8 +126,10 @@ class TrainerAndPlayerController extends Controller
      * @param  \App\Models\TrainerAndPlayer  $trainerAndPlayer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TrainerAndPlayer $trainerAndPlayer)
+    public function destroy(StoreTrainerAndPlayerRequest $request)
     {
-        //
+        $event = TrainerAndPlayer::find($request->id);
+        $event->delete();
+
     }
 }

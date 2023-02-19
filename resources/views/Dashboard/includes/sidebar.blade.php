@@ -164,13 +164,21 @@
                     <li><a class="menu-item" href="{{route('attendance-player.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
                             حضور و غياب الاعيبه </a>
                     </li>
-{{--                    <li><a class="menu-item" href="{{route('trainer-and-player.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">--}}
-{{--                            انشاء مدرب ولاعب  جديد</a>--}}
-{{--                    </li>--}}
 
                 </ul>
             </li>
+            <li class=" nav-item"><a href="#"><i class="la la-futbol-o"></i><span class="menu-title"
+                                                                                    data-i18n="nav.flot_charts.main"> الملاعب </span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{route('stadium.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            كل الملاعب</a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('stadium.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">
+                            انشاء ملعب  جديد</a>
+                    </li>
 
+                </ul>
+            </li>
 
         </ul>
     </div>

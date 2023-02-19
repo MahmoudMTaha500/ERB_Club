@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTrainerAndPlayersTable extends Migration
+class CreateEventTrainerPlayersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateTrainerAndPlayersTable extends Migration
      */
     public function up()
     {
-        Schema::create('trainer_and_players', function (Blueprint $table) {
+        Schema::create('event_trainer_players', function (Blueprint $table) {
             $table->id();
-            $table->integer('trainer_id');
-            $table->integer('stadium_id');
-            $table->timestamp('date')->nullable();
-            $table->timestamp('time_from')->nullable();
-            $table->timestamp('time_to')->nullable();
+            $table->integer('player_id');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateTrainerAndPlayersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trainer_and_players');
+        Schema::dropIfExists('event_trainer_players');
     }
 }
