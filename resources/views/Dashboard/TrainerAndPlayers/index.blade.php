@@ -69,7 +69,7 @@
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" id="saveEvent" class="btn btn-primary"
+                                            <button type="button" id="" class="btn btn-primary"
                                             >save
                                             </button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close
@@ -111,7 +111,7 @@
 
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="projectinput2"> المدرب </label>
                                                                 <select
@@ -125,11 +125,11 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="projectinput2"> اللاعب </label>
-                                                                <select
-                                                                    class=" form-control"
+                                                                <select style="width: 100% !important;"
+                                                                    class="select2 form-control " multiple="multiple"
                                                                     name="player_id"
                                                                     id="player_id">
                                                                     @foreach($players as $player)
@@ -143,22 +143,22 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label for="projectinput2"> من الساعه </label>
-                                                                <input type="time" name="time_from" class="form-control"
-                                                                       id="from">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label for="projectinput2"> الي الساعه </label>
-                                                                <input type="time" name="time_to" class="form-control"
-                                                                       id="to">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+{{--                                                    <div class="row">--}}
+{{--                                                        <div class="col-md-6">--}}
+{{--                                                            <div class="form-group">--}}
+{{--                                                                <label for="projectinput2"> من الساعه </label>--}}
+{{--                                                                <input type="time" name="time_from" class="form-control"--}}
+{{--                                                                       id="from">--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="col-md-6">--}}
+{{--                                                            <div class="form-group">--}}
+{{--                                                                <label for="projectinput2"> الي الساعه </label>--}}
+{{--                                                                <input type="time" name="time_to" class="form-control"--}}
+{{--                                                                       id="to">--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
                                                 </div>
                                             </form>
 
@@ -337,14 +337,10 @@
 
                 select: function ( start, end, allDay) {
                     $("#calendarModal").modal("show");
-
                     $("#saveEvent").click(function () {
-                        // alert(start);
                         var day = $.fullCalendar.formatDate(start, 'Y-MM-DD ');
-
                         var stadium_id = $('#stadium_id').val();
-
-                        var player_id = $('#player_id').val();
+                        var player_id = $('#player_id').select2("val");
                         var user_id = $('#user_id').val();
                         var from = $('#from').val();
                         var from_date = $.fullCalendar.formatDate(start, 'Y-MM-DD HH:mm:ss');
@@ -364,12 +360,12 @@
                                     player_id: player_id,
                                     user_id: user_id,
                                     day : day,
-                                    from: from_date,
+                                     from: from_date,
                                     to: to_date
                                 },
                                 success: function (data) {
                                     calendar.fullCalendar('refetchEvents');
-                                    alert("تم اضافه موعد جديد  ");
+                                    // alert("تم اضافه موعد جديد  ");
                                     $("#calendarModal").modal("hide");
 
 
@@ -400,7 +396,7 @@
                         },
                         success: function (response) {
                             calendar.fullCalendar('refetchEvents');
-                            alert("تم تعديل المعاد  ");
+                            // alert("تم تعديل المعاد  ");
                         }
                     })
                 },
@@ -423,7 +419,7 @@
                         },
                         success: function (response) {
                             calendar.fullCalendar('refetchEvents');
-                            alert("تم تعديل الميعاد  ");
+                            // alert("تم تعديل الميعاد  ");
                         }
                     })
                 },
@@ -431,8 +427,7 @@
                 eventClick: function (event) {
                     if (confirm("هل انت  متاكد من حذف هذا اليعاد")) {
                         var id = event.id;
-                        var Route = "{{route('update-event')}}";
-
+                        var Route = "{{route('delete-event')}}";
                         $.ajax({
                             url: Route,
                             type: "POST",
@@ -442,7 +437,7 @@
                             },
                             success: function (response) {
                                 calendar.fullCalendar('refetchEvents');
-                                alert("تم حذف الميعاد من التقويم  ");
+                                // alert("تم حذف الميعاد من التقويم  ");
                             }
                         })
                     }

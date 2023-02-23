@@ -20,4 +20,7 @@ class TrainerAndPlayer extends Model
     {
         return $this->hasMany('App\Models\eventTrainerPlayers', 'player_id', 'id');
     }
+    public function EventTrainer(){
+        return $this->hasMany('App\Models\EventTrainerPlayers','event_id','id');
+    }
 }

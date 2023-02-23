@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EventTrainerPlayers;
 use App\Models\Players;
 use App\Models\Sports;
 use App\Models\Stadium;
@@ -63,14 +64,19 @@ class TrainerAndPlayerController extends Controller
     public function store(StoreTrainerAndPlayerRequest $request)
     {
 //        dd($request->all());
-        TrainerAndPlayer::create([
+     $event =    TrainerAndPlayer::create([
             'stadium_id'=>$request->stadium_id,
             'trainer_id'=>$request->user_id,
-            'player_id'=>$request->player_id,
             'date'=>$request->day,
             'time_from'=>$request->from,
             'time_to'=>$request->to,
         ]);
+        foreach ($request->player_id as $player ){
+            EventTrainerPlayers::create([
+                'player_id'=>$player,
+                'event_id'=>$event->id,
+            ]);
+        }
         $data = TrainerAndPlayer::get();
         return response()->json($data);
     }
@@ -129,6 +135,7 @@ class TrainerAndPlayerController extends Controller
     public function destroy(StoreTrainerAndPlayerRequest $request)
     {
         $event = TrainerAndPlayer::find($request->id);
+        EventTrainerPlayers::where('event_id',$request->id)->delete();
         $event->delete();
 
     }

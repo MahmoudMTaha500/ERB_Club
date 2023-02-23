@@ -41,9 +41,6 @@
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
 
-{{--                                        <li>--}}
-{{--                                            <a class="btn btn-sm btn-success box-shadow-2 round btn-min-width pull-right" href="{{route('level.create')}}"> <i class="ft-plus ft-md"></i> اضافة مستوي جديد</a>--}}
-{{--                                        </li>--}}
                                 </div>
                             </div>
                             <div class="card-content">
@@ -61,10 +58,11 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @forelse($players as $player )
+                                        @forelse($players as $play )
+                                            @forelse($play->EventTrainer as $player )
 
                                             <tr class="row1" data-id="{{ $player->id }}" >
-                                                <td>{{$player->name}}</td>
+                                                <td>{{$player->players->name}}</td>
 
                                                 <td>
                                                     <form action="{{route('attendance-player.store')}}" method="post">
@@ -86,6 +84,8 @@
                                        <button class="btn btn-bitbucket"> <i class="la la-eye"></i> </button>
                                    </td>
                                             </tr>
+                                            @empty
+                                            @endforelse
 
                                         @empty
                                             <tr>

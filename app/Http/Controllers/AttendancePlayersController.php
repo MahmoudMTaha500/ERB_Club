@@ -6,6 +6,7 @@ use App\Models\AttendancePlayers;
 use App\Http\Requests\StoreAttendancePlayersRequest;
 use App\Http\Requests\UpdateAttendancePlayersRequest;
 use App\Models\Players;
+use App\Models\TrainerAndPlayer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,9 @@ class AttendancePlayersController extends Controller
      */
     public function index()
     {
-        $players = Players::paginate(10);
+        $today = Carbon::today();
+        $players= TrainerAndPlayer::with('EventTrainer.players')->where('date',$today)->paginate(10);
+//        $players = Players::paginate(10);
 return view('Dashboard.AttendancePlayers.index',compact('players'));
     }
 

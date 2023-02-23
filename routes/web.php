@@ -34,7 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     route::get('get-price', "\App\Http\Controllers\PackagesController@getPrice")->name('get-price');
     Route::post('trainer-and-player/ajax/store', "\App\Http\Controllers\TrainerAndPlayerController@store")->name('store-event');
     Route::post('trainer-and-player/ajax/update', "\App\Http\Controllers\TrainerAndPlayerController@update")->name('update-event');
-    Route::post('trainer-and-player/ajax/delete', "\App\Http\Controllers\TrainerAndPlayerController@update")->name('delete-event');
+    Route::post('trainer-and-player/ajax/delete', "\App\Http\Controllers\TrainerAndPlayerController@destroy")->name('delete-event');
 
 
 

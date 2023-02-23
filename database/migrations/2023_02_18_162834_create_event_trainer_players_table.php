@@ -15,6 +15,8 @@ class CreateEventTrainerPlayersTable extends Migration
     {
         Schema::create('event_trainer_players', function (Blueprint $table) {
             $table->id();
+
+            $table->integer('event_id');
             $table->integer('player_id');
             $table->timestamps();
         });
