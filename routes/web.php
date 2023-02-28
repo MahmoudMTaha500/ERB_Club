@@ -49,6 +49,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('price-list', "\App\Http\Controllers\PriceListController");
     Route::resource('package', "\App\Http\Controllers\PackagesController");
     Route::resource('receipt', "\App\Http\Controllers\ReceiptsController");
+    Route::resource('receipt-type', "\App\Http\Controllers\ReceiptTypesController");
     Route::resource('employee', "\App\Http\Controllers\EmployeesController");
     Route::resource('player', "\App\Http\Controllers\PlayersController");
     Route::resource('item', "\App\Http\Controllers\ItemsController");
@@ -56,6 +57,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('trainer', "\App\Http\Controllers\TrainerController");
     Route::resource('trainer-and-player', "\App\Http\Controllers\TrainerAndPlayerController");
     Route::resource('attendance-player', "\App\Http\Controllers\AttendancePlayersController");
+    Route::resource('attendance-trainer', "\App\Http\Controllers\TrainerAttendanceController");
     Route::resource('stadium', "\App\Http\Controllers\StadiumController");
 
 

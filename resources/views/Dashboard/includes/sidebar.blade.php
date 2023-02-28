@@ -119,6 +119,12 @@
                     <li><a class="menu-item" href="{{route('receipt.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">
                             انشاء ايصال  جديد</a>
                     </li>
+                    <li><a class="menu-item" href="{{route('receipt-type.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            كل انواع الايصالات</a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('receipt-type.create')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            انشاء  نوع ايصال  جديد</a>
+                    </li>
 
                 </ul>
             </li>
@@ -147,22 +153,25 @@
                 </ul>
             </li>
             <li class=" nav-item"><a href="#"><i class="la la-commenting"></i><span class="menu-title"
-                                                                                    data-i18n="nav.flot_charts.main">  المدربين و الاعيبه </span></a>
+                                                                                    data-i18n="nav.flot_charts.main">   جدول الملاعب و التدريبات </span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="{{route('trainer-and-player.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
-                            كل المدربين و الاعيبه</a>
+                            كل جدول الملاعب و التدريبات</a>
                     </li>
-                    <li><a class="menu-item" href="{{route('trainer-and-player.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">
-                            انشاء مدرب ولاعب  جديد</a>
-                    </li>
+{{--                    <li><a class="menu-item" href="{{route('trainer-and-player.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">--}}
+{{--                            انشاء مدرب ولاعب  جديد</a>--}}
+{{--                    </li>--}}
 
                 </ul>
             </li>
             <li class=" nav-item"><a href="#"><i class="la la-report"></i><span class="menu-title"
-                                                                                    data-i18n="nav.flot_charts.main">  حضور و غياب الاعيبه </span></a>
+                                                                                    data-i18n="nav.flot_charts.main">  الحضور و الانصراف  </span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="{{route('attendance-player.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
-                            حضور و غياب الاعيبه </a>
+                            حضور و غياب اللاعبيين </a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('attendance-trainer.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            حضور و غياب المدربين </a>
                     </li>
 
                 </ul>

@@ -22,7 +22,7 @@ class AttendancePlayersController extends Controller
         $today = Carbon::today();
         $players= TrainerAndPlayer::with('EventTrainer.players')->where('date',$today)->paginate(10);
 //        $players = Players::paginate(10);
-return view('Dashboard.AttendancePlayers.index',compact('players'));
+    return view('Dashboard.Attendance.index',compact('players'));
     }
 
     /**
