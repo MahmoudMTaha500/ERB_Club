@@ -45,7 +45,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">   قوائم  الاسعار</label>
+                                                        <label for="projectinput2">     الالعاب</label>
                                                         <select class="select2-placeholder-multiple form-control" id="multi_placehodler" name="sport_id" >
                                                             @foreach($sports as $sport)
                                                                 <option value="{{$sport->id}}">{{$sport->name}}</option>

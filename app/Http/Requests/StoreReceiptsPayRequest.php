@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreReceiptsRequest extends FormRequest
+class StoreReceiptsPayRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class StoreReceiptsRequest extends FormRequest
         return [
             "from"=>"required",
             "to"=>"required",
-            "from_type"=>"required",
+            "to_type"=>"required",
             "amount"=>"required",
             "date"=>"required",
 
@@ -39,7 +39,7 @@ class StoreReceiptsRequest extends FormRequest
         return [
             'from.required'=>' يرجي اختيار من  ',
             'to.required'=>'  يرجي اختيار الي  ',
-            'from_type.required'=>'  يرجي اختيار نوع من   ',
+            'to_type.required'=>'  يرجي اختيار نوع من   ',
             'amount.required'=>'  الاجمالي  مطلوب  ',
             'date.required'=>' تاريخ الايصال مطلوب  ',
 

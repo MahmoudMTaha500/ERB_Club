@@ -89,11 +89,33 @@ class TrainerAndPlayerController extends Controller
      */
     public function show(TrainerAndPlayer $trainerAndPlayer,StoreTrainerAndPlayerRequest $request)
     {
-        $event = TrainerAndPlayer::find($request->id);
-        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
-        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
-        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
-        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
+
+        if($request->ajax())
+        {
+            $events=[];
+            $data = TrainerAndPlayer::with('stadiums')->with('traniers')
+                ->with('EventTrainer.players')
+                ->where('id',$request->id)->get();
+//            dd($data);
+            $players='';
+            $stadium_name ='';
+            $trainer_name ='';
+                $stadium_name = $data[0]->stadiums->name;
+                $trainer_name= $data[0]->traniers->name;
+                $name='';
+                foreach ($data[0]->EventTrainer as $ev){
+                    $name = $ev->players->name;
+                    $players .= "<tr> <td> $name</td></tr>";
+
+                }
+
+            return response()->json(['players'=>$players,'stadium_name'=>$stadium_name,'trainer_name'=>$trainer_name]);
+        }
+//        $event = TrainerAndPlayer::find($request->id);
+//        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
+//        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
+//        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
+//        $html = "<span> مكان الحجز: <strong>$event->stadiums->name  </strong> </span>";
 
     }
 

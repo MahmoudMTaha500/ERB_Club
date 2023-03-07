@@ -111,19 +111,38 @@
                 </ul>
             </li>
             <li class=" nav-item"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
-                                                                              data-i18n="nav.flot_charts.main"> الايصالات </span></a>
+                                                                              data-i18n="nav.flot_charts.main"> ايصالات التوريد </span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="{{route('receipt.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
-                            كل الايصالات</a>
+                            كل الايصالات التوريد</a>
                     </li>
                     <li><a class="menu-item" href="{{route('receipt.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">
-                            انشاء ايصال  جديد</a>
+                            انشاء ايصال توريد جديد</a>
                     </li>
                     <li><a class="menu-item" href="{{route('receipt-type.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
-                            كل انواع الايصالات</a>
+                            كل انواع  الايصالات التوريد</a>
                     </li>
                     <li><a class="menu-item" href="{{route('receipt-type.create')}}" data-i18n="nav.flot_charts.flot_line_charts">
-                            انشاء  نوع ايصال  جديد</a>
+                            انشاء  نوع ايصال توريد جديد</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class=" nav-item"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
+                                                                                    data-i18n="nav.flot_charts.main"> ايصالات الصرف </span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{route('receipt-pay.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            كل الايصالات الصرف</a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('receipt-pay.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">
+                            انشاء ايصال صرف جديد</a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('receipt-type-pay.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            كل انواع  الايصالات الصرف</a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('receipt-type-pay.create')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            انشاء  نوع ايصال صرف جديد</a>
                     </li>
 
                 </ul>

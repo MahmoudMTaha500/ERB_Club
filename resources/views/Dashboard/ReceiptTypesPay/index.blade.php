@@ -42,7 +42,7 @@
                                     <ul class="list-inline mb-0">
 
                                             <li>
-                                                <a class="btn btn-sm btn-success box-shadow-2 round btn-min-width pull-right" href="{{route('receipt-type.create')}}"> <i class="ft-plus ft-md"></i> اضافة نوع ايصال</a>
+                                                <a class="btn btn-sm btn-success box-shadow-2 round btn-min-width pull-right" href="{{route('receipt-type-pay.create')}}"> <i class="ft-plus ft-md"></i> اضافة نوع ايصال</a>
                                             </li>
                                 </div>
                             </div>
@@ -70,8 +70,8 @@
                                                 @if($type->type=='bank')
                                                       <td> بنك</td>
                                                       @endif
-                                                @if($type->type=='anther_contact')
-                                                    <td> جهات اخري</td>
+                                                @if($type->type=='expenses')
+                                                    <td>  مصروف</td>
                                                 @endif
 
                                                 @if($type->type=='Custody')
@@ -85,8 +85,8 @@
 
                                                 <td class="text-truncate">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                            <a href="{{route('receipt-type.edit', $type->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
-                                                            <form action="{{route('receipt-type.destroy' ,$type->id)}}" method="POST" class="btn-group">
+                                                            <a href="{{route('receipt-type-pay.edit', $type->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
+                                                            <form action="{{route('receipt-type-pay.destroy' ,$type->id)}}" method="POST" class="btn-group">
                                                                 @csrf @method('delete')
                                                                 <button
 

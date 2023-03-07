@@ -44,6 +44,18 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
+                                                        <label for="projectinput2">  النوع</label>
+                                                        <select class=" form-control"  id="multi_placehodler" name="type" >
+                                                            <option @if($receiptType->type=="Save_money") selected @endif value="Save_money"> خزنه </option>
+                                                            <option @if($receiptType->type=="bank") selected @endif value="bank"> بنك </option>
+                                                            <option @if($receiptType->type=="anther_contact") selected @endif value="anther_contact"> جهات اخري </option>
+                                                            <option @if($receiptType->type=="Custody") selected @endif value="Custody"> عهده </option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
                                                         <label for="projectinput2">  الفرع</label>
                                                         <select class="form-control"  id="multi_placehodler" name="branch_id" >
                                                             @foreach($branches as $branch)

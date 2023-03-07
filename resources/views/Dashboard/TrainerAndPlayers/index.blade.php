@@ -63,16 +63,39 @@
                                             >
                                                 @csrf
                                                 <div class="form-body">
+<div class="row">
+    <div class="col-md-6">
+        <h2 id="stadium_name"> </h2>
+    </div>
+    <div class="col-md-6">
+        <h2 id="trainer_name"> </h2>
 
+    </div>
+</div>
+                                                    <div class="table-responsive">
+                                                        <table class="table" id="table_details">
+                                                            <thead>
+                                                            <tr >
+                                                                <th>الاعب </th>
+
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr id="player_name"></tr>
+
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </form>
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" id="" class="btn btn-primary"
-                                            >save
+                                            <button type="button" id="deleteEvent" class="btn btn-danger"
+                                            >حذف
                                             </button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">غلق
                                             </button>
                                         </div>
                                     </div>
@@ -89,7 +112,7 @@
                                         </div>
                                         <div id="modalBody" class="modal-body">
 
-                                            <form class="form" action="" method="POST"
+                                            <form class="form" id="form_id" action="" method="POST"
                                             >
                                                 @csrf
                                                 <div class="form-body">
@@ -143,22 +166,7 @@
                                                         </div>
 
                                                     </div>
-{{--                                                    <div class="row">--}}
-{{--                                                        <div class="col-md-6">--}}
-{{--                                                            <div class="form-group">--}}
-{{--                                                                <label for="projectinput2"> من الساعه </label>--}}
-{{--                                                                <input type="time" name="time_from" class="form-control"--}}
-{{--                                                                       id="from">--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                        <div class="col-md-6">--}}
-{{--                                                            <div class="form-group">--}}
-{{--                                                                <label for="projectinput2"> الي الساعه </label>--}}
-{{--                                                                <input type="time" name="time_to" class="form-control"--}}
-{{--                                                                       id="to">--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
+
                                                 </div>
                                             </form>
 
@@ -189,131 +197,6 @@
 
     <script>
         $(document).ready(function () {
-            {{--$.ajaxSetup({--}}
-            {{--    headers: {--}}
-            {{--        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-            {{--     }--}}
-            {{--});--}}
-            {{--/****************************************--}}
-            {{-- *				Selectable				*--}}
-            {{-- ****************************************/--}}
-            {{--$("#calendar").fullCalendar({--}}
-            {{--    header: {--}}
-            {{--        left: 'prev,next today',--}}
-            {{--        center: 'title',--}}
-            {{--        right: 'month,agendaWeek,agendaDay'--}}
-            {{--    },--}}
-            {{--    // defaultDate: '2016-06-12',--}}
-            {{--    selectable: true,--}}
-            {{--    selectHelper: true,--}}
-            {{--    select: function(start, end,date) {--}}
-            {{--        alert(start)--}}
-            {{--        alert(end)--}}
-            {{--        console.log(date)--}}
-            {{--        // var title = prompt('Event Title:');--}}
-            {{--        $("#calendarModal").modal("show");--}}
-            {{--        $("#saveEvent").click(function () {--}}
-            {{--            var player_id = $('#player_id').val();--}}
-            {{--            var user_id = $('#user_id').val();--}}
-            {{--            var from = $('#from').val();--}}
-            {{--            var to = $('#to').val();--}}
-            {{--            var Route ="{{route('store-event')}}";--}}
-
-
-
-            {{--            $.ajax(--}}
-            {{--                {--}}
-
-            {{--                    url:Route,--}}
-            {{--                    type:"POST",--}}
-            {{--                    data:{--}}
-            {{--                        player_id: player_id,--}}
-            {{--                        user_id: user_id,--}}
-            {{--                        // today : date,--}}
-            {{--                        from: from,--}}
-            {{--                        to: to--}}
-            {{--                    },--}}
-            {{--                    success:function(data)--}}
-            {{--                    {--}}
-            {{--                        calendar.fullCalendar('refetchEvents');--}}
-            {{--                        alert("Event Created Successfully");--}}
-            {{--                    }--}}
-            {{--                });--}}
-            {{--            alert(player_id);--}}
-
-            {{--        });--}}
-
-            {{--        // var eventData;--}}
-            {{--        // // if (title) {--}}
-            {{--        //     eventData = {--}}
-            {{--        //         title: title,--}}
-            {{--        //         start: start,--}}
-            {{--        //         end: end--}}
-            {{--        //     };--}}
-            {{--        //     $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true--}}
-            {{--        //--}}
-            {{--        // // }--}}
-            {{--        // $('#calendar').fullCalendar('unselect');--}}
-            {{--    },--}}
-            {{--    editable: true,--}}
-            {{--    eventLimit: true, // allow "more" link when too many events--}}
-            {{--    events: [--}}
-            {{--        {--}}
-            {{--            title: 'All Day Event',--}}
-            {{--            start: '2016-06-01'--}}
-            {{--        },--}}
-            {{--        {--}}
-            {{--            title: 'Long Event',--}}
-            {{--            start: '2016-06-07',--}}
-            {{--            end: '2016-06-10'--}}
-            {{--        },--}}
-            {{--        {--}}
-            {{--            id: 999,--}}
-            {{--            title: 'Repeating Event',--}}
-            {{--            start: '2016-06-09T16:00:00'--}}
-            {{--        },--}}
-            {{--        {--}}
-            {{--            id: 999,--}}
-            {{--            title: 'Repeating Event',--}}
-            {{--            start: '2016-06-16T16:00:00'--}}
-            {{--        },--}}
-            {{--        {--}}
-            {{--            title: 'Conference',--}}
-            {{--            start: '2016-06-11',--}}
-            {{--            end: '2016-06-13'--}}
-            {{--        },--}}
-            {{--        {--}}
-            {{--            title: 'Meeting',--}}
-            {{--            start: '2016-06-12T10:30:00',--}}
-            {{--            end: '2016-06-12T12:30:00'--}}
-            {{--        },--}}
-            {{--        {--}}
-            {{--            title: 'Lunch',--}}
-            {{--            start: '2016-06-12T12:00:00'--}}
-            {{--        },--}}
-            {{--        {--}}
-            {{--            title: 'Meeting',--}}
-            {{--            start: '2016-06-12T14:30:00'--}}
-            {{--        },--}}
-            {{--        {--}}
-            {{--            title: 'Happy Hour',--}}
-            {{--            start: '2016-06-12T17:30:00'--}}
-            {{--        },--}}
-            {{--        {--}}
-            {{--            title: 'Dinner',--}}
-            {{--            start: '2016-06-12T20:00:00'--}}
-            {{--        },--}}
-            {{--        {--}}
-            {{--            title: 'Birthday Party',--}}
-            {{--            start: '2016-06-13T07:00:00'--}}
-            {{--        },--}}
-            {{--        {--}}
-            {{--            title: 'Click for Google',--}}
-            {{--            url: 'http://google.com/',--}}
-            {{--            start: '2016-06-29'--}}
-            {{--        }--}}
-            {{--    ]--}}
-            {{--});--}}
 
 
             $.ajaxSetup({
@@ -338,6 +221,7 @@
                 select: function ( start, end, allDay) {
                     $("#calendarModal").modal("show");
                     $("#saveEvent").click(function () {
+                        console.log(start);
                         var day = $.fullCalendar.formatDate(start, 'Y-MM-DD ');
                         var stadium_id = $('#stadium_id').val();
                         var player_id = $('#player_id').select2("val");
@@ -365,9 +249,9 @@
                                 },
                                 success: function (data) {
                                     calendar.fullCalendar('refetchEvents');
-                                    // alert("تم اضافه موعد جديد  ");
+                                    alert("تم اضافه موعد جديد  ");
                                     $("#calendarModal").modal("hide");
-
+                                    location.reload();
 
                                 }
 
@@ -399,6 +283,8 @@
                             // alert("تم تعديل المعاد  ");
                         }
                     })
+                    die();
+
                 },
                 eventDrop: function (event, delta) {
                     var start = $.fullCalendar.formatDate(event.start, 'Y-MM-DD HH:mm:ss');
@@ -425,6 +311,27 @@
                 },
 
                 eventClick: function (event) {
+
+                    var id = event.id;
+                    var Route = "{{route('show-event')}}";
+                    $.ajax({
+                        url: Route,
+                        type: "get",
+                        data: {
+                            id: id,
+                            type: "show"
+                        },
+                        success: function (response) {
+                            $('#player_name').html(response.players);
+                            $('#stadium_name').html(response.stadium_name);
+                            $('#trainer_name').html(response.trainer_name);
+                            $("#calendarModalDetails").modal("show");
+
+                        }
+                    })
+
+                    $('#deleteEvent').click(function(){
+
                     if (confirm("هل انت  متاكد من حذف هذا اليعاد")) {
                         var id = event.id;
                         var Route = "{{route('delete-event')}}";
@@ -437,10 +344,14 @@
                             },
                             success: function (response) {
                                 calendar.fullCalendar('refetchEvents');
+                                $("#calendarModalDetails").modal("hide");
+
                                 // alert("تم حذف الميعاد من التقويم  ");
                             }
                         })
                     }
+                    });
+
                 }
             });
 

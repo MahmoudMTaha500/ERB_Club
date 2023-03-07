@@ -6,6 +6,7 @@ use App\Models\Players;
 use App\Models\Receipts;
 use App\Http\Requests\StoreReceiptsRequest;
 use App\Http\Requests\UpdateReceiptsRequest;
+use App\Models\ReceiptTypes;
 
 class ReceiptsController extends Controller
 {
@@ -28,7 +29,8 @@ class ReceiptsController extends Controller
     public function create()
     {
         $players =Players::get();
-        return view('Dashboard.Receipts.create',compact('players'));
+        $receiptTypes= ReceiptTypes::get();
+        return view('Dashboard.Receipts.create',compact('players','receiptTypes'));
     }
 
     /**
@@ -39,10 +41,17 @@ class ReceiptsController extends Controller
      */
     public function store(StoreReceiptsRequest $request)
     {
+//        dd($request->all());
         Receipts::create([
             'user_id'=>auth()->user()->id,
-            'player_id'=>$request->player_id,
+
+            'type_of_from'=>$request->from_type,
+            'from'=>$request->from,
+            'to'=>$request->to,
+            'type_of_amount'=>$request->type_of_amount,
             'amount'=>$request->amount,
+            'paid'=>$request->paid,
+            'statement'=>$request->statement,
             'date_receipt'=>$request->date,
         ]);
         return redirect()->route('receipt.index')->with('message','تم اضافه الايصال بنجاح ');
@@ -68,8 +77,9 @@ class ReceiptsController extends Controller
      */
     public function edit(Receipts $receipt)
     {
+        $receiptTypes= ReceiptTypes::get();
         $players =Players::get();
-        return view('Dashboard.Receipts.edit',compact('players','receipt'));
+        return view('Dashboard.Receipts.edit',compact('players','receipt','receiptTypes'));
     }
 
     /**
@@ -81,8 +91,14 @@ class ReceiptsController extends Controller
      */
     public function update(UpdateReceiptsRequest $request, Receipts $receipt)
     {
-        $receipt->player_id=$request->player_id;
+        $receipt->user_id=auth()->user()->id;
+        $receipt->from=$request->from;
+        $receipt->to=$request->to;
+        $receipt->type_of_from=$request->from_type;
+        $receipt->type_of_amount=$request->type_of_amount;
         $receipt->amount=$request->amount;
+        $receipt->paid=$request->paid;
+        $receipt->statement=$request->statement;
         $receipt->date_receipt=$request->date;
         $receipt->save();
         return redirect()->route('receipt.index')->with('message','تم تعديل الايصال بنجاح ');

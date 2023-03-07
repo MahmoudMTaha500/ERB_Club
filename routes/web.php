@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::post('trainer-and-player/ajax/update', "\App\Http\Controllers\TrainerAndPlayerController@update")->name('update-event');
     Route::post('trainer-and-player/ajax/delete', "\App\Http\Controllers\TrainerAndPlayerController@destroy")->name('delete-event');
 
+    Route::get('trainer-and-player/ajax/show', "\App\Http\Controllers\TrainerAndPlayerController@show")->name('show-event');
 
 
     #################################################.
@@ -50,6 +51,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('package', "\App\Http\Controllers\PackagesController");
     Route::resource('receipt', "\App\Http\Controllers\ReceiptsController");
     Route::resource('receipt-type', "\App\Http\Controllers\ReceiptTypesController");
+    Route::resource('receipt-pay', "\App\Http\Controllers\ReceiptsPayController");
+    Route::resource('receipt-type-pay', "\App\Http\Controllers\ReceiptTypePayController");
     Route::resource('employee', "\App\Http\Controllers\EmployeesController");
     Route::resource('player', "\App\Http\Controllers\PlayersController");
     Route::resource('item', "\App\Http\Controllers\ItemsController");
