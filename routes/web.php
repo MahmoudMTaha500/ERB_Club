@@ -38,6 +38,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
 
     Route::get('trainer-and-player/ajax/show', "\App\Http\Controllers\TrainerAndPlayerController@show")->name('show-event');
 
+    route::get('get-sports-players', "\App\Http\Controllers\PlayersController@getSports")->name('get-sports-players');
+    route::get('get-players-sports-price', "\App\Http\Controllers\ReceiptsController@getPlayerSportPrice")->name('get-players-sports-price');
 
     #################################################.
     route::get('/file/delete/{id}',"\App\Http\Controllers\PlayersController@deleteFiles");

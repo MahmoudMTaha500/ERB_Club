@@ -9,6 +9,7 @@ use App\Http\Requests\StoreReceiptsPayRequest;
 use App\Http\Requests\UpdateReceiptsPayRequest;
 use App\Models\ReceiptTypePay;
 use App\Models\ReceiptTypes;
+use App\Models\User;
 
 class ReceiptsPayController extends Controller
 {
@@ -31,9 +32,12 @@ class ReceiptsPayController extends Controller
     public function create()
     {
         $players =Players::get();
+        $receiptTypesFrom= ReceiptTypePay::whereIn('type',['Save_money','bank','Custody'])->get();
         $receiptTypes= ReceiptTypePay::get();
-        return view('Dashboard.ReceiptsPay.create',compact('players','receiptTypes'));
+        $employees = User::get();
+        return view('Dashboard.ReceiptsPay.create',compact('employees','players','receiptTypes','receiptTypesFrom'));
     }
+
 
     /**
      * Store a newly created resource in storage.

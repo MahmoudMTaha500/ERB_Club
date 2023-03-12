@@ -50,7 +50,8 @@ class StadiumController extends Controller
                 'branch_id' => $request->branch_id,
                 'sport_id' => $request->sport_id,
                 'name' => $request->name,
-                'type' => $request->type
+                'type' => $request->type,
+                'hour_rate' => $request->hour_rate
             ]);
         return redirect()->route('stadium.index')->with('message','تم اضافه الملعب ');
     }
@@ -74,7 +75,11 @@ class StadiumController extends Controller
      */
     public function edit(Stadium $stadium)
     {
-        return view('Dashcorad.Stadiums.edit',compact('stadium'));
+        $branches = Branchs::get();
+        $sports = Sports::get();
+
+
+        return view('Dashboard.Stadiums.edit',compact('stadium','branches','sports'));
     }
 
     /**
@@ -84,9 +89,17 @@ class StadiumController extends Controller
      * @param \App\Models\Stadium $stadium
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateStadiumRequest $request, Stadium $stadium)
+    public function update(StoreStadiumRequest $request, Stadium $stadium)
     {
-
+        Stadium::where('id',$stadium->id)->update(
+            [
+                'branch_id' => $request->branch_id,
+                'sport_id' => $request->sport_id,
+                'name' => $request->name,
+                'type' => $request->type,
+                'hour_rate' => $request->hour_rate
+            ]);
+        return redirect()->route('stadium.index')->with('message','تم تعديل الملعب ');
     }
 
     /**

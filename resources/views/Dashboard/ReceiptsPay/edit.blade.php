@@ -109,8 +109,8 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="">  السعر المصروف </label>
-                                                        <input type="number" name="amount" id="amount" value="{{$receiptsPay->amount}}" class="form-control">
+                                                        <label for="">  المبلغ  </label>
+                                                        <input type="number" name="amount" id="amount" value="{{$receiptsPay->amount*-1}}" class="form-control">
 
                                                     </div>
                                                 </div>

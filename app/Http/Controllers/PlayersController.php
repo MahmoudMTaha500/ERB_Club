@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branchs;
+use App\Models\Levels;
 use App\Models\Players;
 use App\Http\Requests\StorePlayersRequest;
 use App\Http\Requests\UpdatePlayersRequest;
 use App\Models\PlayersFiles;
+use App\Models\Sports;
 use Illuminate\Support\Facades\File;
 
 
@@ -181,5 +183,31 @@ class PlayersController extends Controller
         $player_file->delete();
 
         return back()->with('error','تم حذف الفايل اللاعب بنجاح ');
+    }
+
+    public function getSports(Request  $request){
+//    dd($request->all());
+//        $branches_request = $request->branch_id;
+//        $levels = Sports::whereHas('branches' , function ($query) use ($branches_request){
+//            $query->whereIn('branch_id',$branches_request);
+//        })->get();
+//
+//        $selected='';
+//        $option='';
+//        foreach ($levels as  $sport){
+//            if($request->level_id){
+//                foreach ($level->sports as $lv)
+//                {
+//                    if($lv->id == $sport->id)
+//                        $selected = 'selected';
+//                }
+//            }
+//            $option .= "
+//      <option value=$sport->id $selected > $sport->name </option> ";
+//            $selected = ' ';
+//        }
+//
+//        return     \Response::json(['data'=>$option])  ;
+
     }
 }

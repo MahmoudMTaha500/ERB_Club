@@ -30,21 +30,21 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('branch.store')}}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" id="myForm" action="{{route('branch.store')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  اسم الفرع </label>
-                                                        <input type="text" class="form-control" name="name"  required>
+                                                        <input type="text" class="form-control" name="name" value="{{old('name')}}"  required>
 
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2"> الرقم الارضي</label>
-                                                        <input type="number" class="form-control" name="landline"  required>
+                                                        <input type="number" class="form-control" name="landline"  value="{{old('landline')}}"  required>
 
                                                     </div>
                                                 </div>
@@ -53,13 +53,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">المدينه</label>
-                                                        <input type="text" class="form-control" name="city"  required>
+                                                        <input type="text" class="form-control" name="city" value="{{old('city')}}"   required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  الهاتف</label>
-                                                        <input type="number" class="form-control" name="phone"  required>
+                                                        <input type="number" class="form-control" name="phone"  value="{{old('phone')}}"  required>
 
                                                     </div>
                                                 </div>
@@ -69,13 +69,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">العنوان</label>
-                                                        <input type="text" class="form-control" name="address"  required>
+                                                        <input type="text" class="form-control" name="address" value="{{old('address')}}"   >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">لوكشان</label>
-                                                        <input type="text" class="form-control" name="location"  required>
+                                                        <input type="text" class="form-control" name="location"  value="{{old('location')}}"  >
                                                     </div>
                                                 </div>
 
@@ -89,7 +89,16 @@
 
 
                                             <div class="form-actions center">
-                                                <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <button type="button"  class="btn btn-danger   w-100" onclick="resetForm();">مسح  </button>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -102,4 +111,14 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        function resetForm() {
+
+            document.getElementById("myForm").reset();
+
+        }
+    </script>
 @endsection

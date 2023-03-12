@@ -26,8 +26,7 @@ class StorePriceListRequest extends FormRequest
         return [
             "price"=>"required",
             "sport_id"=>"required",
-            "desc"=>"required",
-
+            "name"=>"required",
         ];
     }
 
@@ -36,7 +35,7 @@ class StorePriceListRequest extends FormRequest
         return [
             'price.required'=>'السعر مطلوب ',
             'sport_id.required'=>' اللعبه مطلويه ',
-            'desc.required'=>' الوصف مطلوب ',
+            'name.required'=>' الاسم مطلوب ',
 
 
         ];

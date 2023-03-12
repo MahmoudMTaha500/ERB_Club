@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Players extends Model
 {
@@ -20,5 +22,10 @@ class Players extends Model
 
     public function players_files(){
         return$this->hasMany('App\Models\PlayersFiles','player_id','id');
+    }
+    public  function PlayerSportPrice(): HasManyThrough
+    {
+        return $this->hasManyThrough(Sports::class,PriceList::class,'sport_id','id');
+
     }
 }

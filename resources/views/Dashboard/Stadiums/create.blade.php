@@ -30,7 +30,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('stadium.store')}}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" id="myForm" action="{{route('stadium.store')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
@@ -44,7 +44,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2"> الفرع </label>
-                                                        <select class="select2-placeholder-multiple form-control"  name="branch_id" >
+                                                        <select class="select2-placeholder-multiple form-control"  id="branch_id" name="branch_id" >
                                                             @foreach($branches as $branch)
                                                                 <option value="{{$branch->id}}">{{$branch->name}}</option>
 
@@ -58,7 +58,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">   اللعبه </label>
-                                                        <select class="select2-placeholder-multiple form-control"  name="sport_id" >
+                                                        <select class="select2-placeholder-multiple form-control"  id="sport_id" name="sport_id" >
                                                             @foreach($sports as $sport)
                                                                 <option value="{{$sport->id}}">{{$sport->name}}</option>
 
@@ -67,7 +67,7 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label>قابل لايجار </label>
                                                         <div class="input-group">
@@ -82,10 +82,25 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label> سعر ساعه الايجار  </label>
+                                                        <input type="number"  class="form-control"  id="hour_rate" disabled name="hour_rate">
+                                                    </div>
+                                                </div>
 
                                             </div>
                                             <div class="form-actions center">
-                                                <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <button type="button"  class="btn btn-danger   w-100" onclick="resetForm();">مسح  </button>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -102,18 +117,42 @@
 @section('script')
 
     <script>
-        $('#branch_id').on('change', function () {
-            var ids =$("#branch_id").select2("val");
-            var  route = "{{route('get-sports')}}";
-            $.ajax(route,   // request url
-                {
-                    type: 'GET',  // http method
-                    data: { "branch_id": ids },
-                    success: function (data, status, xhr) {// success callback function
-                        $("#sport_id").html(data.data);
+        $(document).ready(function (){
+            AbleForRenet();
 
-                    }
-                });
+            $('#branch_id').on('change', function () {
+                var ids =$("#branch_id").select2("val");
+                var  route = "{{route('get-sports')}}";
+                $.ajax(route,   // request url
+                    {
+                        type: 'GET',  // http method
+                        data: { "branch_id[]": ids },
+                        success: function (data, status, xhr) {// success callback function
+                            $("#sport_id").html(data.data);
+
+                        }
+                    });
+            });
+
+
+        $('.custom-control').change(function (){
+            AbleForRenet();
+        });
+
+        function resetForm() {
+
+            document.getElementById("myForm").reset();
+
+        }
+        function AbleForRenet(){
+            if($('input[name="type"]:checked').val() == 1){
+                $('#hour_rate').removeAttr("disabled")
+            } else {
+                $('#hour_rate').attr("disabled",'disabled');
+
+                $('#hour_rate').val('');
+            }
+        }
         });
 
     </script>

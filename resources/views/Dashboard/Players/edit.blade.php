@@ -276,6 +276,19 @@
                     }
                 });
         });
+        $(window).on( 'load', function () {
+            var ids =$("#branch_id").val();
+            var  route = "{{route('get-sports')}}";
+            $.ajax(route,   // request url
+                {
+                    type: 'GET',  // http method
+                    data: { "branch_id[]": ids },
+                    success: function (data, status, xhr) {// success callback function
+                        $("#sport_id").html(data.data);
+
+                    }
+                });
+        });
         $('#add_ele').click(function(){
             var html = ' <div class="row remve_ele"> <div class="col-6"><div class="form-group"> <label for="" class="control-label mb-1"> Name Of File:</label> <input  name="name_of_file[]" type="text" class="form-control" required   value="" placeholder="type your File">  </div>';
             html += '</div><div class="col-5"> <div class="form-group"><label for="cc-payment" class="control-label mb-1">File :</label><input  name="file[]" type="file" class="form-control" required  value=""></div></div> <div class="col-1">';

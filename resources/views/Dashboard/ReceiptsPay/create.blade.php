@@ -30,13 +30,13 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('receipt-pay.store')}}" method="POST" enctype="multipart/form-data">
+                                    <form class="form"  id="myForm" action="{{route('receipt-pay.store')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">  اسم المستلم </label>
+                                                        <label for="projectinput2">  اسم محرر الايصال</label>
                                                         <input type="text" class="form-control" disabled name="name" value="{{ auth()->user()->name }}" required>
 
                                                     </div>
@@ -45,7 +45,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  تاريخ الايصال</label>
-                                                        <input type="date" name="date" class="form-control">
+                                                        <input type="date" name="date" class="form-control"     placeholder="dd-mm-yyyy" value = "{{ Carbon\Carbon::today()->format('Y-m-d') }}"
+                                                               min="1997-01-01" max="2030-12-31">
                                                     </div>
                                                 </div>
 
@@ -54,9 +55,22 @@
                                                 <div class="col-md-5">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  من   </label>
-                                                        <select class="select2-placeholder-multiple form-control"  name="from" >
-                                                            @foreach($receiptTypes as $type)
-                                                                <option value="{{$type->id}}">{{$type->name}}</option>
+                                                        <select class=" form-control"  name="from"  id="from">
+                                                            @foreach($receiptTypesFrom as $type)
+                                                                <option data-type="{{$type->type}}" value="{{$type->id}}">{{$type->name}}</option>
+
+                                                            @endforeach
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6" style="display: none" id="employees">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">  الي  </label>
+                                                        <select class="form-control"  name="employee_id" >
+                                                            @foreach($employees as $employee)
+                                                                <option value="{{$employee->id}}">{{$employee->name}}</option>
 
                                                             @endforeach
                                                         </select>
@@ -69,7 +83,7 @@
                                                     <label>الي الاعبين</label>
                                                         <input class="from_type " type="radio" id="players" name="to_type" value="players">
                                                         <label> الي اخري </label>
-                                                        <input class=" from_type" type="radio" id="others" name="to_type" value="others">
+                                                        <input class=" from_type" type="radio" id="others" checked name="to_type" value="others">
 
                                                     </div>
                                                 </div>
@@ -100,11 +114,12 @@
 
 
 
+
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="">  السعر المصروف </label>
+                                                        <label for="">   المبلغ </label>
                                                         <input type="number" name="amount" id="amount" class="form-control">
 
                                                     </div>
@@ -120,7 +135,16 @@
                                             </div>
 
                                             <div class="form-actions center">
-                                                <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <button type="button"  class="btn btn-danger   w-100" onclick="resetForm();">مسح  </button>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -138,23 +162,50 @@
 
     <script>
         $(document).ready(function(){
+            checkfromType();
+            showEmployees();
+
 
 
             $('.from_type').change(function (){
-               if($('input[name="to_type"]:checked').val() =='players'){
-                   $('#to_players').show();
-                   $('#to_others').hide();
-               }
-                if($('input[name="to_type"]:checked').val() =='others'){
-                    $('#to_others').show();
-
-                    $('#to_players').hide();
-                }
+                checkfromType();
             });
 
+            $("#from").change(function(){
+                showEmployees();
+            });
 
 
         });
 
+        /*+
+           function of js to keep code and didn't duplicate
+         */
+        function checkfromType(){
+            if($('input[name="to_type"]:checked').val() =='players'){
+                $('#to_players').show();
+                $('#to_others').hide();
+            }
+            if($('input[name="to_type"]:checked').val() =='others'){
+                $('#to_others').show();
+
+                $('#to_players').hide();
+            }
+        }
+        function resetForm() {
+            checkfromType();
+
+            document.getElementById("myForm").reset();
+
+        }
+        function showEmployees(){
+
+            if($("#from").find('option:selected').data('type') == 'Custody' ){
+                $('#employees').show();
+            } else {
+                $('#employees').hide();
+
+            }
+        }
     </script>
 @endsection

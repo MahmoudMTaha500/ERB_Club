@@ -30,7 +30,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('contract.store')}}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" id="myForm" action="{{route('contract.store')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
@@ -67,7 +67,8 @@
                                                     <div class="form-group">
                                                         <label for="projectinput2"> مده التعاقد  من</label>
 
-                                                        <input type="date" class="form-control" name="from_date">
+                                                        <input type="date" class="form-control" name="from_date" placeholder="dd-mm-yyyy" value = "{{ Carbon\Carbon::today()->format('Y-m-d') }}"
+                                                               min="1997-01-01" max="2030-12-31">
                                                     </div>
                                                 </div>
                                                 <div class=" col-md-6">
@@ -126,9 +127,18 @@
 
 
                                               </div>
-                                            <div class="form-actions center">
-                                                <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+                                        <div class="form-actions center">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button"  class="btn btn-danger   w-100" onclick="resetForm();">مسح  </button>
+
+                                                </div>
                                             </div>
+                                        </div>
                                 </form>
                                 </div>
                             </div>
@@ -184,5 +194,11 @@ function getItemValues(object){
                 return false;
             });
         });
+
+function resetForm() {
+
+    document.getElementById("myForm").reset();
+
+}
     </script>
 @endsection

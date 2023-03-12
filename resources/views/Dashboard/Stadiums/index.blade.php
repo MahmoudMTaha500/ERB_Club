@@ -56,6 +56,7 @@
 
                                             <th class="border-top-0">   اللعبه</th>
                                             <th class="border-top-0">    قابل لايجار </th>
+                                            <th class="border-top-0">    سعر الساعه </th>
 
 
                                             <th class="border-top-0">التحكم</th>
@@ -75,6 +76,9 @@
                                                 </td>
                                                 <td>
                                                  {{ $stadium->type == 1 ? 'نعم': 'لا'  }}
+                                                </td>
+                                                <td>
+                                                 {{ $stadium->type == 1 ? $stadium->hour_rate : '----'  }}
                                                 </td>
 
 

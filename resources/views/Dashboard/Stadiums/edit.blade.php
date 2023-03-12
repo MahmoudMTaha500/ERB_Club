@@ -30,23 +30,27 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('receipt.update',$receipt->id)}}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" id="myForm" action="{{route('stadium.update',$stadium->id)}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('put')
                                         <div class="form-body">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">  اسم المستلم </label>
-                                                        <input type="text" class="form-control" disabled name="name" value="{{ auth()->user()->name }}" required>
+                                                        <label for="projectinput2">  اسم الملعب </label>
+                                                        <input type="text" class="form-control"  name="name" value="{{$stadium->name}}" required>
 
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">   المبلغ </label>
-                                                        <input type="number" class="form-control"  name="amount"  value="{{ $receipt->amount }}" required>
+                                                        <label for="projectinput2"> الفرع </label>
+                                                        <select class="select2-placeholder-multiple form-control"  name="branch_id" >
+                                                            @foreach($branches as $branch)
+                                                                <option @if($branch->id == $stadium->branch_id) selected @endif value="{{$branch->id}}">{{$branch->name}}</option>
 
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
 
@@ -54,26 +58,50 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">  من السيد </label>
-                                                        <select class="select2-placeholder-multiple form-control"  name="player_id" >
-                                                            @foreach($players as $player)
-                                                                <option value="{{$player->id}}" @if($receipt->player_id==$player->id) selected @endif >{{$player->name}}</option>
+                                                        <label for="projectinput2">   اللعبه </label>
+                                                        <select class="select2-placeholder-multiple form-control"  name="sport_id" >
+                                                            @foreach($sports as $sport)
+                                                                <option @if($sport->id == $stadium->sport_id) selected @endif  value="{{$sport->id}}">{{$sport->name}}</option>
 
                                                             @endforeach
                                                         </select>
 
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">  تاريخ الايصال</label>
-                                                        <input type="date" name="date" class="form-control" value="{{ $receipt->date_receipt->format("Y-m-d") }}">
+                                                        <label>قابل لايجار </label>
+                                                        <div class="input-group">
+                                                            <div class="d-inline-block custom-control custom-radio mr-1">
+                                                                <input type="radio" name="type" @if($stadium->type==1) checked @endif class="custom-control-input" id="yes" value=1>
+                                                                <label class="custom-control-label" for="yes">نعم</label>
+                                                            </div>
+                                                            <div class="d-inline-block custom-control custom-radio">
+                                                                <input type="radio" name="type" @if($stadium->type==0) checked @endif class="custom-control-input" id="no" value=0>
+                                                                <label class="custom-control-label" for="no">لا</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label> سعر ساعه الايجار  </label>
+                                                        <input type="number"  class="form-control"  value="{{ $stadium->hour_rate }}" id="hour_rate" disabled name="hour_rate">
                                                     </div>
                                                 </div>
 
                                             </div>
                                             <div class="form-actions center">
-                                                <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <button type="button"  class="btn btn-danger   w-100" onclick="resetForm();">مسح  </button>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -90,18 +118,42 @@
 @section('script')
 
     <script>
-        $('#branch_id').on('change', function () {
-            var ids =$("#branch_id").select2("val");
-            var  route = "{{route('get-sports')}}";
-            $.ajax(route,   // request url
-                {
-                    type: 'GET',  // http method
-                    data: { "branch_id": ids },
-                    success: function (data, status, xhr) {// success callback function
-                        $("#sport_id").html(data.data);
+        $(document).ready(function (){
+            AbleForRenet();
 
-                    }
-                });
+            $('#branch_id').on('change', function () {
+                var ids =$("#branch_id").select2("val");
+                var  route = "{{route('get-sports')}}";
+                $.ajax(route,   // request url
+                    {
+                        type: 'GET',  // http method
+                        data: { "branch_id[]": ids },
+                        success: function (data, status, xhr) {// success callback function
+                            $("#sport_id").html(data.data);
+
+                        }
+                    });
+            });
+
+
+            $('.custom-control').change(function (){
+                AbleForRenet();
+            });
+
+            function resetForm() {
+
+                document.getElementById("myForm").reset();
+
+            }
+            function AbleForRenet(){
+                if($('input[name="type"]:checked').val() == 1){
+                    $('#hour_rate').removeAttr("disabled")
+                } else {
+                    $('#hour_rate').attr("disabled",'disabled');
+
+                    $('#hour_rate').val('');
+                }
+            }
         });
 
     </script>

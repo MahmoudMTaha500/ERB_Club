@@ -13,12 +13,13 @@ class CreateStadiaTable extends Migration
      */
     public function up()
     {
-        Schema::create('stadia', function (Blueprint $table) {
+        Schema::create('stadium', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('branch_id');
             $table->integer('sport_id');
             $table->enum('type',[0,1])->default(0);
+            $table->integer('hour_rate')->nullable();
             $table->timestamps();
         });
     }

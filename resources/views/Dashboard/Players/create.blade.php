@@ -30,7 +30,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('player.store')}}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" id="myForm" action="{{route('player.store')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
 
                                             <div class="form-body">
@@ -193,12 +193,19 @@
 
 
                                             </div>
-                                            <div class="form-actions">
 
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="la la-check-square-o"></i> حفظ
-                                                </button>
+                                        <div class="form-actions center">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button"  class="btn btn-danger   w-100" onclick="resetForm();">مسح  </button>
+
+                                                </div>
                                             </div>
+                                        </div>
                                         </form>
 
 
@@ -239,6 +246,10 @@
         $(document).on('click' , ".remove_ele",function(){
             $(this).parent().parent().parent().remove();
         });
+        function resetForm() {
 
+            document.getElementById("myForm").reset();
+
+        }
     </script>
 @endsection

@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Players;
+use App\Models\PriceList;
 use App\Models\Receipts;
 use App\Http\Requests\StoreReceiptsRequest;
 use App\Http\Requests\UpdateReceiptsRequest;
 use App\Models\ReceiptTypes;
+use Facade\FlareClient\Http\Response;
+use Illuminate\Http\Request;
 
 class ReceiptsController extends Controller
 {
@@ -28,7 +31,8 @@ class ReceiptsController extends Controller
      */
     public function create()
     {
-        $players =Players::get();
+        $players =Players::with('PlayerSportPrice')->get();
+//        dd($players[0]->PlayerSportPrice->price);
         $receiptTypes= ReceiptTypes::get();
         return view('Dashboard.Receipts.create',compact('players','receiptTypes'));
     }
@@ -116,5 +120,12 @@ class ReceiptsController extends Controller
         $receipt->delete();
         return redirect()->route('receipt.index')->with('error','تم تعديل الايصال بنجاح ');
 
+    }
+
+    public function getPlayerSportPrice(Request  $request){
+    $player=      Players::find($request->player_id);
+        $sport_id =  $player->sport_id;
+          $price_list =  PriceList::where('sport_id',$sport_id)->get()->first();
+        return     \Response::json(['price'=>$price_list->price])  ;
     }
 }

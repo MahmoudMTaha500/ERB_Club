@@ -41,49 +41,51 @@
                                                         <input type="text" class="form-control"  name="name"   value="{{ $priceList->name }}">
 
                                                     </div>
+                                                </div>
+
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">   قوائم  الاسعار</label>
+                                                        <label for="projectinput2">     الالعاب</label>
                                                         <select class=" form-control" id="multi_placehodler" name="sport_id" >
                                                             @foreach($sports as $sport)
                                                                 <option value="{{$sport->id}}"
-                                                                @if($sport->id == $priceList->sports->id) selected @endif
-                                                                 >{{$sport->name}}</option>
+                                                                        @if($sport->id == $priceList->sports->id) selected @endif
+                                                                >{{$sport->name}}</option>
 
                                                             @endforeach
                                                         </select>
 
                                                     </div>
                                                 </div>
-
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="projectinput2">  سعر اللعبه  </label>
-                                                        <input type="number" class="form-control" name="price"  value="{{ $priceList->price }}" required>
 
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput2">  سعر اللعبه  </label>
+                                                            <input type="number" class="form-control" name="price"  value="{{ $priceList->price }}" required>
+
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="projectinput2"> وصف  </label>
-                                                        <textarea  class="form-control" name="desc"  required>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput2"> وصف  </label>
+                                                            <textarea  class="form-control" name="desc"  required>
                                                             {{$priceList->desc}}
                                                         </textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
+
+
+
+
+
+
+                                                <div class="form-actions center">
+                                                    <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+                                                </div>
                                             </div>
-
-
-
-
-
-
-                                            <div class="form-actions center">
-                                                <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
-                                            </div>
-                                        </div>
                                     </form>
                                 </div>
                             </div>
