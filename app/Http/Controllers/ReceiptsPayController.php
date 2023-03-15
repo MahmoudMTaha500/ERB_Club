@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Custody;
 use App\Models\Players;
 use App\Models\Receipts;
 use App\Models\ReceiptsPay;
@@ -32,7 +33,7 @@ class ReceiptsPayController extends Controller
     public function create()
     {
         $players =Players::get();
-        $receiptTypesFrom= ReceiptTypePay::whereIn('type',['Save_money','bank','Custody'])->get();
+        $receiptTypesFrom= ReceiptTypePay::whereIn('type',['Save_money','bank'])->get();
         $receiptTypes= ReceiptTypePay::get();
         $employees = User::get();
         return view('Dashboard.ReceiptsPay.create',compact('employees','players','receiptTypes','receiptTypesFrom'));
@@ -47,7 +48,7 @@ class ReceiptsPayController extends Controller
      */
     public function store(StoreReceiptsPayRequest $request)
     {
-        ReceiptsPay::create([
+     $receipt_pay =    ReceiptsPay::create([
             'user_id'=>auth()->user()->id,
 
             'type_of_to'=>$request->to_type,
@@ -57,6 +58,15 @@ class ReceiptsPayController extends Controller
             'statement'=>$request->statement,
             'date_receipt'=>$request->date,
         ]);
+
+     if($request->employee_id){
+         Custody::create([
+             'receipt_pay_id'=>$receipt_pay->id,
+             'price'=>$request->amount,
+             'user_id'=> $request->employee_id
+         ]);
+     }
+
         return redirect()->route('receipt-pay.index')->with('message','تم اضافه الايصال بنجاح ');
     }
 

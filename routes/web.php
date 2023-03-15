@@ -45,6 +45,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     route::get('/file/delete/{id}',"\App\Http\Controllers\PlayersController@deleteFiles");
     ################################################
 
+    ################### Custody expense Route ajax ##############################.
+    route::get('/custody-expense-get',"\App\Http\Controllers\CustodyExpenseController@index")->name('custody-expense-get');
+    route::post('/custody-expense-store',"\App\Http\Controllers\CustodyExpenseController@store")->name('custody-expense-store');
+    ################################################
 
     Route::resource('branch', "\App\Http\Controllers\BranchesController");
     Route::resource('sport', "\App\Http\Controllers\SportsController");
@@ -65,6 +69,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('attendance-trainer', "\App\Http\Controllers\TrainerAttendanceController");
     Route::resource('stadium', "\App\Http\Controllers\StadiumController");
 
+    Route::resource('custody', "\App\Http\Controllers\CustodyController");
+    Route::resource('settlement-request', "\App\Http\Controllers\SettlementRequestController");
 
 
 Route::get('logout',"App\Http\Controllers\LoginController@logout")->name('logout');

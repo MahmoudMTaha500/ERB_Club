@@ -51,7 +51,7 @@
                                     <table id="tablecontents" class="table table-hover table-xl mb-0 sortable">
                                         <thead>
                                         <tr>
-                                            <th class="border-top-0">  اسم المستلم</th>
+                                            <th class="border-top-0">   القائم  بالصرف</th>
                                             <th class="border-top-0"> من </th>
                                             <th class="border-top-0"> الي </th>
 
@@ -87,7 +87,7 @@
                                                  {{ $receipt->amount }}
                                                 </td>
                                                 <td>
-                                                 {{ $receipt->date_receipt }}
+                                                 {{ $receipt->date_receipt  }}
                                                 </td>
 
 

@@ -147,6 +147,25 @@
 
                 </ul>
             </li>
+
+            <li class=" nav-item"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
+                                                                                    data-i18n="nav.flot_charts.main">  العهده </span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{route('custody.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            كل مصروفات العهده </a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class=" nav-item"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
+                                                                                    data-i18n="nav.flot_charts.main">  طلبات تسويه العهده  </span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{route('settlement-request.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            كل  طلبات تسويه  العهده </a>
+                    </li>
+
+                </ul>
+            </li>
             <li class=" nav-item"><a href="#"><i class="ft-align-justify"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main"> بنود العقد </span></a>
                 <ul class="menu-content">

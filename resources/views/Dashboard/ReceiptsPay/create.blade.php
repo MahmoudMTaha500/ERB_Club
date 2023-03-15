@@ -57,7 +57,7 @@
                                                         <label for="projectinput2">  من   </label>
                                                         <select class=" form-control"  name="from"  id="from">
                                                             @foreach($receiptTypesFrom as $type)
-                                                                <option data-type="{{$type->type}}" value="{{$type->id}}">{{$type->name}}</option>
+                                                                <option  value="{{$type->id}}">{{$type->name}}</option>
 
                                                             @endforeach
                                                         </select>
@@ -65,18 +65,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-6" style="display: none" id="employees">
-                                                    <div class="form-group">
-                                                        <label for="projectinput2">  الي  </label>
-                                                        <select class="form-control"  name="employee_id" >
-                                                            @foreach($employees as $employee)
-                                                                <option value="{{$employee->id}}">{{$employee->name}}</option>
 
-                                                            @endforeach
-                                                        </select>
-
-                                                    </div>
-                                                </div>
 
                                                 <div class="col-md-3 mt-2" >
                                                     <div class="form-group">
@@ -102,9 +91,21 @@
                                                 <div class="col-md-4" style="display: none" id="to_others">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  الي  </label>
-                                                        <select class="form-control"  name="to" >
+                                                        <select class="form-control"  name="to"  id="others_to">
                                                             @foreach($receiptTypes as $type)
-                                                                <option value="{{$type->id}}">{{$type->name}}</option>
+                                                                <option data-type="{{$type->type}}"  value="{{$type->id}}">{{$type->name}}</option>
+
+                                                            @endforeach
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6" style="display: none" id="employees">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">  الموظف المسئول عن العهده  </label>
+                                                        <select class="form-control"  name="employee_id" >
+                                                            @foreach($employees as $employee)
+                                                                <option value="{{$employee->id}}">{{$employee->name}}</option>
 
                                                             @endforeach
                                                         </select>
@@ -171,7 +172,7 @@
                 checkfromType();
             });
 
-            $("#from").change(function(){
+            $("#others_to").change(function(){
                 showEmployees();
             });
 
@@ -199,8 +200,7 @@
 
         }
         function showEmployees(){
-
-            if($("#from").find('option:selected').data('type') == 'Custody' ){
+            if($("#others_to").find('option:selected').data('type') == 'Custody' ){
                 $('#employees').show();
             } else {
                 $('#employees').hide();
