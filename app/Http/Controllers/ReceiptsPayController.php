@@ -92,7 +92,9 @@ class ReceiptsPayController extends Controller
         $receiptsPay = ReceiptsPay::find($id);
         $receiptTypes= ReceiptTypePay::get();
         $players =Players::get();
-        return view('Dashboard.ReceiptsPay.edit',compact('players','receiptsPay','receiptTypes'));
+        $employees = User::get();
+
+        return view('Dashboard.ReceiptsPay.edit',compact('players','receiptsPay','receiptTypes','employees'));
     }
 
     /**
@@ -113,6 +115,15 @@ class ReceiptsPayController extends Controller
         $receiptsPay->amount= (-$request->amount);
         $receiptsPay->date_receipt=$request->date;
         $receiptsPay->save();
+
+        if($request->employee_id){
+            Custody::where('receipt_pay_id', $receiptsPay->id)->delete();
+            Custody::create([
+                'receipt_pay_id'=>$receiptsPay->id,
+                'price'=>$request->amount,
+                'user_id'=> $request->employee_id
+            ]);
+        }
         return redirect()->route('receipt-pay.index')->with('message','تم تعديل الايصال بنجاح ');
     }
 

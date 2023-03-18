@@ -71,6 +71,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
 
     Route::resource('custody', "\App\Http\Controllers\CustodyController");
     Route::resource('settlement-request', "\App\Http\Controllers\SettlementRequestController");
+    Route::resource('cuts-employee', "\App\Http\Controllers\CutsEmployeeController");
 
 
 Route::get('logout',"App\Http\Controllers\LoginController@logout")->name('logout');

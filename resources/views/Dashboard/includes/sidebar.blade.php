@@ -166,6 +166,19 @@
 
                 </ul>
             </li>
+
+            <li class=" nav-item"><a href="#"><i class="ft-user-minus"></i><span class="menu-title"
+                                                                                    data-i18n="nav.flot_charts.main"> الاستقطاعات  </span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{route('cuts-employee.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            كل  الاستقطاعات الموظفين </a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('cuts-employee.create')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                            اضافه استقطاع</a>
+                    </li>
+
+                </ul>
+            </li>
             <li class=" nav-item"><a href="#"><i class="ft-align-justify"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main"> بنود العقد </span></a>
                 <ul class="menu-content">
