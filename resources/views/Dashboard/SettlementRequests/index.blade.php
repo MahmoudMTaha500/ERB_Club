@@ -68,7 +68,7 @@
                                         @forelse($settlements as $settlement )
 
                                             <tr class="row1" data-id="{{ $settlement->id }}" >
-                                                <td>{{$settlement->custody->user->name}}</td>
+                                                <td>{{$settlement->custody->user->name }}</td>
 
 
                                                 <td>
@@ -76,18 +76,18 @@
                                                 </td>
 
                                                 <td>
-                                                    {{$settlement->custody->price}}
+                                                    {{$settlement->custody->price }}
                                                 </td>
 
                                                 <td>
                                                     {{$settlement->custody_expenses}}
                                                 </td>
                                                 <td>
-                                                    {{$settlement->custody->price -  $settlement->custody_expenses}}
+                                                    {{$settlement->custody->price -  $settlement->custody_expenses }}
                                                 </td>
 
                                                 <td>
-                                                    {{$settlement->receiptTypeTO->name}}
+                                                    {{$settlement->receiptTypeTO->name }}
                                                 </td>
                                                 <td>
                                                     {{$settlement->status == 0 ? 'pending' : 'active'}}
