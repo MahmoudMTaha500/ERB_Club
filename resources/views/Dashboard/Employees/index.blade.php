@@ -53,6 +53,11 @@
                                         <tr>
                                             <th class="border-top-0">اسم الموظف</th>
                                             <th class="border-top-0">البريد الإلكتروني </th>
+                                            <th class="border-top-0">تاريخ الميلاد </th>
+                                            <th class="border-top-0">الرقم القومي  </th>
+                                            <th class="border-top-0"> شهاده التخرج </th>
+                                            <th class="border-top-0"> الحاله لعسكريه </th>
+                                            <th class="border-top-0"> الصوره </th>
 {{--                                            <th class="border-top-0">قسم الوظف</th>--}}
 
 
@@ -65,6 +70,48 @@
                                             <tr class="row1" data-id="{{ $user->id }}" >
                                                 <td class="text-truncate"> {{$user->name}} </td>
                                                 <td class="text-truncate">{{$user->email}}</td>
+                                                <td class="text-truncate">{{$user->birth_Day}}</td>
+                                                <td class="text-truncate">{{$user->national_id}}</td>
+                                                <td class="text-truncate">{{$user->degree}}</td>
+                                                <td class="text-truncate">{{$user->military_status}}</td>
+
+
+                                                <div class="modal fade" id="smallmodal-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="smallmodalLabel"> صوره الموظف</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                @if($user->image)
+
+                                                                <img class="img-fluid" src="{{asset($user->image) ?? "----"}}" alt="">
+                                                                @else
+                                                                    <h5> لايوجد صوره لهذا الموظف</h5>
+                                                                @endif
+
+
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">غلق</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <td>
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-warning  "  data-toggle="modal" data-target="#smallmodal-{{$user->id}}">
+
+                                                        <i class="la la-eye"></i>
+                                                    </button>
+
 {{--                                                <td class="text-truncate">{{$user->roles->name}} </td>--}}
 
 

@@ -27,8 +27,7 @@ class UpdateEmployeesRequest  extends FormRequest
             "name"=>"required",
             "email"=>"required",
 
-            "phone"=>"nullable|numeric|max:11",
-            "phone2"=>"nullable|numeric|max:11",
+
 
         ];
     }
@@ -39,8 +38,6 @@ class UpdateEmployeesRequest  extends FormRequest
             'name.required'=>' اسم المدرب مطلوب ',
             'email.required'=>'  ايميل مطلوب ',
 
-            'phone.numeric'=>'   الرجاء ادخل رقم هاتف صحيح ولا يتعدي 11 رقم',
-            'phone2.numeric'=>'     الرجاء ادخل رقم هاتف صحيح   ولا يتعدي 11 رقم ',
 
 
         ];

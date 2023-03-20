@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JoinAndLeave;
+use App\Models\Sports;
+use App\Models\SportsAndLevelTrainer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreEmployeesRequest;
 use App\Http\Requests\UpdateEmployeesRequest;
+use Illuminate\Support\Facades\File;
+
 
 class TrainerController extends Controller
 {
@@ -27,7 +32,8 @@ class TrainerController extends Controller
      */
     public function create()
     {
-        return view('Dashboard.Trainers.create');
+        $sports = Sports::get();
+        return view('Dashboard.Trainers.create',compact('sports'));
     }
 
     /**
@@ -39,6 +45,15 @@ class TrainerController extends Controller
     public function store(StoreEmployeesRequest $request)
     {
 //        dd($request->all());
+        $fileNamePath="";
+        if($request->hasFile('image')){
+            $objFile =$request->image;
+            $fileName = time() . $objFile->getClientOriginalName();
+            $pathFile = public_path("storage/trainer/images");
+            $objFile->move($pathFile, $fileName);
+            $fileNamePath = "storage/trainer/images" . '/' . $fileName;
+        }
+
         $admin = User::create([
             "name" => $request->name,
             "email" => $request->email,
@@ -47,7 +62,35 @@ class TrainerController extends Controller
             "address" => $request->address,
             "is_trainer" => '1',
             "password" => bcrypt("$request->password"),
+            "birth_day" => $request->birth_day,
+            "national_id" => $request->national_id,
+            "degree" => $request->degree,
+            "military_status" => $request->military_status,
+            "image" => $fileNamePath,
         ]);
+
+        if($request->date_of_join != []){
+
+        for($x=0; $x < count($request->date_of_join); $x++ ){
+            JoinAndLeave::create([
+                'user_id'=>$admin->id,
+                'date_of_join'=>$request->date_of_join[$x],
+                'date_of_leave'=>$request->date_of_leave[$x],
+                'reason_of_leave'=>$request->reason_of_leave[$x],
+            ]);
+        }
+        }
+        if($request->level_id){
+            for($x=0; $x < count($request->level_id); $x++ ){
+                SportsAndLevelTrainer::create([
+                    'user_id'=>$admin->id,
+                    'sport_id'=>$request->sport_id,
+                    'level_id'=>$request->level_id[$x],
+                ]);
+            }
+        }
+
+
 
         return redirect()->route('trainer.index')->with('message','تم اضافه المدرب بنجاح ');
 
@@ -72,8 +115,10 @@ class TrainerController extends Controller
      */
     public function edit($id)
     {
+        $sports = Sports::get();
+
         $user=User::find($id);
-        return view('Dashboard.Trainers.edit',compact('user'));
+        return view('Dashboard.Trainers.edit',compact('user','sports'));
 
     }
 
@@ -86,14 +131,43 @@ class TrainerController extends Controller
      */
     public function update(UpdateEmployeesRequest $request, $id)
     {
+//        dd($request->all());
         $admin = User::find($id);
         $admin->name =  $request->name;
         $admin->email =  $request->email;
         $admin->phone =  $request->phone;
         $admin->phone2 =  $request->phone2;
         $admin->address =  $request->address;
+        $admin->birth_day =  $request->birth_day;
+        $admin->national_id =  $request->national_id;
+        $admin->degree =  $request->degree;
+        $admin->military_status =  $request->military_status;
 
+        $fileNamePath="";
+        if($request->hasFile('image')){
+            File::delete($admin->image);
+
+            $objFile =$request->image;
+            $fileName = time() . $objFile->getClientOriginalName();
+            $pathFile = public_path("storage/trainer/images");
+            $objFile->move($pathFile, $fileName);
+            $fileNamePath = "storage/trainer/images" . '/' . $fileName;
+            $admin->image =  $fileNamePath;
+
+        }
         $admin->save();
+        JoinAndLeave::where('user_id',$admin->id)->delete();
+        if($request->date_of_join != []){
+
+            for($x=0; $x < count($request->date_of_join); $x++ ){
+                JoinAndLeave::create([
+                    'user_id'=>$admin->id,
+                    'date_of_join'=>$request->date_of_join[$x],
+                    'date_of_leave'=>$request->date_of_leave[$x],
+                    'reason_of_leave'=>$request->reason_of_leave[$x],
+                ]);
+            }
+        }
         return redirect()->route('trainer.index')->with('message','تم تعديل المدرب بنجاح ');
 
     }

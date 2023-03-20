@@ -29,7 +29,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" id="myForm" action="{{route('employee.store')}}" method="POST">
+                                    <form class="form" id="myForm" action="{{route('employee.store')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @include('Dashboard.includes.alerts.errors')
 
@@ -62,6 +62,41 @@
                                                     <div class="form-group">
                                                         <label for="projectinput3">كلمه السر </label>
                                                         <input type="text" id="projectinput3" rows="20" class="form-control" required placeholder="كلمه السر" name="password" value="{{old('password')}}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1"> تاريخ الميلاد</label>
+                                                        <input type="date"  class="form-control"   placeholder="dd-mm-yyyy"
+                                                               min="1997-01-01" max="2030-12-31" name="birth_day" value="{{old('birth_day')}}" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput3"> الرقم القومي </label>
+                                                        <input type="number" class="form-control"  placeholder="الرقم القومي" name="national_id" value="{{old('national_id')}}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1"> شهاده التخرج</label>
+                                                        <input type="text" class="form-control"  placeholder="   ادخل شهاده التخرج" name="degree" value="{{old('degree')}}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput3"> الحاله العسكريه </label>
+                                                        <input type="text"  rows="20" class="form-control"  placeholder="الحاله العسكريه " name="military_status" value="{{old('military_status')}}" />
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="projectinput3">  صوره شخصيه  </label>
+                                                        <input type="file"  rows="20" class="form-control"   name="image" value="{{old('image')}}" />
                                                     </div>
                                                 </div>
                                             </div>

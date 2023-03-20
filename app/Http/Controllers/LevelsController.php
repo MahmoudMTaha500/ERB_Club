@@ -7,6 +7,7 @@ use App\Models\Levels;
 use App\Http\Requests\StoreLevelsRequest;
 use App\Http\Requests\UpdateLevelsRequest;
 use App\Models\Sports;
+use App\Models\SportsAndLevelTrainer;
 use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Models\Branches_sports;
@@ -50,7 +51,7 @@ class LevelsController extends Controller
         ]);
         $sports = $request->sport_id;
 
-        $level->sports()->attach($sports);
+        $level->sports()->sync($sports);
         return redirect()->route('level.index')->with('message','تم اضافه المستوي بنجاح ');
 
 
@@ -146,6 +147,34 @@ foreach ($level->sports as $lv)
   }
 
     return     \Response::json(['data'=>$option])  ;
+
+}
+
+public function getLevels(Request $request){
+    $levels = Levels::whereHas('sports' , function ($query) use ($request){
+        $query->where('sport_id',$request->sport_id);
+    })->get();
+    if($request->user_id){
+        $users_levels = SportsAndLevelTrainer::where('user_id',$request->user_id)->get();
+    }
+    $selected='';
+    $option='';
+
+    foreach ($levels as $level){
+        if($request->user_id){
+          foreach ($users_levels as $user_level){
+              if($user_level->level_id == $level->id) {
+
+                  $selected = 'selected';
+          }
+          }
+
+        }
+        $option .= "
+      <option $selected value=$level->id > $level->name </option> ";
+    }
+    return     \Response::json(['data'=>$option])  ;
+
 
 }
 

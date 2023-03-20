@@ -19,6 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $guarded=[];
+    protected $dates=['birth_day'];
 //    protected $fillable = [
 //        'name', 'email', 'password',
 //    ];
@@ -40,4 +41,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public  function joinAndLeave(){
+        return $this->hasMany('App\Models\JoinAndLeave','user_id','id');
+    }
+    public function  sport_and_level_trainer(){
+        return $this->hasMany('App\Models\SportsAndLevelTrainer','user_id','id');
+    }
 }

@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
  * */
 
     route::get('get-sports', "\App\Http\Controllers\LevelsController@getSports")->name('get-sports');
+    route::get('get-levels', "\App\Http\Controllers\LevelsController@getLevels")->name('get-levels');
     route::get('get-price-list', "\App\Http\Controllers\PackagesController@getPriceList")->name('get-price-list');
     route::get('get-price', "\App\Http\Controllers\PackagesController@getPrice")->name('get-price');
     Route::post('trainer-and-player/ajax/store', "\App\Http\Controllers\TrainerAndPlayerController@store")->name('store-event');

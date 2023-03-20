@@ -56,6 +56,11 @@
                                             <th class="border-top-0"> الهاتف </th>
                                             <th class="border-top-0"> الهاتف الاخر </th>
                                             <th class="border-top-0"> العنوان  </th>
+                                            <th class="border-top-0">تاريخ الميلاد </th>
+                                            <th class="border-top-0">الرقم القومي  </th>
+                                            <th class="border-top-0"> شهاده التخرج </th>
+                                            <th class="border-top-0"> الحاله لعسكريه </th>
+                                            <th class="border-top-0"> الصوره </th>
 {{--                                            <th class="border-top-0">قسم الوظف</th>--}}
 
 
@@ -71,6 +76,47 @@
                                                 <td class="text-truncate">{{$user->phone ?? '------'}}</td>
                                                 <td class="text-truncate">{{$user->phone2 ?? '------'}}</td>
                                                 <td class="text-truncate">{{$user->address ?? '------'}}</td>
+                                                <td class="text-truncate">{{$user->birth_Day}}</td>
+                                                <td class="text-truncate">{{$user->national_id}}</td>
+                                                <td class="text-truncate">{{$user->degree}}</td>
+                                                <td class="text-truncate">{{$user->military_status}}</td>
+
+
+                                                <div class="modal fade" id="smallmodal-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="smallmodalLabel"> صوره الموظف</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                @if($user->image)
+
+                                                                    <img class="img-fluid" src="{{asset($user->image) ?? "----"}}" alt="">
+                                                                @else
+                                                                    <h5> لايوجد صوره لهذا لمدرب</h5>
+                                                                @endif
+
+
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">غلق</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <td>
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-warning  "  data-toggle="modal" data-target="#smallmodal-{{$user->id}}">
+
+                                                        <i class="la la-eye"></i>
+                                                    </button>
 
 
                                                 <td class="text-truncate">

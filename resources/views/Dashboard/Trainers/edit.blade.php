@@ -29,7 +29,9 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('trainer.update',$user->id)}}" method="POST">
+                                    <img src="{{asset($user->image) ?? "----"}}"  style="max-width: 200px; float: left"  class="rounded-circle" alt="">
+
+                                    <form class="form" action="{{route('trainer.update',$user->id)}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('put')
                                         @include('Dashboard.includes.alerts.errors')
@@ -69,7 +71,139 @@
                                                         <input type="text" id="projectinput1" class="form-control"  placeholder="ادخل عنوان المدرب" name="address" value="{{$user->address}}" />
                                                     </div>
                                                 </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1"> تاريخ الميلاد</label>
+                                                        <input type="date"  class="form-control"   placeholder="dd-mm-yyyy"
+                                                               min="1997-01-01" max="2030-12-31" name="birth_day"  value="{{$user->birth_day->format('Y-m-d')}}" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput3"> الرقم القومي </label>
+                                                        <input type="number" class="form-control"  placeholder="الرقم القومي" name="national_id"  value="{{$user->national_id}}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1"> شهاده التخرج</label>
+                                                        <input type="text" class="form-control"  placeholder="   ادخل شهاده التخرج" name="degree" value="{{$user->degree}}"  />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput3"> الحاله العسكريه </label>
+                                                        <input type="text"  rows="20" class="form-control"  placeholder="الحاله العسكريه " name="military_status" value="{{$user->military_status}}"  />
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="projectinput3">  صوره شخصيه  </label>
+                                                        <input type="file"  rows="20" class="form-control"   name="image" value="{{old('image')}}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput3">   الالعاب  </label>
+                                                        <select name="sport_id" id="sport_id" class="form-control">
+                                                            <option value="">اختر لعبه </option>
+
+                                                            @foreach($sports as $sport)
+                                                                <option @if($user->sport_and_level_trainer[0]->sport_id==$sport->id) selected @endif value="{{$sport->id}}">{{$sport->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput3"> المستويات  </label>
+                                                        <select name="level_id[]" id="level_id" class="form-control select2-placeholder-multiple"  multiple="multiple" >
+                                                            <option> </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <div class="row targetDiv" id="div0">
+                                                <div class="col-md-12">
+                                                    <div id="group1" class="fvrduplicate">
+                                                        <div class="row entry">
+                                                            <div class=" col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="projectinput2">   تاريخ الانضمام</label>
+                                                                    <input type="date" class=" form-control "  name="date_of_join[]"  >
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group price_row">
+                                                                    <label for="projectinput2">   تاريخ المغادره</label>
+                                                                    <input type="date" class=" form-control "  name="date_of_leave[]"  >
+                                                                </div>
+                                                            </div>
+                                                            <div class=" col-md-5">
+                                                                <div class="form-group">
+                                                                    <label>سبب المغادره  </label>
+                                                                    <textarea class="form-control form-control-sm  " name="reason_of_leave[]"
+                                                                              rows="10" placeholder="سبب المغادره"> </textarea>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class=" col-md-1 mt-2">
+
+                                                                <button type="button" class="btn btn-success btn-add">
+                                                                    <i class="fa fa-plus" aria-hidden="true">+</i>
+                                                                </button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                      @forelse($user->joinAndLeave as $data)
+                                                <div class="row targetDiv" >
+                                                    <div class="col-md-12">
+                                                        <div  class="fvrduplicate">
+                                                            <div class="row entry">
+                                                                <div class=" col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label for="projectinput2">   تاريخ الانضمام</label>
+                                                                        <input type="date" class=" form-control "  name="date_of_join[]"  value="{{ $data->date_of_join ? $data->date_of_join->format('Y-m-d') :   ' '}}" >
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group price_row">
+                                                                        <label for="projectinput2">   تاريخ المغادره</label>
+                                                                        <input type="date" class=" form-control "  name="date_of_leave[]"  value="{{ $data->date_of_leave ? $data->date_of_leave->format('Y-m-d'):  ' '}}" >
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-md-5">
+                                                                    <div class="form-group">
+                                                                        <label>سبب المغادره  </label>
+                                                                        <textarea class="form-control form-control-sm  " name="reason_of_leave[]"
+                                                                                  rows="10" placeholder="سبب المغادره"> {{$data->reason_of_leave}} </textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class=" col-md-1 mt-2">
+
+                                                                    <button type="button" class="btn btn-danger .btn-remove" id="remove_{{$data->id}}" onclick="removeElement({{$data->id}})">
+                                                                        <i class="fa  fa-minus" aria-hidden="true">-</i>
+                                                                    </button>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @empty
+
+                                            @endforelse
 
 
                                         </div>
@@ -90,6 +224,58 @@
 @section('script')
 
     <script>
+        $('#sport_id').on('change', function () {
+            var id =$(this).val();
+            var  route = "{{route('get-levels')}}";
+            $.ajax(route,   // request url
+                {
+                    type: 'GET',  // http method
+                    data: { "sport_id": id },
+                    success: function (data, status, xhr) {// success callback function
+                        $("#level_id").html(data.data);
+
+                    }
+                });
+        });
+        $(window).on( 'load', function () {
+            var id =$("#sport_id").val();
+            var user_id = "{{ $user->id }}"
+            var  route = "{{route('get-levels')}}";
+            $.ajax(route,   // request url
+                {
+                    type: 'GET',  // http method
+                    data: { "sport_id": id , "user_id":user_id },
+                    success: function (data, status, xhr) {// success callback function
+                        $("#level_id").html(data.data);
+
+                    }
+                });
+        });
+        $(function() {
+            $(document).on('click', '.btn-add', function(e) {
+                e.preventDefault();
+                var controlForm = $(this).closest('.fvrduplicate'),
+                    currentEntry = $(this).parents('.entry:first'),
+                    newEntry = $(currentEntry.clone()).appendTo(controlForm);
+                newEntry.find('input').val('');
+                controlForm.find('.entry:not(:last) .btn-add')
+                    .removeClass('btn-add').addClass('btn-remove')
+                    .removeClass('btn-success').addClass('btn-danger')
+                    .html('<i class="fa fa-minus" aria-hidden="true">-</i>');
+            }).on('click', '.btn-remove', function(e) {
+                $(this).closest('.entry').remove();
+                return false;
+            });
+        });
+        function removeElement(id){
+            var remove_id = "remove_"+id;
+                $("#"+remove_id).closest('.entry').remove();
+                return false;
+        }
+
+
+
+
         $(".trainer").change(function(){
             if($(this).val() == 'user'){
                 $('#permiossn').show()

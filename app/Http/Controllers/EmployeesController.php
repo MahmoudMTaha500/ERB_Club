@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use  App\Models\User;
+use Illuminate\Support\Facades\File;
 
 class EmployeesController extends Controller
 {
@@ -14,7 +15,7 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $users = User::latest('id')->paginate(10);
+        $users = User::where('is_trainer','0')->latest('id')->paginate(10);
 //        dd($users);
         return view('Dashboard.Employees.index',compact('users'));
     }
@@ -37,10 +38,26 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
+        $fileNamePath="";
+        if($request->hasFile('image')){
+            $objFile =$request->image;
+            $fileName = time() . $objFile->getClientOriginalName();
+            $pathFile = public_path("storage/employee/images");
+            $objFile->move($pathFile, $fileName);
+            $fileNamePath = "storage/employee/images" . '/' . $fileName;
+        }
+
         $admin = User::create([
             "name" => $request->name,
             "email" => $request->email,
             "password" => bcrypt("$request->password"),
+            "birth_day" => $request->birth_day,
+            "national_id" => $request->national_id,
+            "degree" => $request->degree,
+            "military_status" => $request->military_status,
+            "image" => $fileNamePath,
+
         ]);
         if($request->role =="admin"){
             $admin->attachRole($request->role);
@@ -48,6 +65,9 @@ class EmployeesController extends Controller
             $admin->attachRole($request->role);
             $admin->attachPermissions($request->permession);
         }
+
+
+
         return redirect()->route('employee.index')->with('message','تم اضافه المؤظف بنجاح ');
 
     }
@@ -88,6 +108,24 @@ class EmployeesController extends Controller
         $admin = User::find($id);
         $admin->name =  $request->name;
         $admin->email =  $request->email;
+        $admin->birth_day =  $request->birth_day;
+        $admin->national_id =  $request->national_id;
+        $admin->degree =  $request->degree;
+        $admin->military_status =  $request->military_status;
+
+        $fileNamePath="";
+        if($request->hasFile('image')){
+        File::delete($admin->image);
+
+            $objFile =$request->image;
+            $fileName = time() . $objFile->getClientOriginalName();
+            $pathFile = public_path("storage/employee/images");
+            $objFile->move($pathFile, $fileName);
+            $fileNamePath = "storage/employee/images" . '/' . $fileName;
+            $admin->image =  $fileNamePath;
+
+        }
+
         if($request->password){
             $admin->password =  bcrypt("$request->password");
         }
