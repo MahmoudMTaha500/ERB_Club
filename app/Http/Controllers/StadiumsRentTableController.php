@@ -6,13 +6,14 @@ use App\Models\EventTrainerPlayers;
 use App\Models\Players;
 use App\Models\Sports;
 use App\Models\Stadium;
+use App\Models\StadiumsRentTable;
+use App\Http\Requests\StoreStadiumsRentTableRequest;
+use App\Http\Requests\UpdateStadiumsRentTableRequest;
 use App\Models\TrainerAndPlayer;
-use App\Http\Requests\StoreTrainerAndPlayerRequest;
-use App\Http\Requests\UpdateTrainerAndPlayerRequest;
 use App\Models\User;
-use http\Env\Request;
+use Illuminate\Http\Request;
 
-class TrainerAndPlayerController extends Controller
+class StadiumsRentTableController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,9 +35,8 @@ class TrainerAndPlayerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(StoreTrainerAndPlayerRequest $request)
+    public function create(StoreStadiumsRentTableRequest $request)
     {
-
         if($request->ajax())
         {
             $events=[];
@@ -48,24 +48,22 @@ class TrainerAndPlayerController extends Controller
                     'title'=> $event->stadiums->name.'. C:'.$event->traniers->name.'. S:'.$event->sports->name ,
                     'start'=>$event->time_from,
                     'end'=>$event->time_to,
-                    ];
+                ];
 
             }
             return response()->json($events);
         }
-//        return  view('Dashboard.TrainerAndPlayers.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTrainerAndPlayerRequest  $request
+     * @param  \App\Http\Requests\StoreStadiumsRentTableRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTrainerAndPlayerRequest $request)
+    public function store(StoreStadiumsRentTableRequest $request)
     {
-//        dd($request->all());
-     $event =    TrainerAndPlayer::create([
+        $event =    TrainerAndPlayer::create([
             'stadium_id'=>$request->stadium_id,
             'trainer_id'=>$request->user_id,
             'sport_id'=>$request->sport_id,
@@ -87,10 +85,10 @@ class TrainerAndPlayerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TrainerAndPlayer  $trainerAndPlayer
+     * @param  \App\Models\StadiumsRentTable  $stadiumsRentTable
      * @return \Illuminate\Http\Response
      */
-    public function show(TrainerAndPlayer $trainerAndPlayer,StoreTrainerAndPlayerRequest $request)
+    public function show(StadiumsRentTable $stadiumsRentTable,StoreStadiumsRentTableRequest $request)
     {
 
         if($request->ajax())
@@ -103,28 +101,27 @@ class TrainerAndPlayerController extends Controller
             $players='';
             $stadium_name ='';
             $trainer_name ='';
-                $stadium_name = $data[0]->stadiums->name;
-                $trainer_name= $data[0]->traniers->name;
-                $name='';
-                foreach ($data[0]->EventTrainer as $ev){
-                    $name = $ev->players->name;
-                    $players .= "<tr> <td> $name</td></tr>";
+            $stadium_name = $data[0]->stadiums->name;
+            $trainer_name= $data[0]->traniers->name;
+            $name='';
+            foreach ($data[0]->EventTrainer as $ev){
+                $name = $ev->players->name;
+                $players .= "<tr> <td> $name</td></tr>";
 
-                }
+            }
 
             return response()->json(['players'=>$players,'stadium_name'=>$stadium_name,'trainer_name'=>$trainer_name]);
         }
-
 
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TrainerAndPlayer  $trainerAndPlayer
+     * @param  \App\Models\StadiumsRentTable  $stadiumsRentTable
      * @return \Illuminate\Http\Response
      */
-    public function edit(TrainerAndPlayer $trainerAndPlayer)
+    public function edit(StadiumsRentTable $stadiumsRentTable)
     {
         //
     }
@@ -132,32 +129,29 @@ class TrainerAndPlayerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTrainerAndPlayerRequest  $request
-     * @param  \App\Models\TrainerAndPlayer  $trainerAndPlayer
+     * @param  \App\Http\Requests\UpdateStadiumsRentTableRequest  $request
+     * @param  \App\Models\StadiumsRentTable  $stadiumsRentTable
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreTrainerAndPlayerRequest $request, TrainerAndPlayer $trainerAndPlayer)
+    public function update(UpdateStadiumsRentTableRequest $request, StadiumsRentTable $stadiumsRentTable)
     {
         $event = TrainerAndPlayer::find($request->id);
         $event->time_from =$request->start;
         $event->time_to =$request->end;
         $event->save();
         return response()->json($event);
-
-
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TrainerAndPlayer  $trainerAndPlayer
+     * @param  \App\Models\StadiumsRentTable  $stadiumsRentTable
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StoreTrainerAndPlayerRequest $request)
+    public function destroy(StadiumsRentTable $stadiumsRentTable,StoreStadiumsRentTableRequest $request)
     {
         $event = TrainerAndPlayer::find($request->id);
         EventTrainerPlayers::where('event_id',$request->id)->delete();
         $event->delete();
-
     }
 }

@@ -63,15 +63,15 @@
                                             >
                                                 @csrf
                                                 <div class="form-body">
-<div class="row">
-    <div class="col-md-6">
-        <h2 id="stadium_name"> </h2>
-    </div>
-    <div class="col-md-6">
-        <h2 id="trainer_name"> </h2>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h2 id="stadium_name"> </h2>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h2 id="trainer_name"> </h2>
 
-    </div>
-</div>
+                                                        </div>
+                                                    </div>
                                                     <div class="table-responsive">
                                                         <table class="table" id="table_details">
                                                             <thead>
@@ -134,24 +134,13 @@
 
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-12 mt-2" >
                                                             <div class="form-group">
-                                                                <label for="projectinput3">   الالعاب  </label>
-                                                                <select name="sport_id" id="sport_id" class="form-control">
-                                                                    <option value="">اختر لعبه </option>
+                                                                <label>مدرب </label>
+                                                                <input class="from_type " type="radio"  checked  id="players" name="type" value="trainer">
+                                                                <label>مستاجر </label>
+                                                                <input class=" from_type" type="radio" id="others" name="type" value="stranger">
 
-                                                                    @foreach($sports as $sport)
-                                                                        <option value="{{$sport->id}}">{{$sport->name}}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <label for="projectinput3"> المستويات  </label>
-                                                                <select name="level_id" id="level_id" class=" form-control " style="width: 100% !important;" >
-                                                                    <option> </option>
-                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
@@ -168,22 +157,7 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <label for="projectinput2"> اللاعب </label>
-                                                                <select style="width: 100% !important;"
-                                                                    class="select2 form-control " multiple="multiple"
-                                                                    name="player_id"
-                                                                    id="player_id">
-                                                                    @foreach($players as $player)
-                                                                        <option
-                                                                            value="{{$player->id}}">{{$player->name}}</option>
 
-                                                                    @endforeach
-                                                                </select>
-
-                                                            </div>
-                                                        </div>
 
                                                     </div>
 
@@ -269,7 +243,7 @@
 
 
                         if (user_id) {
-                            var Route = "{{route('store-event')}}";
+                            var Route = "{{route('store-stadium')}}";
                             jQuery.ajax({
                                 url: Route,
                                 type: "POST",
@@ -281,7 +255,7 @@
                                     sport_id: sport_id,
                                     level_id: level_id,
                                     day : day,
-                                     from: from_date,
+                                    from: from_date,
                                     to: to_date
                                 },
                                 success: function (data) {
@@ -304,7 +278,7 @@
                     var end = $.fullCalendar.formatDate(event.end, 'Y-MM-DD HH:mm:ss');
                     var title = event.title;
                     var id = event.id;
-                    var Route = "{{route('update-event')}}";
+                    var Route = "{{route('update-stadium')}}";
 
                     $.ajax({
                         url: Route,
@@ -328,7 +302,7 @@
                     var end = $.fullCalendar.formatDate(event.end, 'Y-MM-DD HH:mm:ss');
                     var title = event.title;
                     var id = event.id;
-                    var Route = "{{route('update-event')}}";
+                    var Route = "{{route('update-stadium')}}";
 
                     $.ajax({
                         url: Route,
@@ -350,7 +324,7 @@
                 eventClick: function (event) {
 
                     var id = event.id;
-                    var Route = "{{route('show-event')}}";
+                    var Route = "{{route('show-stadium')}}";
                     $.ajax({
                         url: Route,
                         type: "get",
@@ -369,31 +343,41 @@
 
                     $('#deleteEvent').click(function(){
 
-                    if (confirm("هل انت  متاكد من حذف هذا اليعاد")) {
-                        var id = event.id;
-                        var Route = "{{route('delete-event')}}";
-                        $.ajax({
-                            url: Route,
-                            type: "POST",
-                            data: {
-                                id: id,
-                                type: "delete"
-                            },
-                            success: function (response) {
-                                calendar.fullCalendar('refetchEvents');
-                                $("#calendarModalDetails").modal("hide");
+                        if (confirm("هل انت  متاكد من حذف هذا اليعاد")) {
+                            var id = event.id;
+                            var Route = "{{route('delete-stadium')}}";
+                            $.ajax({
+                                url: Route,
+                                type: "POST",
+                                data: {
+                                    id: id,
+                                    type: "delete"
+                                },
+                                success: function (response) {
+                                    calendar.fullCalendar('refetchEvents');
+                                    $("#calendarModalDetails").modal("hide");
 
-                                // alert("تم حذف الميعاد من التقويم  ");
-                            }
-                        })
-                    }
+                                    // alert("تم حذف الميعاد من التقويم  ");
+                                }
+                            })
+                        }
                     });
 
                 }
             });
 
         });
+        function checkfromType(){
+            if($('input[name="type"]:checked').val() =='trainer'){
+                $('#trainer_id').show();
+                $('#name').hide();
+            }
+            if($('input[name="from_type"]:checked').val() =='stranger'){
+                $('#name').show();
 
+                $('#trainer_id').hide();
+            }
+        }
     </script>
 
 @endsection

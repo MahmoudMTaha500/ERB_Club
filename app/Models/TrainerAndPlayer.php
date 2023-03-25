@@ -26,4 +26,9 @@ class TrainerAndPlayer extends Model
     public function traniers(){
         return $this->belongsTo('App\Models\User','trainer_id','id');
     }
+    public function sports() {
+
+        return $this->belongsTo('App\Models\Sports','sport_id','id');
+    }
+
 }

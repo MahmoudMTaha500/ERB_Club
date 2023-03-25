@@ -33,11 +33,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     route::get('get-levels', "\App\Http\Controllers\LevelsController@getLevels")->name('get-levels');
     route::get('get-price-list', "\App\Http\Controllers\PackagesController@getPriceList")->name('get-price-list');
     route::get('get-price', "\App\Http\Controllers\PackagesController@getPrice")->name('get-price');
+
+   /*
+    *  Routes Full Calender for Stadiums and Trainers
+    */
     Route::post('trainer-and-player/ajax/store', "\App\Http\Controllers\TrainerAndPlayerController@store")->name('store-event');
     Route::post('trainer-and-player/ajax/update', "\App\Http\Controllers\TrainerAndPlayerController@update")->name('update-event');
     Route::post('trainer-and-player/ajax/delete', "\App\Http\Controllers\TrainerAndPlayerController@destroy")->name('delete-event');
-
     Route::get('trainer-and-player/ajax/show', "\App\Http\Controllers\TrainerAndPlayerController@show")->name('show-event');
+
+    Route::post('stadium-rent-table/ajax/store', "\App\Http\Controllers\StadiumsRentTableController@store")->name('store-stadium');
+    Route::post('stadium-rent-table/ajax/update', "\App\Http\Controllers\StadiumsRentTableController@update")->name('update-stadium');
+    Route::post('stadium-rent-table/ajax/delete', "\App\Http\Controllers\StadiumsRentTableController@destroy")->name('delete-stadium');
+    Route::get('stadium-rent-table/ajax/show', "\App\Http\Controllers\StadiumsRentTableController@show")->name('show-stadium');
+    #################################################.
 
     route::get('get-sports-players', "\App\Http\Controllers\PlayersController@getSports")->name('get-sports-players');
     route::get('get-players-sports-price', "\App\Http\Controllers\ReceiptsController@getPlayerSportPrice")->name('get-players-sports-price');
@@ -66,6 +75,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('contract', "\App\Http\Controllers\ContractController");
     Route::resource('trainer', "\App\Http\Controllers\TrainerController");
     Route::resource('trainer-and-player', "\App\Http\Controllers\TrainerAndPlayerController");
+    Route::resource('stadium-rent-table', "\App\Http\Controllers\StadiumsRentTableController");
     Route::resource('attendance-player', "\App\Http\Controllers\AttendancePlayersController");
     Route::resource('attendance-trainer', "\App\Http\Controllers\TrainerAttendanceController");
     Route::resource('stadium', "\App\Http\Controllers\StadiumController");

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JoinAndLeave;
 use App\Models\Sports;
 use App\Models\SportsAndLevelTrainer;
+use App\Models\SportsAndLevelTrainerArchive;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreEmployeesRequest;
@@ -165,6 +166,23 @@ class TrainerController extends Controller
                     'date_of_join'=>$request->date_of_join[$x],
                     'date_of_leave'=>$request->date_of_leave[$x],
                     'reason_of_leave'=>$request->reason_of_leave[$x],
+                ]);
+            }
+        }
+
+        if($request->level_id){
+            SportsAndLevelTrainer::where('user_id',$admin->id)->delete();
+
+            for($x=0; $x < count($request->level_id); $x++ ){
+                SportsAndLevelTrainer::create([
+                    'user_id'=>$admin->id,
+                    'sport_id'=>$request->sport_id,
+                    'level_id'=>$request->level_id[$x],
+                ]);
+                SportsAndLevelTrainerArchive::create([
+                    'user_id'=>$admin->id,
+                    'sport_id'=>$request->sport_id,
+                    'level_id'=>$request->level_id[$x],
                 ]);
             }
         }

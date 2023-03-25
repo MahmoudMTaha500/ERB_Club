@@ -209,9 +209,9 @@
                     <li><a class="menu-item" href="{{route('trainer-and-player.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
                             كل جدول الملاعب و التدريبات</a>
                     </li>
-{{--                    <li><a class="menu-item" href="{{route('trainer-and-player.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">--}}
-{{--                            انشاء مدرب ولاعب  جديد</a>--}}
-{{--                    </li>--}}
+                    <li><a class="menu-item" href="{{route('stadium-rent-table.index')}}" data-i18n="nav.flot_charts.flot_bar_charts">
+                            ايجار الملاعب   </a>
+                    </li>
 
                 </ul>
             </li>
