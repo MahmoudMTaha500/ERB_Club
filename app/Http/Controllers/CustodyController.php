@@ -17,7 +17,7 @@ class CustodyController extends Controller
      */
     public function index()
     {
-        $custodies=Custody::where('user_id', auth()->user()->id )->where('requested',0)->with('receipt_pay.receiptTypeTO')->get();
+        $custodies=Custody::where('user_id', auth()->user()->id )->where('requested','0')->with('receipt_pay.receiptTypeTO')->get();
         $receiptTypes= ReceiptTypePay::whereIn('type',['Save_money','bank'])->get();
 //        dd($custodies);
         return view("Dashboard.Custody.index",compact('custodies','receiptTypes'));

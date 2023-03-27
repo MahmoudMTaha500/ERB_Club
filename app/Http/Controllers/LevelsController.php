@@ -172,7 +172,10 @@ public function getLevels(Request $request){
         }
         $option .= "
       <option $selected value=$level->id > $level->name </option> ";
+        $selected = '';
+
     }
+
     return     \Response::json(['data'=>$option])  ;
 
 

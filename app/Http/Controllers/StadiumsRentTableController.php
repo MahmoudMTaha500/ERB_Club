@@ -6,11 +6,13 @@ use App\Models\EventTrainerPlayers;
 use App\Models\Players;
 use App\Models\Sports;
 use App\Models\Stadium;
+use App\Models\StadiumRentCancellations;
 use App\Models\StadiumsRentTable;
 use App\Http\Requests\StoreStadiumsRentTableRequest;
 use App\Http\Requests\UpdateStadiumsRentTableRequest;
 use App\Models\TrainerAndPlayer;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StadiumsRentTableController extends Controller
@@ -26,7 +28,7 @@ class StadiumsRentTableController extends Controller
         $users = User::where('is_trainer' ,'1')->get();
         $sports = Sports::get();
         $stadiums = Stadium::get();
-        return  view('Dashboard.TrainerAndPlayers.index',compact('players','users','sports','stadiums'));
+        return  view('Dashboard.StadiumsRentTables.index',compact('players','users','sports','stadiums'));
 
     }
 
@@ -40,12 +42,18 @@ class StadiumsRentTableController extends Controller
         if($request->ajax())
         {
             $events=[];
-            $data = TrainerAndPlayer::get();
+            $data = StadiumsRentTable::get();
+            $type = '';
             foreach ($data as $event){
+                if($event->type == 'trainer'){
+                    $type = 'C:';
+                }  else{
+                    $type = 'MR:';
 
+                }
                 $events[]=[
                     "id"=>$event->id,
-                    'title'=> $event->stadiums->name.'. C:'.$event->traniers->name.'. S:'.$event->sports->name ,
+                    'title'=> $event->stadiums->name. $type .$event->name.'. P:'.$event->price ,
                     'start'=>$event->time_from,
                     'end'=>$event->time_to,
                 ];
@@ -63,22 +71,29 @@ class StadiumsRentTableController extends Controller
      */
     public function store(StoreStadiumsRentTableRequest $request)
     {
-        $event =    TrainerAndPlayer::create([
-            'stadium_id'=>$request->stadium_id,
-            'trainer_id'=>$request->user_id,
-            'sport_id'=>$request->sport_id,
-            'level_id'=>$request->level_id,
-            'date'=>$request->day,
-            'time_from'=>$request->from,
-            'time_to'=>$request->to,
-        ]);
-        foreach ($request->player_id as $player ){
-            EventTrainerPlayers::create([
-                'player_id'=>$player,
-                'event_id'=>$event->id,
-            ]);
+        $from = $request->day." ". $request->from;
+        $to = $request->day." ". $request->to;
+        $name = $request->name;
+        $type = 'strange';
+        if($request->user_id){
+            $user = User::find($request->user_id);
+            $name = $user->name;
+            $type = 'trainer';
+
         }
-        $data = TrainerAndPlayer::get();
+
+        $event =    StadiumsRentTable::create([
+            'stadium_id'=>$request->stadium_id,
+            'user_id'=>$request->user_id,
+            'name'=>$name,
+            'type'=>$type,
+            'date'=>$request->day,
+            'price'=>$request->hour_rate,
+            'time_from'=>$from,
+            'time_to'=>$to,
+        ]);
+
+        $data = StadiumsRentTable::get();
         return response()->json($data);
     }
 
@@ -94,23 +109,43 @@ class StadiumsRentTableController extends Controller
         if($request->ajax())
         {
             $events=[];
-            $data = TrainerAndPlayer::with('stadiums')->with('traniers')
-                ->with('EventTrainer.players')
+            $data = StadiumsRentTable::with('stadiums')
                 ->where('id',$request->id)->get();
-//            dd($data);
-            $players='';
-            $stadium_name ='';
-            $trainer_name ='';
-            $stadium_name = $data[0]->stadiums->name;
-            $trainer_name= $data[0]->traniers->name;
-            $name='';
-            foreach ($data[0]->EventTrainer as $ev){
-                $name = $ev->players->name;
-                $players .= "<tr> <td> $name</td></tr>";
+            $type = '';
 
-            }
+                if($data[0]->type == 'trainer'){
+                    $type = 'كابتن';
+                }  else{
+                    $type = 'مستاحر';
 
-            return response()->json(['players'=>$players,'stadium_name'=>$stadium_name,'trainer_name'=>$trainer_name]);
+                }
+                $stadium = $data[0]->stadiums->name;
+                $name = $data[0]->name;
+                $price = $data[0]->price;
+
+
+            $html =<<<line
+     <tr>
+                                                    <th class="text-nowrap" scope="row">الملعب</th>
+                                                    <td colspan="5">$stadium</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-nowrap" scope="row">السعر</th>
+                                                    <td colspan="5">$price</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-nowrap" scope="row">اسم صاحب الحجز </th>
+                                                    <td colspan="5">$name</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-nowrap" scope="row">كابتن او مستاجر</th>
+                                                    <td colspan="5">$type</td>
+                                                </tr>
+line;
+
+            return response()->json(["html"=>$html]);
+
+//            return response()->json(['players'=>$players,'stadium_name'=>$stadium_name,'trainer_name'=>$trainer_name]);
         }
 
     }
@@ -133,9 +168,9 @@ class StadiumsRentTableController extends Controller
      * @param  \App\Models\StadiumsRentTable  $stadiumsRentTable
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateStadiumsRentTableRequest $request, StadiumsRentTable $stadiumsRentTable)
+    public function update(StoreStadiumsRentTableRequest $request, StadiumsRentTable $stadiumsRentTable)
     {
-        $event = TrainerAndPlayer::find($request->id);
+        $event = StadiumsRentTable::find($request->id);
         $event->time_from =$request->start;
         $event->time_to =$request->end;
         $event->save();
@@ -150,8 +185,28 @@ class StadiumsRentTableController extends Controller
      */
     public function destroy(StadiumsRentTable $stadiumsRentTable,StoreStadiumsRentTableRequest $request)
     {
-        $event = TrainerAndPlayer::find($request->id);
-        EventTrainerPlayers::where('event_id',$request->id)->delete();
+//        dd($request->all());
+        $StadiumRentCancellations = new StadiumRentCancellations();
+
+        $event = StadiumsRentTable::find($request->id);
+
+        $StadiumRentCancellations->stadium_id =$event->stadium_id;
+        $StadiumRentCancellations->user_id =$event->user_id;
+        $StadiumRentCancellations->name =$event->name;
+        $StadiumRentCancellations->type =$event->type;
+        $StadiumRentCancellations->price =$event->price;
+        $StadiumRentCancellations->date =$event->date;
+        $StadiumRentCancellations->time_from =$event->time_from;
+        $StadiumRentCancellations->time_to =$event->time_to;
+
+        $StadiumRentCancellations->from_who =$request->from_who;
+        $StadiumRentCancellations->reason =$request->reason;
+
+        $StadiumRentCancellations->save();
+
+
+
+
         $event->delete();
     }
 }

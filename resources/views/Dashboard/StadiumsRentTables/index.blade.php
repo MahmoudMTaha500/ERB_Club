@@ -58,36 +58,39 @@
                                             <h4 id="modalTitle" class="modal-title"></h4>
                                         </div>
                                         <div id="modalBody" class="modal-body">
+                                            <table class="table table-bordered table-striped table-responsive">
 
+                                                <tbody id="stadium_details">
+
+                                                </tbody>
+                                            </table>
+                                            <hr>
+                                            <h6 class="text-center"> اذا اردت حذف الحجز يجب عليك ذكر السبب و من مين  </h6>
                                             <form class="form" action="" method="POST"
                                             >
                                                 @csrf
                                                 <div class="form-body">
                                                     <div class="row">
-                                                        <div class="col-md-6">
-                                                            <h2 id="stadium_name"> </h2>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <h2 id="trainer_name"> </h2>
+                                                        <div class="col-6">
 
+                                                            <div class="form-group">
+                                                                <label>الاداره </label>
+                                                                <input class="type_who " type="radio"     name="type_who" value="management">
+                                                                <label>مستاجر </label>
+                                                                <input class=" type_who" type="radio"  name="type_who" value="renter">
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <label for=""> اذكر سبب حذف الحجز</label>
+                                                                <textarea  class="form-control" name="reason" id="reason" cols="" rows="5"></textarea>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="table-responsive">
-                                                        <table class="table" id="table_details">
-                                                            <thead>
-                                                            <tr >
-                                                                <th>الاعب </th>
-
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr id="player_name"></tr>
 
 
-                                                            </tbody>
-                                                        </table>
                                                     </div>
-                                                </div>
                                             </form>
 
                                         </div>
@@ -125,25 +128,38 @@
                                                                     name="stadium_id" id="stadium_id">
                                                                     @foreach($stadiums as $stadium)
                                                                         <option
-                                                                            value="{{$stadium->id}}">{{$stadium->name}}</option>
+                                                                          data-price="{{$stadium->hour_rate}}"  value="{{$stadium->id}}">{{$stadium->name}}</option>
 
                                                                     @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="projectinput2"> سعر الايجار للساعه  </label>
+                                                                <input  class="form-control" type="number" name="price" id="hour_rate">
+                                                            </div>
+                                                        </div>
 
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-12 mt-2" >
+                                                        <div class="col-md-12 "  >
                                                             <div class="form-group">
                                                                 <label>مدرب </label>
-                                                                <input class="from_type " type="radio"  checked  id="players" name="type" value="trainer">
+                                                                <input class="from_type " type="radio"    id="players" name="type" value="trainer">
                                                                 <label>مستاجر </label>
                                                                 <input class=" from_type" type="radio" id="others" name="type" value="stranger">
 
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-12" id="div_name" style="display: none;">
+                                                            <div class="form-group">
+                                                                <label for="projectinput2"> اسم المستاجر  </label>
+                                                                <input id="name" class=" form-control"  name="name"  >
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12" id="div_trainer">
                                                             <div class="form-group">
                                                                 <label for="projectinput2"> المدرب </label>
                                                                 <select
@@ -157,7 +173,18 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-
+                                                        <div class="col-md-6" >
+                                                            <div class="form-group">
+                                                                <label for="projectinput2"> من الساعه </label>
+                                                                <input class="form-control" type="time" name="form" id="from_date">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6" >
+                                                            <div class="form-group">
+                                                                <label for="projectinput2"> الي الساعه </label>
+                                                                <input class="form-control" type="time" name="to" id="to_date">
+                                                            </div>
+                                                        </div>
 
                                                     </div>
 
@@ -204,6 +231,14 @@
                         }
                     });
             });
+            $("#stadium_id").change(function (){
+                var price =  parseInt($("#stadium_id").find('option:selected').data('price'));
+                $("#hour_rate").val(price);
+
+            });
+            $('.from_type').change(function (){
+                checkfromType();
+            });
 
 
             $.ajaxSetup({
@@ -221,28 +256,35 @@
                 },
                 slotDuration: '00:05:00',
 
-                events: "{{ route('trainer-and-player.create') }}",
+                events: "{{ route('stadium-rent-table.create') }}",
                 selectable: true,
                 selectHelper: true,
 
                 select: function ( start, end, allDay) {
                     $("#calendarModal").modal("show");
                     $("#saveEvent").click(function () {
-                        console.log(start);
                         var day = $.fullCalendar.formatDate(start, 'Y-MM-DD ');
                         var stadium_id = $('#stadium_id').val();
-                        var player_id = $('#player_id').select2("val");
+                        var hour_rate = $('#hour_rate').val();
                         var user_id = $('#user_id').val();
-                        var sport_id = $('#sport_id').val();
-                        var level_id = $('#level_id').val();
-                        var from = $('#from').val();
-                        var from_date = $.fullCalendar.formatDate(start, 'Y-MM-DD HH:mm:ss');
 
-                        var to = $('#to').val();
-                        var to_date = $.fullCalendar.formatDate(end, 'Y-MM-DD HH:mm:ss');
+                        var name = $("#name").val();
 
 
-                        if (user_id) {
+                        // var date_from= new Date(day+$("#from_date").val());
+                        var date_from= $("#from_date").val();
+                            // var date_format_from = date_from.toLocaleString();
+                        var date_to= $("#to_date").val();
+                        // var date_to= new Date(day+$("#to_date").val());
+                        // var date_format_to = date_to.toLocaleString();
+
+
+
+                        // var from_date = $.fullCalendar.formatDate(start, 'Y-MM-DD HH:mm:ss');
+                        // var to_date = $.fullCalendar.formatDate(end, 'Y-MM-DD HH:mm:ss');
+
+
+
                             var Route = "{{route('store-stadium')}}";
                             jQuery.ajax({
                                 url: Route,
@@ -250,24 +292,22 @@
                                 dataType: 'json',
                                 data: {
                                     stadium_id: stadium_id,
-                                    player_id: player_id,
+                                    hour_rate: hour_rate,
                                     user_id: user_id,
-                                    sport_id: sport_id,
-                                    level_id: level_id,
+                                    name: name,
+
                                     day : day,
-                                    from: from_date,
-                                    to: to_date
+                                    from: date_from,
+                                    to: date_to
                                 },
                                 success: function (data) {
                                     calendar.fullCalendar('refetchEvents');
-                                    alert("تم اضافه موعد جديد  ");
                                     $("#calendarModal").modal("hide");
-                                    location.reload();
 
                                 }
 
                             });
-                        }
+
 
                     });
 
@@ -333,34 +373,47 @@
                             type: "show"
                         },
                         success: function (response) {
-                            $('#player_name').html(response.players);
-                            $('#stadium_name').html(response.stadium_name);
-                            $('#trainer_name').html(response.trainer_name);
+                            $('#stadium_details').html(response.html);
                             $("#calendarModalDetails").modal("show");
 
                         }
                     })
 
+
+
+
                     $('#deleteEvent').click(function(){
+                        var from_who =  $('input[name="type_who"]:checked').val();
+                        var reason = $("#reason").val();
+                        if(from_who   != '' &&  reason != '' ){
 
-                        if (confirm("هل انت  متاكد من حذف هذا اليعاد")) {
-                            var id = event.id;
-                            var Route = "{{route('delete-stadium')}}";
-                            $.ajax({
-                                url: Route,
-                                type: "POST",
-                                data: {
-                                    id: id,
-                                    type: "delete"
-                                },
-                                success: function (response) {
-                                    calendar.fullCalendar('refetchEvents');
-                                    $("#calendarModalDetails").modal("hide");
+                            if (confirm("هل انت  متاكد من حذف هذا اليعاد")) {
+                                var id = event.id;
+                                var Route = "{{route('delete-stadium')}}";
+                                $.ajax({
+                                    url: Route,
+                                    type: "POST",
+                                    data: {
+                                        id: id,
+                                        from_who: from_who,
+                                        reason: reason,
+                                        type: "delete"
+                                    },
+                                    success: function (response) {
+                                        calendar.fullCalendar('refetchEvents');
+                                        $("#calendarModalDetails").modal("hide");
 
-                                    // alert("تم حذف الميعاد من التقويم  ");
-                                }
-                            })
+                                        // alert("تم حذف الميعاد من التقويم  ");
+                                    }
+                                })
+                            }
+
+                        }else{
+
+                            alert('يرجي اختيار و ذكر سبب الالغاء الججز')
+                            return false;
                         }
+
                     });
 
                 }
@@ -369,13 +422,14 @@
         });
         function checkfromType(){
             if($('input[name="type"]:checked').val() =='trainer'){
-                $('#trainer_id').show();
-                $('#name').hide();
+                $('#div_trainer').show();
+                $('#div_name').hide();
+                $('#name').val(' ');
             }
-            if($('input[name="from_type"]:checked').val() =='stranger'){
-                $('#name').show();
-
-                $('#trainer_id').hide();
+            if($('input[name="type"]:checked').val() =='stranger'){
+                $('#div_name').show();
+                     $('#user_id').val('');
+                $('#div_trainer').hide();
             }
         }
     </script>

@@ -76,7 +76,7 @@
                                                     <div class="form-group">
                                                         <label for="projectinput1"> تاريخ الميلاد</label>
                                                         <input type="date"  class="form-control"   placeholder="dd-mm-yyyy"
-                                                               min="1997-01-01" max="2030-12-31" name="birth_day"  value="{{$user->birth_day->format('Y-m-d')}}" />
+                                                               min="1997-01-01" max="2030-12-31" name="birth_day"  value="{{$user->birth_day ? $user->birth_day->format('Y-m-d') : ''}}" />
                                                     </div>
                                                 </div>
 

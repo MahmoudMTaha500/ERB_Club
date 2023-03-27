@@ -159,14 +159,17 @@ class TrainerController extends Controller
         $admin->save();
         JoinAndLeave::where('user_id',$admin->id)->delete();
         if($request->date_of_join != []){
-
             for($x=0; $x < count($request->date_of_join); $x++ ){
+                if($request->date_of_join[$x] != null){
+
                 JoinAndLeave::create([
                     'user_id'=>$admin->id,
                     'date_of_join'=>$request->date_of_join[$x],
                     'date_of_leave'=>$request->date_of_leave[$x],
                     'reason_of_leave'=>$request->reason_of_leave[$x],
                 ]);
+                }
+
             }
         }
 

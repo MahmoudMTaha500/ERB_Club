@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StadiumsRentTable extends Model
+class StadiumRentCancellations extends Model
 {
     use HasFactory;
     protected $guarded=[];
@@ -13,10 +13,7 @@ class StadiumsRentTable extends Model
     {
         return $this->belongsTo('App\Models\Stadium', 'stadium_id', 'id');
     }
-
-
     public function traniers(){
         return $this->belongsTo('App\Models\User','user_id','id');
     }
-
 }
