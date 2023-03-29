@@ -57,9 +57,15 @@ class EmployeesController extends Controller
             "degree" => $request->degree,
             "military_status" => $request->military_status,
             "image" => $fileNamePath,
+            "personal_image" => $request->personal_image,
+            "national_image" => $request->national_image,
+            "birth_certificate" => $request->birth_certificate,
+            "degree_certificate" => $request->degree_certificate,
+            "army_certificate" => $request->army_certificate,
+            "feish" => $request->feish,
 
         ]);
-        if($request->role =="admin"){
+        if($request->role =="Administrator"){
             $admin->attachRole($request->role);
         } else{
             $admin->attachRole($request->role);
@@ -112,6 +118,12 @@ class EmployeesController extends Controller
         $admin->national_id =  $request->national_id;
         $admin->degree =  $request->degree;
         $admin->military_status =  $request->military_status;
+        $admin->personal_image =  $request->personal_image;
+        $admin->national_image =  $request->national_image;
+        $admin->birth_certificate =  $request->birth_certificate;
+        $admin->degree_certificate =  $request->degree_certificate;
+        $admin->army_certificate =  $request->army_certificate;
+        $admin->feish =  $request->feish;
 
         $fileNamePath="";
         if($request->hasFile('image')){

@@ -201,6 +201,30 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <h4 class="form-section">
+                                                <i class="ft-clipboard"></i>
+                                                الاوراق المطلوبه
+                                            </h4>
+                                            <div class="row">
+
+                                                <div class="col-md-3">
+                                                    <label for=""> 2 صورة شخصية</label>
+                                                    <input class="form-control" type="checkbox"  @if($player->personal_image=="1") checked @endif name="personal_image" id="" value="1">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for=""> صورة بطاقة</label>
+                                                    <input class="form-control" type="checkbox" name="father_national_image"  @if($player->father_national_image=="1") checked @endif id="" value="1">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="">شهادة ميلاد</label>
+                                                    <input class="form-control" type="checkbox"  @if($player->birth_certificate=="1") checked @endif name="birth_certificate" id="" value="1">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="">شهادة المؤهل</label>
+                                                    <input class="form-control" type="checkbox"  @if($player->medical=="1") checked @endif name="medical" id="" value="1">
+                                                </div>
+                                            </div>
+                                            <hr class="form-group">
 
                                         </div>
                                         <div class="form-actions">

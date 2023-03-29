@@ -128,6 +128,38 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <h4 class="form-section">
+                                                <i class="ft-clipboard"></i>
+                                                الاوراق المطلوبه
+                                            </h4>
+                                            <div class="row">
+
+                                                <div class="col-md-2">
+                                                    <label for=""> 2 صورة شخصية</label>
+                                                    <input class="form-control" type="checkbox"  @if($user->personal_image=="1") checked @endif name="personal_image" id="" value="1">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for=""> صورة بطاقة</label>
+                                                    <input class="form-control" type="checkbox" name="national_image"  @if($user->national_image=="1") checked @endif id="" value="1">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="">شهادة ميلاد</label>
+                                                    <input class="form-control" type="checkbox"  @if($user->birth_certificate=="1") checked @endif name="birth_certificate" id="" value="1">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="">شهادة المؤهل</label>
+                                                    <input class="form-control" type="checkbox"  @if($user->degree_certificate=="1") checked @endif name="degree_certificate" id="" value="1">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="">شهادة تجنيد</label>
+                                                    <input class="form-control" type="checkbox"  @if($user->army_certificate=="1") checked @endif name="army_certificate" id="" value="1">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for=""> فيش</label>
+                                                    <input class="form-control" type="checkbox"  @if($user->feish=="1") checked @endif name="feish" id="" value="1">
+                                                </div>
+                                            </div>
+                                            <hr class="form-group">
                                             <div class="row targetDiv" id="div0">
                                                 <div class="col-md-12">
                                                     <div id="group1" class="fvrduplicate">

@@ -49,6 +49,7 @@
                                                         <option value="bank"> بنك </option>
                                                         <option value="expenses"> مصروف  </option>
                                                         <option value="Custody"> عهده </option>
+                                                        <option value="Salaries"> مرتبات  </option>
                                                         </select>
 
                                                     </div>

@@ -132,6 +132,38 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <h4 class="form-section">
+                                                <i class="ft-clipboard"></i>
+                                                الاوراق المطلوبه
+                                            </h4>
+                                            <div class="row">
+
+                                                <div class="col-md-2">
+                                                    <label for=""> 2 صورة شخصية</label>
+                                                    <input class="form-control" type="checkbox" name="personal_image" id="" value="1">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for=""> صورة بطاقة</label>
+                                                    <input class="form-control" type="checkbox" name="national_image" id="" value="1">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="">شهادة ميلاد</label>
+                                                    <input class="form-control" type="checkbox" name="birth_certificate" id="" value="1">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="">شهادة المؤهل</label>
+                                                    <input class="form-control" type="checkbox" name="degree_certificate" id="" value="1">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="">شهادة تجنيد</label>
+                                                    <input class="form-control" type="checkbox" name="army_certificate" id="" value="1">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for=""> فيش</label>
+                                                    <input class="form-control" type="checkbox" name="feish" id="" value="1">
+                                                </div>
+                                            </div>
+                                            <hr class="form-group">
                                             <div class="row targetDiv" id="div0">
                                                 <div class="col-md-12">
                                                     <div id="group1" class="fvrduplicate">

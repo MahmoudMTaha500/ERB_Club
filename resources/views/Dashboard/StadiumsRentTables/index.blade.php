@@ -249,6 +249,21 @@
 
             var calendar = $('#calendar').fullCalendar({
                 editable: true,
+
+                validRange: {
+                    start: moment().format('YYYY-MM-DD'),
+                    end: '2100-01-01' // hard coded goodness unfortunately
+                },
+                visibleRange: {
+                    start: moment().subtract(30, 'days'), // set the start date of the visible range to 30 days ago
+                    end: moment().add(30, 'days') // set the end date of the visible range to 30 days in the future
+                },
+                eventLimit: false,
+
+
+                timezone: 'Egypt', // set timezone to Egypt
+                defaultView: 'month', // set the default view to month
+                defaultDate: moment(),
                 header: {
                     left: 'prev,next today',
                     center: 'title',

@@ -50,6 +50,8 @@
                                                             <option @if($receiptTypePay->type=="bank") selected @endif value="bank"> بنك </option>
                                                             <option @if($receiptTypePay->type=="expenses") selected @endif value="expenses">  مصروف </option>
                                                             <option @if($receiptTypePay->type=="Custody") selected @endif value="Custody"> عهده </option>
+                                                            <option  @if($receiptTypePay->type=="Salaries") selected @endif value="Salaries"> مرتبات  </option>
+
                                                         </select>
 
                                                     </div>

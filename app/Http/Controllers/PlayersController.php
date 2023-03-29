@@ -62,6 +62,10 @@ class PlayersController extends Controller
             'join_by'=>$request->join_by,
             'goal_of_sport'=>$request->goal_of_sport,
             'note'=>$request->note,
+          "personal_image" => $request->personal_image,
+          "father_national_image" => $request->father_national_image,
+          "birth_certificate" => $request->birth_certificate,
+          "medical" => $request->medical,
         ]);
         if($request->file){
 
@@ -137,6 +141,10 @@ class PlayersController extends Controller
         $player->join_by = $request->join_by;
         $player->goal_of_sport = $request->goal_of_sport;
         $player->note = $request->note;
+        $player->personal_image =  $request->personal_image;
+        $player->father_national_image =  $request->father_national_image;
+        $player->birth_certificate =  $request->birth_certificate;
+        $player->medical =  $request->medical;
         $player->save();
         if($request->file){
 
