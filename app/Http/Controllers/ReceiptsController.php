@@ -7,10 +7,14 @@ use App\Models\PriceList;
 use App\Models\Receipts;
 use App\Http\Requests\StoreReceiptsRequest;
 use App\Http\Requests\UpdateReceiptsRequest;
+use App\Models\ReceiptsPay;
 use App\Models\ReceiptTypes;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
-
+use App\Services\PDF\ConvertDataToPDF;
+use ZanySoft\LaravelPDF\PDF;
+use App\Exports\ExportToExcelSheet;
+use Maatwebsite\Excel\Facades\Excel;
 class ReceiptsController extends Controller
 {
     /**
@@ -18,10 +22,27 @@ class ReceiptsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $receipts = Receipts::paginate(10);
-        return view('Dashboard.Receipts.index',compact('receipts'));
+        if($request->filter){
+            $receipts = $this->filter($request);
+            if($request->pdf){
+                $viewName = "Dashboard.Receipts.pdf";
+                $fileName = "ايصالات التوريد";
+               $FilePdf = new ConvertDataToPDF($viewName,$receipts,$viewName);
+            }
+            if($request->excel){
+                $ExportToExcelSheet  = new ExportToExcelSheet($receipts ,'Dashboard.Receipts.pdf');
+                 return Excel::download($ExportToExcelSheet , 'ايصالات التوريد.xlsx');
+            }
+        } else{
+            $receipts = Receipts::paginate(10);
+
+        }
+        $players =Players::with('PlayerSportPrice')->get();
+//        dd($players[0]->PlayerSportPrice->price);
+        $receiptTypes= ReceiptTypes::get();
+        return view('Dashboard.Receipts.index',compact('receipts','players','receiptTypes'));
     }
 
     /**
@@ -93,7 +114,7 @@ class ReceiptsController extends Controller
      * @param  \App\Models\Receipts  $receipts
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateReceiptsRequest $request, Receipts $receipt)
+    public function update(StoreReceiptsRequest $request, Receipts $receipt)
     {
         $receipt->user_id=auth()->user()->id;
         $receipt->from=$request->from;
@@ -128,4 +149,43 @@ class ReceiptsController extends Controller
           $price_list =  PriceList::where('sport_id',$sport_id)->get()->first();
         return     \Response::json(['price'=>$price_list->price])  ;
     }
+
+    public function filter($request){
+        $fromDate = $request->fromDate;
+        $toDate = $request->toDate;
+        $type = $request->type;
+        $Receipts = new Receipts();
+
+//dd($request->all());
+        if($fromDate && $toDate && $fromDate <=  $toDate){
+            $Receipts = $Receipts->whereBetween("$request->type_date", [$fromDate, $toDate]);
+        }
+
+
+
+        if($type){
+            $Receipts = $Receipts->whereHas('receiptType' , function($query) use ($type){
+                $query->where('type',$type);
+            });
+        }
+
+        if($request->from_others){
+            $Receipts = $Receipts->where("from", $request->from_others)->where('type_of_from',"others");
+        }
+        if($request->from_player){
+            $Receipts = $Receipts->where("from", $request->from_player)->where('type_of_from',"players");
+        }
+        if($request->to){
+            $Receipts = $Receipts->where("to", $request->to);
+        }
+        $Receipts =$Receipts->paginate(10);
+        return $Receipts;
+
+
+    }
+
+    /*
+     *  pdf file
+     * */
+
 }

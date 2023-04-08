@@ -23,12 +23,14 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css-rtl/plugins/animate/animate.css')}}">
     <!-- BEGIN VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css-rtl/vendors.css')}}">
+
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/calendars/fullcalendar.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/weather-icons/climacons.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/fonts/meteocons/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/charts/morris.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/charts/chartist.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/forms/selects/select2.min.css')}}">
+
     <link rel="stylesheet" type="text/css"
           href="{{asset('assets/admin/vendors/css/charts/chartist-plugin-tooltip.css')}}">
     <link rel="stylesheet" type="text/css"
@@ -52,7 +54,6 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/extensions/datedropper.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/extensions/timedropper.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css-rtl/plugins/calendars/fullcalendar.css')}}">
-
 
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
@@ -83,10 +84,12 @@
 
 <!-- BEGIN VENDOR JS-->
 
+
 <script src="{{asset('assets/admin/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/admin/vendors/js/extensions/moment.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/admin/vendors/js/extensions/fullcalendar.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/admin/js/core/libraries/jquery_ui/jquery-ui.min.js')}}" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
 <!-- BEGIN VENDOR JS-->
 <script src="{{asset('assets/admin/vendors/js/tables/datatable/datatables.min.js')}}"
@@ -135,60 +138,56 @@
 
 
 <script src="{{asset('assets/admin/js/scripts/modal/components-modal.js')}}" type="text/javascript"></script>
-
 {{--<script src="{{asset('assets/admin/js/scripts/extensions/fullcalendar.js')}}" type="text/javascript"></script>--}}
+{{--<script>--}}
+{{--    $('#meridians1').timeDropper({--}}
+{{--        meridians: true,--}}
+{{--        setCurrentTime: false--}}
+{{--    });--}}
+{{--    $('#meridians2').timeDropper({--}}
+{{--        meridians: true,setCurrentTime: false--}}
 
+{{--    });--}}
+{{--    $('#meridians3').timeDropper({--}}
+{{--        meridians: true,--}}
+{{--        setCurrentTime: false--}}
+{{--    });--}}
+{{--    $('#meridians4').timeDropper({--}}
+{{--        meridians: true,--}}
+{{--        setCurrentTime: false--}}
+{{--    });--}}
+{{--    $('#meridians5').timeDropper({--}}
+{{--        meridians: true,setCurrentTime: false--}}
 
-
-<script>
-    $('#meridians1').timeDropper({
-        meridians: true,
-        setCurrentTime: false
-    });
-    $('#meridians2').timeDropper({
-        meridians: true,setCurrentTime: false
-
-    });
-    $('#meridians3').timeDropper({
-        meridians: true,
-        setCurrentTime: false
-    });
-    $('#meridians4').timeDropper({
-        meridians: true,
-        setCurrentTime: false
-    });
-    $('#meridians5').timeDropper({
-        meridians: true,setCurrentTime: false
-
-    });
-    $('#meridians6').timeDropper({
-        meridians: true,setCurrentTime: false
-    });
-    $('#meridians7').timeDropper({
-        meridians: true,setCurrentTime: false
-    });
-    $('#meridians8').timeDropper({
-        meridians: true,setCurrentTime: false
-    });
-    $('#meridians9').timeDropper({
-        meridians: true,setCurrentTime: false
-    });
-    $('#meridians10').timeDropper({
-        meridians: true,setCurrentTime: false
-    });
-    $('#meridians11').timeDropper({
-        meridians: true,setCurrentTime: false
-    });
-    $('#meridians12').timeDropper({
-        meridians: true,setCurrentTime: false
-    });
-    $('#meridians13').timeDropper({
-        meridians: true,setCurrentTime: false
-    });
-    $('#meridians14').timeDropper({
-        meridians: true,setCurrentTime: false
-    });
-</script>
+{{--    });--}}
+{{--    $('#meridians6').timeDropper({--}}
+{{--        meridians: true,setCurrentTime: false--}}
+{{--    });--}}
+{{--    $('#meridians7').timeDropper({--}}
+{{--        meridians: true,setCurrentTime: false--}}
+{{--    });--}}
+{{--    $('#meridians8').timeDropper({--}}
+{{--        meridians: true,setCurrentTime: false--}}
+{{--    });--}}
+{{--    $('#meridians9').timeDropper({--}}
+{{--        meridians: true,setCurrentTime: false--}}
+{{--    });--}}
+{{--    $('#meridians10').timeDropper({--}}
+{{--        meridians: true,setCurrentTime: false--}}
+{{--    });--}}
+{{--    $('#meridians11').timeDropper({--}}
+{{--        meridians: true,setCurrentTime: false--}}
+{{--    });--}}
+{{--    $('#meridians12').timeDropper({--}}
+{{--        meridians: true,setCurrentTime: false--}}
+{{--    });--}}
+{{--    $('#meridians13').timeDropper({--}}
+{{--        meridians: true,setCurrentTime: false--}}
+{{--    });--}}
+{{--    $('#meridians14').timeDropper({--}}
+{{--        meridians: true,setCurrentTime: false--}}
+{{--    });--}}
+{{--</script>--}}
 @yield('script')
 </body>
 </html>

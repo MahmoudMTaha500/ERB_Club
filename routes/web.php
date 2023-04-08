@@ -60,6 +60,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     route::post('/custody-expense-store',"\App\Http\Controllers\CustodyExpenseController@store")->name('custody-expense-store');
     ################################################
 
+    ################### ٌ  Route PDf and Excel  ##############################.
+    Route::get('receipt/pdf', "\App\Http\Controllers\ReceiptsController@pdfFile")->name('receipt.pdf');
+    Route::get('receipt/excel', "\App\Http\Controllers\ReceiptsController@pdfFile")->name('receipt.excel');
+
+    ################################################
+
+
     Route::resource('branch', "\App\Http\Controllers\BranchesController");
     Route::resource('sport', "\App\Http\Controllers\SportsController");
     Route::resource('level', "\App\Http\Controllers\LevelsController");

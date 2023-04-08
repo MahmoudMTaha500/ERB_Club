@@ -110,7 +110,7 @@
 
                 </ul>
             </li>
-            <li class=" nav-item"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
+            <li class=" nav-item  @if(Route::is('receipt.*') || Route::is('receipt-type.*') ) open @endif"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
                                                                               data-i18n="nav.flot_charts.main"> ايصالات التوريد </span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="{{route('receipt.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
@@ -129,7 +129,7 @@
                 </ul>
             </li>
 
-            <li class=" nav-item"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
+            <li class=" nav-item  @if(Route::is('receipt-pay.*') || Route::is('receipt-type-pay.*') ) open @endif"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main"> ايصالات الصرف </span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="{{route('receipt-pay.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
