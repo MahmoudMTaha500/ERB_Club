@@ -90,6 +90,12 @@
 <script src="{{asset('assets/admin/vendors/js/extensions/fullcalendar.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/admin/js/core/libraries/jquery_ui/jquery-ui.min.js')}}" type="text/javascript"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="{{asset('assets/admin/vendors/js/forms/repeater/jquery.repeater.min.js')}}"
+        type="text/javascript">
+
+</script>
+<script src="{{asset('assets/admin/js/scripts/forms/form-repeater.js')}}"
+                 type="text/javascript"></script>
 
 <!-- BEGIN VENDOR JS-->
 <script src="{{asset('assets/admin/vendors/js/tables/datatable/datatables.min.js')}}"

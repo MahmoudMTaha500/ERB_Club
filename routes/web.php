@@ -90,6 +90,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('custody', "\App\Http\Controllers\CustodyController");
     Route::resource('settlement-request', "\App\Http\Controllers\SettlementRequestController");
     Route::resource('cuts-employee', "\App\Http\Controllers\CutsEmployeeController");
+    Route::resource('partner-contract', "\App\Http\Controllers\PartnerContractsController");
+    Route::resource('tournament', "\App\Http\Controllers\TournamentsController");
 
 
 Route::get('logout',"App\Http\Controllers\LoginController@logout")->name('logout');
