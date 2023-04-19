@@ -7,12 +7,12 @@
         <div class="content-wrapper">
             <div class="content-header row">
                 <div class="content-header-left col-md-6 col-12 mb-2">
-                    <h3 class="content-header-title">قسم  قوائم  الاسعار</h3>
+                    <h3 class="content-header-title">قسم    المسابقات</h3>
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="">لوحة التحكم</a></li>
-                                <li class="breadcrumb-item active">اضافة  قائمه اسعار</li>
+                                <li class="breadcrumb-item active">اضافة   مسابقه</li>
                             </ol>
                         </div>
                     </div>
@@ -25,67 +25,102 @@
                     <div class="col-lg-10">
                         <div class="card" style="zoom: 1;">
                             <div class="card-header">
-                                <h4 class="card-title" id="bordered-layout-card-center">اضافة قائمه اسعار جديد</h4>
+                                <h4 class="card-title" id="bordered-layout-card-center">اضافة  مسابقه جديد</h4>
                                 <a href="/sat/courses/create.php" class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('price-list.update',$priceList->id)}}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" id="myForm" action="{{route('tournament.update',$tournament->id)}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('put')
                                         <div class="form-body">
                                             <div class="row">
+
+
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">     اسم القائمه  </label>
-                                                        <input type="text" class="form-control"  name="name"   value="{{ $priceList->name }}">
+                                                        <label for="projectinput2">     اسم مسابقه  </label>
+                                                        <input type="text" class="form-control"  name="name"  value="{{$tournament->name}}">
 
                                                     </div>
                                                 </div>
-
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">     الالعاب</label>
-                                                        <select class=" form-control" id="multi_placehodler" name="sport_id" >
-                                                            @foreach($sports as $sport)
-                                                                <option value="{{$sport->id}}"
-                                                                        @if($sport->id == $priceList->sports->id) selected @endif
-                                                                >{{$sport->name}}</option>
+                                                        <label for="projectinput2">  الفرع</label>
+                                                        <select class="select2-placeholder-multiple form-control" multiple="multiple" id="multi_placehodler" name="branch_id[]" >
+                                                            @foreach($branches as $branch)
+                                                                <option value="{{$branch->id}}"
+                                                                        @foreach($tournament->tournament_branches as $b)
+
+
+                                                                            @if($b->branch_id == $branch->id)
+                                                                                selected="selected"
+                                                                    @endif
+                                                                    @endforeach
+                                                                >{{$branch->name}}</option>
 
                                                             @endforeach
                                                         </select>
 
                                                     </div>
                                                 </div>
-                                            </div>
 
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">   تاريخ المسابقه</label>
+                                                        <input type="date" class="form-control"  name="date" placeholder="dd-mm-yyyy" value="{{$tournament->date->format('Y-m-d')}}" >
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">  قيمه الاشتراك</label>
+                                                        <input type="number" class="form-control"  name="subscribe_value" value="{{$tournament->subscribe_value}}" >
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2"> التكلفه  </label>
+                                                        <input type="number" class="form-control"  name="cost"  value="{{$tournament->cost}}">
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group col-12 mb-2 contact-repeater">
+                                                    <div data-repeater-list="repeater">
+                                                        @foreach($tournament->tournament_files as $file)
+
+                                                            <div class="input-group mb-1" data-repeater-item>
+                                                                <input type="text" name="file_name" value="{{$file->name}}" placeholder="اكتب اسم الملفات المطلوبه" class="form-control" id="example-tel-input">
+                                                                <span class="input-group-append" id="button-addon2">
+                              <button class="btn btn-danger" type="button" data-repeater-delete><i class="ft-x"></i></button>
+                            </span>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <button type="button" data-repeater-create class="btn btn-primary">
+                                                        <i class="ft-plus"></i> اضافه اسم ملف اخر
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-actions center">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput2">  سعر اللعبه  </label>
-                                                            <input type="number" class="form-control" name="price"  value="{{ $priceList->price }}" required>
+                                                        <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
 
-                                                        </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput2"> وصف  </label>
-                                                            <textarea  class="form-control" name="desc"  required>
-                                                            {{$priceList->desc}}
-                                                        </textarea>
-                                                        </div>
+                                                        <button type="button"  class="btn btn-danger   w-100" onclick="resetForm();">مسح  </button>
+
                                                     </div>
                                                 </div>
-
-
-
-
-
-
-                                                <div class="form-actions center">
-                                                    <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
-                                                </div>
                                             </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -96,4 +131,16 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+
+    <script>
+
+        function resetForm() {
+
+            document.getElementById("myForm").reset();
+
+        }
+
+    </script>
 @endsection

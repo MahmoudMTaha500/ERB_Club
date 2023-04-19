@@ -82,7 +82,7 @@
 
                                                 </div>
                                                 <div class="form-group col-12 mb-2 contact-repeater">
-                                                    <div data-repeater-list="repeater-group">
+                                                    <div data-repeater-list="repeater">
                                                         <div class="input-group mb-1" data-repeater-item>
                                                             <input type="text" name="file_name" placeholder="اكتب اسم الملفات المطلوبه" class="form-control" id="example-tel-input">
                                                             <span class="input-group-append" id="button-addon2">

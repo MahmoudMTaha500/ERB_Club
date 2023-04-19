@@ -5,12 +5,12 @@
         <div class="content-wrapper">
             <div class="content-header row">
                 <div class="content-header-left col-md-6 col-12 mb-2">
-                    <h3 class="content-header-title">قسم قوائم  الاسعار</h3>
+                    <h3 class="content-header-title">قسم المسابقات  </h3>
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{url('/admin')}}">لوحة التحكم</a></li>
-                                <li class="breadcrumb-item active">كل  قوائم الاسعار</li>
+                                <li class="breadcrumb-item active">كل  المسابقات </li>
                             </ol>
                         </div>
                     </div>
@@ -36,13 +36,13 @@
                     <div id="recent-transactions" class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title"> قوائم الاسعار ({{$priceLists->total()}})</h4>
+                                <h4 class="card-title">  المسابقات ({{$tournaments->count()}})</h4>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
 
                                             <li>
-                                                <a class="btn btn-sm btn-success box-shadow-2 round btn-min-width pull-right" href="{{route('price-list.create')}}"> <i class="ft-plus ft-md"></i> اضافة قائمه سعر جديد</a>
+                                                <a class="btn btn-sm btn-success box-shadow-2 round btn-min-width pull-right" href="{{route('tournament.create')}}"> <i class="ft-plus ft-md"></i> اضافة  مسابقه جديد</a>
                                             </li>
                                 </div>
                             </div>
@@ -51,30 +51,48 @@
                                     <table id="myTable" class="table table-hover table-xl mb-0 sortable">
                                         <thead>
                                         <tr>
-                                            <th class="border-top-0">  اسم اللعبه</th>
-                                            <th class="border-top-0"> السعر</th>
-                                            <th class="border-top-0"> الوصف</th>
+                                            <th class="border-top-0">  اسم المسابقه</th>
+                                            <th class="border-top-0"> الفرع</th>
+                                            <th class="border-top-0"> تاريخ المسابقه</th>
+                                            <th class="border-top-0"> اشتراك </th>
+                                            <th class="border-top-0"> التكلفه</th>
+                                            <th class="border-top-0"> الفايلات المطلوبه</th>
 
 
                                             <th class="border-top-0">التحكم</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @forelse($priceLists as $price_list )
+                                        @forelse($tournaments as $tournament )
 
-                                            <tr class="row1" data-id="{{ $price_list->id }}" >
+                                            <tr class="row1" data-id="{{ $tournament->id }}" >
                                                 <td>
-                                                    {{$price_list->sports->name}}
+                                                    {{$tournament->name}}
                                                 </td>
-                                                <td>{{$price_list->price}}</td>
-                                                <td>{{$price_list->desc}}</td>
+                                                <td>
 
+                                                    @foreach($tournament->tournament_branches as $b)
 
+                                                        <strong> ,{{$b->branches->name}}  </strong>
+                                                    @endforeach
+                                                </td>
+
+                                                <td>{{$tournament->date->format('Y-m-d')}}</td>
+                                                <td>{{$tournament->subscribe_value}}</td>
+                                                <td>{{$tournament->cost}}</td>
+
+                                                <td>
+
+                                                    @foreach($tournament->tournament_files as $f)
+
+                                                        <strong> ,{{$f->name}}  </strong>
+                                                    @endforeach
+                                                </td>
 
                                                 <td class="text-truncate">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                            <a href="{{route('price-list.edit', $price_list->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
-                                                            <form action="{{route('price-list.destroy' ,$price_list->id)}}" method="POST" class="btn-group">
+                                                            <a href="{{route('tournament.edit', $tournament->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
+                                                            <form action="{{route('tournament.destroy' ,$tournament->id)}}" method="POST" class="btn-group">
                                                                 @csrf @method('delete')
                                                                 <button
 
@@ -90,7 +108,10 @@
 
                                         @empty
                                         <tr>
-                                            لايوجد قائمه اسعار حاليا
+                                            <td colspan="6">
+                                                لايوجد  مسابقات  حاليا
+
+                                            </td>
                                         </tr>
                                         @endforelse
 
@@ -101,9 +122,9 @@
                         </div>
                     </div>
                 </div>
-                @if($priceLists->hasPages())
-                    {{$priceLists->appends(request()->input())->links('pagination::bootstrap-4')}}
-                @endif
+{{--                @if($tournaments->hasPages())--}}
+{{--                    {{$tournaments->appends(request()->input())->links('pagination::bootstrap-4')}}--}}
+{{--                @endif--}}
                 <!--/ Recent Transactions -->
             </div>
         </div>

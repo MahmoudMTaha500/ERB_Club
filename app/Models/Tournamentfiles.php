@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Tournamentfiles extends Model
 {
     use HasFactory;
+    protected $guarded=[];
+
 }
