@@ -19,7 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-
+            $table->enum('personal_image',[0,1])->default(0)->nullable();
+            $table->enum('national_image',[0,1])->default(0)->nullable();
+            $table->enum('birth_certificate',[0,1])->default(0)->nullable();
+            $table->enum('degree_certificate',[0,1])->default(0)->nullable();
+            $table->enum('army_certificate',[0,1])->default(0)->nullable();
+            $table->enum('feish',[0,1])->default(0)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

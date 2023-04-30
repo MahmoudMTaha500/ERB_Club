@@ -15,5 +15,8 @@ class Branchs extends Model
 
         return $this->belongsToMany('App\Models\Sports','branches_sports','sport_id','branch_id');
     }
+    public function players(){
+        return $this->hasMany('App\Models\Players','branch_id','id');
+    }
 
 }

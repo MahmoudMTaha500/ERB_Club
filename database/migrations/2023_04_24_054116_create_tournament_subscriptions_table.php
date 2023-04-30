@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTableUsersTrainer extends Migration
+class CreateTournamentSubscriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class AlterTableUsersTrainer extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-
-
-
+        Schema::create('tournament_subscriptions', function (Blueprint $table) {
+            $table->id();
+            $table->integer('tournament_id');
+            $table->integer('player_id');
+            $table->timestamps();
         });
     }
 
@@ -27,8 +28,6 @@ class AlterTableUsersTrainer extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('tournament_subscriptions');
     }
 }

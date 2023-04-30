@@ -46,6 +46,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::post('stadium-rent-table/ajax/update', "\App\Http\Controllers\StadiumsRentTableController@update")->name('update-stadium');
     Route::post('stadium-rent-table/ajax/delete', "\App\Http\Controllers\StadiumsRentTableController@destroy")->name('delete-stadium');
     Route::get('stadium-rent-table/ajax/show', "\App\Http\Controllers\StadiumsRentTableController@show")->name('show-stadium');
+    Route::get('tournament-subscription/get-tournament-information', "\App\Http\Controllers\TournamentSubscriptionsController@getTournamentInformation")->name('get-tournament-information');
+
     #################################################.
 
     route::get('get-sports-players', "\App\Http\Controllers\PlayersController@getSports")->name('get-sports-players');
@@ -92,6 +94,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('cuts-employee', "\App\Http\Controllers\CutsEmployeeController");
     Route::resource('partner-contract', "\App\Http\Controllers\PartnerContractsController");
     Route::resource('tournament', "\App\Http\Controllers\TournamentsController");
+    Route::resource('tournament-subscription', "\App\Http\Controllers\TournamentSubscriptionsController");
 
 
 Route::get('logout',"App\Http\Controllers\LoginController@logout")->name('logout');

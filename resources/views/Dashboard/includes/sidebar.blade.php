@@ -261,6 +261,12 @@
                     <li><a class="menu-item" href="{{route('tournament.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">
                             انشاء مسابقه  جديد</a>
                     </li>
+                    <li><a class="menu-item" href="{{route('tournament-subscription.index')}}" data-i18n="nav.flot_charts.flot_bar_charts">
+                            كل اشتراكات  المسابقات</a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('tournament-subscription.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">
+                            انشاء اشتراك للمسابقه  </a>
+                    </li>
 
                 </ul>
             </li>
