@@ -43,7 +43,17 @@ class TournamentSubscriptionsController extends Controller
      */
     public function store(StoreTournamentSubscriptionsRequest $request)
     {
-        //
+       dd($request->all());
+       $players_id = count($request->player_id);
+       for($x=0; $x < $players_id; $x++){
+          TournamentSubscriptions::create([
+              'tournament_id'=>$request->tournament_id,
+              'player_id'=>$request->player_id[$x],
+          ]);
+
+       }
+        return redirect()->route('tournament.index')->with('message','تم اضافه المسابقه بنجاح ');
+
     }
 
     /**
