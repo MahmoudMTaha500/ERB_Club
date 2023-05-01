@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::post('stadium-rent-table/ajax/delete', "\App\Http\Controllers\StadiumsRentTableController@destroy")->name('delete-stadium');
     Route::get('stadium-rent-table/ajax/show', "\App\Http\Controllers\StadiumsRentTableController@show")->name('show-stadium');
     Route::get('tournament-subscription/get-tournament-information', "\App\Http\Controllers\TournamentSubscriptionsController@getTournamentInformation")->name('get-tournament-information');
+    Route::get('tournament-subscription/get-tournament-selected-players', "\App\Http\Controllers\TournamentSubscriptionsController@getSelectedPlayers")->name('get-tournament-selected-players');
 
     #################################################.
 

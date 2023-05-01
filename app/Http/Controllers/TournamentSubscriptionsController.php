@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Players;
 use App\Models\Tournaments;
 use App\Models\TournamentSubscriptions;
 use App\Http\Requests\StoreTournamentSubscriptionsRequest;
@@ -18,8 +19,11 @@ class TournamentSubscriptionsController extends Controller
      */
     public function index()
     {
-        $tournaments_subscriptions = TournamentSubscriptions::get();
-        return view('Dashboard.TournamentSubscription.index',compact('tournaments_subscriptions'));
+        $tournaments_subscriptions = TournamentSubscriptions::with('players')->get();
+        $tournaments = Tournaments::with('tournament_branches.branches')->with('tournament_subscriptions.players')->get();
+
+//        dd($tournaments);
+        return view('Dashboard.TournamentSubscription.index',compact('tournaments'));
 
     }
 
@@ -30,7 +34,7 @@ class TournamentSubscriptionsController extends Controller
      */
     public function create()
     {
-        $tournaments = Tournaments::with('tournament_branches.branches')->with('tournament_files')->get();
+        $tournaments = Tournaments::with('tournament_branches.branches')->get();
 //        dd($tournaments);
         return view('Dashboard.TournamentSubscription.create',compact('tournaments'));
     }
@@ -43,7 +47,6 @@ class TournamentSubscriptionsController extends Controller
      */
     public function store(StoreTournamentSubscriptionsRequest $request)
     {
-       dd($request->all());
        $players_id = count($request->player_id);
        for($x=0; $x < $players_id; $x++){
           TournamentSubscriptions::create([
@@ -52,7 +55,7 @@ class TournamentSubscriptionsController extends Controller
           ]);
 
        }
-        return redirect()->route('tournament.index')->with('message','تم اضافه المسابقه بنجاح ');
+        return redirect()->route('tournament-subscription.index')->with('message','تم اضافه اشتراك  المسابقه بنجاح ');
 
     }
 
@@ -73,9 +76,15 @@ class TournamentSubscriptionsController extends Controller
      * @param  \App\Models\TournamentSubscriptions  $tournamentSubscriptions
      * @return \Illuminate\Http\Response
      */
-    public function edit(TournamentSubscriptions $tournamentSubscriptions)
+    public function edit(TournamentSubscriptions $tournamentSubscriptions, $id)
     {
-        //
+//        dd($id);
+        $tournament_edit = Tournaments::find($id);
+//        $players = Players::where('branch_id', $tournament_edit->branch_id)->get();
+        $tournaments = Tournaments::with('tournament_branches.branches')->get();
+
+        return view('Dashboard.TournamentSubscription.edit',compact('tournaments','tournament_edit'));
+
     }
 
     /**
@@ -87,7 +96,16 @@ class TournamentSubscriptionsController extends Controller
      */
     public function update(UpdateTournamentSubscriptionsRequest $request, TournamentSubscriptions $tournamentSubscriptions)
     {
-        //
+        TournamentSubscriptions::where('tournament_id',$request->tournament_id)->delete();
+        $players_id = count($request->player_id);
+        for($x=0; $x < $players_id; $x++){
+            TournamentSubscriptions::create([
+                'tournament_id'=>$request->tournament_id,
+                'player_id'=>$request->player_id[$x],
+            ]);
+
+        }
+        return redirect()->route('tournament-subscription.index')->with('message','تم تعديل اشتراك  المسابقه بنجاح ');
     }
 
     /**
@@ -96,9 +114,12 @@ class TournamentSubscriptionsController extends Controller
      * @param  \App\Models\TournamentSubscriptions  $tournamentSubscriptions
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TournamentSubscriptions $tournamentSubscriptions)
+    public function destroy(TournamentSubscriptions $tournamentSubscriptions,$id)
     {
-        //
+        TournamentSubscriptions::where('tournament_id',$id)->delete();
+        return redirect()->route('tournament-subscription.index')->with('error','تم حذف اشتراك  المسابقه بنجاح ');
+
+
     }
 
     /*
@@ -116,13 +137,27 @@ class TournamentSubscriptionsController extends Controller
 line;
 //               dd($branch);
               foreach ($branch->branches->players as $player ){
+                  $selected =  $this->getSelectedPlayers($player->id);
                   $html_players.=<<<line
-             <option value="$player->id"> $player->name </option>
+             <option $selected value="$player->id"> $player->name </option>
 
 line;
 
               }
            }
         return     \Response::json(['branches'=>$html_branches,'players'=>$html_players])  ;
+    }
+
+    /*
+     *
+     * */
+    public function getSelectedPlayers($player_id){
+        $playerInTournament = TournamentSubscriptions::where('player_id',$player_id)->get();
+        if(!$playerInTournament->isEmpty()){
+            return "selected";
+        }
+        return ' ';
+
+
     }
 }

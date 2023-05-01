@@ -13,7 +13,7 @@ class UpdateTournamentSubscriptionsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,19 @@ class UpdateTournamentSubscriptionsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "tournament_id"=>"required",
+            'player_id' => 'required',
+
+
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'tournament_id.required'=>'المسابقه مطلوبه  ',
+            'player_id.required'=>'يرجي اختيار لاعب واحد علي الاقل ف المسابقه  ',
+
         ];
     }
 }

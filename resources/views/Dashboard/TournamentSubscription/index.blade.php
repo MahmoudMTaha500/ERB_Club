@@ -42,7 +42,7 @@
                                     <ul class="list-inline mb-0">
 
                                             <li>
-                                                <a class="btn btn-sm btn-success box-shadow-2 round btn-min-width pull-right" href="{{route('tournament.create')}}"> <i class="ft-plus ft-md"></i> اضافة  مسابقه جديد</a>
+                                                <a class="btn btn-sm btn-success box-shadow-2 round btn-min-width pull-right" href="{{route('tournament-subscription.create')}}"> <i class="ft-plus ft-md"></i> اضافة  مسابقه جديد</a>
                                             </li>
                                 </div>
                             </div>
@@ -53,10 +53,8 @@
                                         <tr>
                                             <th class="border-top-0">  اسم المسابقه</th>
                                             <th class="border-top-0"> الفرع</th>
-                                            <th class="border-top-0"> تاريخ المسابقه</th>
-                                            <th class="border-top-0"> اشتراك </th>
-                                            <th class="border-top-0"> التكلفه</th>
-                                            <th class="border-top-0"> الفايلات المطلوبه</th>
+
+                                            <th class="border-top-0">  الاعبين</th>
 
 
                                             <th class="border-top-0">التحكم</th>
@@ -77,22 +75,22 @@
                                                     @endforeach
                                                 </td>
 
-                                                <td>{{$tournament->date->format('Y-m-d')}}</td>
-                                                <td>{{$tournament->subscribe_value}}</td>
-                                                <td>{{$tournament->cost}}</td>
+
+
+
 
                                                 <td>
 
-                                                    @foreach($tournament->tournament_files as $f)
+                                                    @foreach($tournament->tournament_subscriptions as $player)
 
-                                                        <strong> ,{{$f->name}}  </strong>
+                                                        <strong> ,{{$player->players[0]->name}}  </strong>
                                                     @endforeach
                                                 </td>
 
                                                 <td class="text-truncate">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                            <a href="{{route('tournament.edit', $tournament->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
-                                                            <form action="{{route('tournament.destroy' ,$tournament->id)}}" method="POST" class="btn-group">
+                                                            <a href="{{route('tournament-subscription.edit', $tournament->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
+                                                            <form action="{{route('tournament-subscription.destroy' ,$tournament->id)}}" method="POST" class="btn-group">
                                                                 @csrf @method('delete')
                                                                 <button
 

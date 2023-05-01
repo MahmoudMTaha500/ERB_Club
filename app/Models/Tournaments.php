@@ -18,4 +18,9 @@ class Tournaments extends Model
         return $this->hasMany(Tournamentfiles::class ,'tournament_id','id');
 
     }
+    public function tournament_subscriptions(){
+        return $this->hasMany(TournamentSubscriptions::class ,'tournament_id','id');
+
+    }
+
 }
