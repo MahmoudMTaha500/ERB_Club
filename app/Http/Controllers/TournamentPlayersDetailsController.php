@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\TournamentPlayersDetails;
 use App\Http\Requests\StoreTournamentPlayersDetailsRequest;
 use App\Http\Requests\UpdateTournamentPlayersDetailsRequest;
+use App\Models\Tournaments;
+use Illuminate\Http\Request;
 
 class TournamentPlayersDetailsController extends Controller
 {
@@ -15,7 +17,6 @@ class TournamentPlayersDetailsController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -25,7 +26,10 @@ class TournamentPlayersDetailsController extends Controller
      */
     public function create()
     {
-        //
+        $tournaments = Tournaments::with('tournament_branches.branches')->get();
+        return view('Dashboard.TournamentSubscription.TournamentDetails',compact('tournaments'));
+
+
     }
 
     /**
@@ -36,7 +40,18 @@ class TournamentPlayersDetailsController extends Controller
      */
     public function store(StoreTournamentPlayersDetailsRequest $request)
     {
-        //
+//        dd($request->all());
+          TournamentPlayersDetails::create([
+              'tournament_id'=>$request->tournament_id,
+              'player_id'=>$request->player_id,
+              'paid'=>$request->paid,
+              'files'=>$request->files,
+              'subscription'=>$request->subscription,
+              'place'=>$request->place,
+              'notes'=>$request->notes,
+
+          ]);
+          return redirect()->back();
     }
 
     /**
@@ -82,5 +97,45 @@ class TournamentPlayersDetailsController extends Controller
     public function destroy(TournamentPlayersDetails $tournamentPlayersDetails)
     {
         //
+    }
+
+
+    /*
+     *
+     *
+     * */
+
+    public function getTournamentInformation(Request $request){
+//        dd($request->all());
+        $tournament = Tournaments::with('tournament_branches.branches.players')->find($request->tournament_id);
+        $html_branches ='';
+        $html_players ='';
+        foreach ($tournament->tournament_branches as $branch){
+            $name = $branch->branches->name;
+            $html_branches.=<<<line
+             <option selected value="$branch->branch_id"> $name </option>
+line;
+
+            foreach ($branch->branches->players as $player ){
+                $html_players.=<<<line
+             <option  value="$player->id"> $player->name </option>
+
+line;
+
+            }
+        }
+        return     \Response::json(['branches'=>$html_branches,'players'=>$html_players])  ;
+    }
+
+
+    /*
+     *
+     *
+     * */
+
+    public function getPlayerInformation(Request $request)
+    {
+       $playerInformation = TournamentPlayersDetails::find($request->player_id);
+       dd($playerInformation);
     }
 }

@@ -126,6 +126,7 @@
                             انشاء  نوع ايصال توريد جديد</a>
                     </li>
 
+
                 </ul>
             </li>
 
@@ -266,6 +267,9 @@
                     </li>
                     <li><a class="menu-item" href="{{route('tournament-subscription.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">
                             انشاء اشتراك للمسابقه  </a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('tournament-follow.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">
+                              متابعه المسابقه   </a>
                     </li>
 
                 </ul>

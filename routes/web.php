@@ -48,6 +48,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::get('stadium-rent-table/ajax/show', "\App\Http\Controllers\StadiumsRentTableController@show")->name('show-stadium');
     Route::get('tournament-subscription/get-tournament-information', "\App\Http\Controllers\TournamentSubscriptionsController@getTournamentInformation")->name('get-tournament-information');
     Route::get('tournament-subscription/get-tournament-selected-players', "\App\Http\Controllers\TournamentSubscriptionsController@getSelectedPlayers")->name('get-tournament-selected-players');
+    Route::get('tournament-follow/get-tournament-information', "\App\Http\Controllers\TournamentPlayersDetailsController@getTournamentInformation")->name('get-tournament-follow-information');
+    Route::get('tournament-follow/get-player-information', "\App\Http\Controllers\TournamentPlayersDetailsController@getPlayerInformation")->name('get-player-information');
 
     #################################################.
 
@@ -96,6 +98,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('partner-contract', "\App\Http\Controllers\PartnerContractsController");
     Route::resource('tournament', "\App\Http\Controllers\TournamentsController");
     Route::resource('tournament-subscription', "\App\Http\Controllers\TournamentSubscriptionsController");
+    Route::resource('tournament-follow', "\App\Http\Controllers\TournamentPlayersDetailsController");
 
 
 Route::get('logout',"App\Http\Controllers\LoginController@logout")->name('logout');

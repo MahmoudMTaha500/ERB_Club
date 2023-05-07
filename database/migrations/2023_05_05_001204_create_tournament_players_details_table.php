@@ -17,7 +17,13 @@ class CreateTournamentPlayersDetailsTable extends Migration
             $table->id();
             $table->integer('tournament_id');
             $table->integer('player_id');
-            
+            $table->enum('files',[0,1])->default(0);
+            $table->enum('paid',[0,1])->default(0);
+            $table->enum('subscribe',[0,1])->default(0);
+            $table->string('place')->nullable();
+            $table->longText('notes')->nullable();
+
+
 
             $table->timestamps();
         });
