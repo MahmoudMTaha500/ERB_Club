@@ -148,6 +148,8 @@
         $("#tournament_id").change(function ()
         {
             getTournamentInformation();
+            resetDataPlayer();
+
         });
         $("#player_id").change(function(){
             getPlayerInformation()
@@ -180,6 +182,10 @@
                 data: { "player_id": player_id },
                 success: function (data, status, xhr) {// success callback function
                     // $("#player_id").html(data.players);
+                    if(data[0]==null){
+                        resetDataPlayer();
+                        return false;
+                    }
                     var data_files = data[0].files_data;
                     if(data_files == 1){
                         $("#files_data").prop('checked',true)
@@ -208,6 +214,14 @@
             });
         }
 
+
+         function resetDataPlayer(){
+             $("#files_data").prop('checked',false);
+             $("#paid").prop('checked',false);
+             $("#subscribe").prop('checked',false);
+             $("#notes").val('');
+             $("#place").val('');
+         }
     </script>
 @endsection
 
