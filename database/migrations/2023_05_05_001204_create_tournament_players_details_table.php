@@ -17,7 +17,13 @@ class CreateTournamentPlayersDetailsTable extends Migration
             $table->id();
             $table->integer('tournament_id');
             $table->integer('player_id');
-            
+            $table->integer('files_data')->default(0)->nullable();
+            $table->integer('paid')->default(0)->nullable();
+            $table->integer('subscribe')->default(0)->nullable();
+            $table->string('place')->nullable();
+            $table->longText('notes')->nullable();
+
+
 
             $table->timestamps();
         });
