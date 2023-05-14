@@ -40,13 +40,15 @@ class TournamentPlayersDetailsController extends Controller
      */
     public function store(StoreTournamentPlayersDetailsRequest $request)
     {
-//        dd($request->all());
+
+        TournamentPlayersDetails::where('player_id',$request->player_id)->delete();
+
           TournamentPlayersDetails::create([
               'tournament_id'=>$request->tournament_id,
               'player_id'=>$request->player_id,
               'paid'=>$request->paid,
-              'files'=>$request->files,
-              'subscription'=>$request->subscription,
+              'files_data'=>$request->files_data,
+              'subscribe'=>$request->subscription,
               'place'=>$request->place,
               'notes'=>$request->notes,
 
@@ -109,7 +111,7 @@ class TournamentPlayersDetailsController extends Controller
 //        dd($request->all());
         $tournament = Tournaments::with('tournament_branches.branches.players')->find($request->tournament_id);
         $html_branches ='';
-        $html_players ='';
+        $html_players ='<option  value=""> اختار لاعب </option>';
         foreach ($tournament->tournament_branches as $branch){
             $name = $branch->branches->name;
             $html_branches.=<<<line
@@ -135,7 +137,10 @@ line;
 
     public function getPlayerInformation(Request $request)
     {
-       $playerInformation = TournamentPlayersDetails::find($request->player_id);
-       dd($playerInformation);
+       $playerInformation = TournamentPlayersDetails::where('player_id',$request->player_id)->get()->first();
+
+
+
+       return \Response::json([$playerInformation])  ;
     }
 }

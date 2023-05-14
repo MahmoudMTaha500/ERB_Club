@@ -74,21 +74,21 @@
                                                     <div class="form-group">
 
                                                     <label for=""> تم الدفع</label>
-                                                    <input  type="checkbox" name="paid"  value=1 >
+                                                    <input  type="checkbox" name="paid" id="paid"  value=1 >
                                                 </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
 
                                                     <label for="">  الاوراق المطلوبه</label>
-                                                    <input  type="checkbox" name="files"  value=1 >
+                                                    <input  type="checkbox" name="files_data"  id="files_data" value=1 >
                                                 </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
 
                                                     <label for="">  الالتحاق بالمسابقه</label>
-                                                    <input  type="checkbox" name="subscription"  value=1 >
+                                                    <input  type="checkbox" name="subscription"  id="subscribe" value=1 >
                                                 </div>
                                                 </div>
                                             </div>
@@ -98,14 +98,14 @@
                                                     <div class="form-group">
 
                                                     <label for="">  المركز الذي حصل عليه</label>
-                                                    <input  class="form-control" type="text" name="place" >
+                                                    <input  class="form-control" type="text" id="place" name="place" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
 
                                                     <label for="">  ملاحظات   </label>
-                                                <textarea class="form-control" rows="5" name="notes">  </textarea>
+                                                <textarea class="form-control" rows="5" id="notes" name="notes">  </textarea>
                                                     </div>
                                                 </div>
 
@@ -145,13 +145,14 @@
             document.getElementById("myForm").reset();
 
         }
-        $("#tournament_id").click(function ()
+        $("#tournament_id").change(function ()
         {
             getTournamentInformation();
         });
         $("#player_id").change(function(){
             getPlayerInformation()
         });
+
         function getTournamentInformation()
         {
             var tournament_id = $("#tournament_id").val();
@@ -179,6 +180,29 @@
                 data: { "player_id": player_id },
                 success: function (data, status, xhr) {// success callback function
                     // $("#player_id").html(data.players);
+                    var data_files = data[0].files_data;
+                    if(data_files == 1){
+                        $("#files_data").prop('checked',true)
+                    }else{
+                        $("#files_data").prop('checked',false)
+
+                    }
+                    var paid = data[0].paid;
+                    if(paid == 1){
+                        $("#paid").prop('checked',true)
+                    }else{
+                        $("#paid").prop('checked',false)
+
+                    }
+                    var subscribe = data[0].subscribe;
+                    if(subscribe == 1){
+                        $("#subscribe").prop('checked',true)
+                    }else{
+                        $("#subscribe").prop('checked',false)
+
+                    }
+                    $("#notes").val(data[0].notes);
+                    $("#place").val(data[0].place);
 
                 }
             });
