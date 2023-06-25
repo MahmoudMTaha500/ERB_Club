@@ -205,6 +205,18 @@
                 </ul>
             </li>
             <li class=" nav-item"><a href="#"><i class="la la-commenting"></i><span class="menu-title"
+                                                                                    data-i18n="nav.flot_charts.main">  عقود الشركاء </span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{route('contract-partner.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                             كل  عقود الشركاء </a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('contract-partner.create')}}" data-i18n="nav.flot_charts.flot_bar_charts">
+                            انشاء عقد  جديد</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class=" nav-item"><a href="#"><i class="la la-commenting"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main">   جدول الملاعب و التدريبات </span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="{{route('trainer-and-player.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
