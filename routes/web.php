@@ -99,7 +99,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], functio
     Route::resource('tournament', "\App\Http\Controllers\TournamentsController");
     Route::resource('tournament-subscription', "\App\Http\Controllers\TournamentSubscriptionsController");
     Route::resource('tournament-follow', "\App\Http\Controllers\TournamentPlayersDetailsController");
-
+    Route::resource('contract-partner',"\App\Http\Controllers\ContractPartnersController");
+    Route::resource('partner',"\App\Http\Controllers\PartnersController");
 
 Route::get('logout',"App\Http\Controllers\LoginController@logout")->name('logout');
 });
