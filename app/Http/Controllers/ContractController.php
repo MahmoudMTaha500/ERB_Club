@@ -19,7 +19,7 @@ class ContractController extends Controller
     public function index()
     {
         $contracts =Contract::with('contract_details')->paginate(10);
-        return view("dashboard.Contracts.index",compact('contracts'));
+        return view("Dashboard.Contracts.index",compact('contracts'));
 
 
     }
@@ -33,7 +33,7 @@ class ContractController extends Controller
     {
         $employees = User::get();
         $items = Items::get();
-        return view("dashboard.Contracts.create",compact('employees','items'));
+        return view("Dashboard.Contracts.create",compact('employees','items'));
 
     }
 
@@ -87,7 +87,7 @@ class ContractController extends Controller
 
         $employees = User::get();
         $items = Items::get();
-        return view("dashboard.Contracts.edit",compact('employees','items','contract'));
+        return view("Dashboard.Contracts.edit",compact('employees','items','contract'));
     }
 
     /**

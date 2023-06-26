@@ -42,7 +42,7 @@
                                     <ul class="list-inline mb-0">
 
                                         <li>
-                                            <a class="btn btn-sm btn-success box-shadow-2 round btn-min-width pull-right" href="{{route('contract.create')}}"> <i class="ft-plus ft-md"></i> اضافة عقد جديد</a>
+                                            <a class="btn btn-sm btn-success box-shadow-2 round btn-min-width pull-right" href="{{route('contract-partner.create')}}"> <i class="ft-plus ft-md"></i> اضافة عقد جديد</a>
                                         </li>
                                 </div>
                             </div>
@@ -84,18 +84,18 @@
                                                 <td>{{$contract->percentage}}</td>
                                                 <td>{{$contract->type_of_contract}}</td>
 
-                                                <td><a    href="{{$contract->file}}"  target="_blank" >
+                                                <td><a    href="{{ URL::asset($contract->file)}}"  target="_blank" >
                                                         <i class="icon-eye"></i>
                                                     </a> </td>
                                                 <td class="text-truncate">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                        <a href="{{route('contract.edit', $contract->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
-                                                        <form action="{{route('contract.destroy' ,$contract->id)}}" method="POST" class="btn-group">
+                                                        <a href="{{route('contract-partner.edit', $contract->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
+                                                        <form action="{{route('contract-partner.destroy' ,$contract->id)}}" method="POST" class="btn-group">
                                                             @csrf @method('delete')
                                                             <button
 
                                                                 class="btn btn-danger btn-sm round"
-                                                                onclick="return confirm('حذف هذه العقود سيقوم بحذف جميع الفروع و الالعاب المتعلقه به!! هل انت متاكد من الحذف ؟')"
+                                                                onclick="return confirm('حذف هذا  العقود سيقوم بحذف جميع الفروع و الالعاب المتعلقه به!! هل انت متاكد من الحذف ؟')"
                                                             >
                                                                 حذف
                                                             </button>

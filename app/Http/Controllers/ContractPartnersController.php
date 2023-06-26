@@ -44,7 +44,7 @@ class ContractPartnersController extends Controller
     {
 //dd($request->all());
         if($request->file){
-                $media_name=$request->file;
+                $media_name=$request->file_name;
                 $objfile =$request->file;
                 $fileName = time() . $objfile->getClientOriginalName();
                 $pathFile = public_path("storage/ContractPartners");
@@ -91,9 +91,11 @@ class ContractPartnersController extends Controller
      * @param  \App\Models\ContractPartners  $contractPartners
      * @return \Illuminate\Http\Response
      */
-    public function edit(ContractPartners $contractPartners)
+    public function edit(ContractPartners $contractPartner)
     {
-        //
+        $partners = Partners::get();
+//        dd($contractPartner->ContractPartners());
+        return view("Dashboard.ContractsPartners.edit",compact('partners','contractPartner'));
     }
 
     /**
@@ -103,9 +105,15 @@ class ContractPartnersController extends Controller
      * @param  \App\Models\ContractPartners  $contractPartners
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateContractPartnersRequest $request, ContractPartners $contractPartners)
+    public function update(StoreContractPartnersRequest $request, ContractPartners $contractPartner)
     {
-        //
+     dd($contractPartner);
+        $contractPartner->from_company= $request->from_company;
+        $contractPartner->from= $request->from_company;
+        $contractPartner->to= $request->from_company;
+        $contractPartner->percentage= $request->from_company;
+        $contractPartner->file_name= $request->from_company;
+        $contractPartner->file= $request->from_company;
     }
 
     /**

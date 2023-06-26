@@ -33,7 +33,7 @@ class PlayersController extends Controller
     public function create()
     {
         $branches = Branchs::get();
-        return view("dashboard.Players.create",compact('branches'));
+        return view("Dashboard.Players.create",compact('branches'));
     }
 
     /**
@@ -111,7 +111,7 @@ class PlayersController extends Controller
     {
         $branches = Branchs::get();
 //        dd($player_files);
-        return view("dashboard.Players.edit",compact('branches','player'));
+        return view("Dashboard.Players.edit",compact('branches','player'));
 
     }
 

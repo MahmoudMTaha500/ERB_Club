@@ -9,10 +9,9 @@ class ContractPartners extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    protected $dates = ['from' , 'to' ];
 
-//  public  function ContractPartnersRelation(){
-//      return $this->hasMany('App\Models\ContractPartnersRelation','contract_id','id');
-//  }
+
 public function partners(){
     return $this->belongsTo('App\Models\Partners','from_company','id');
 }
