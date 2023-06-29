@@ -107,13 +107,36 @@ class ContractPartnersController extends Controller
      */
     public function update(StoreContractPartnersRequest $request, ContractPartners $contractPartner)
     {
-     dd($contractPartner);
+//     dd($contractPartner);
         $contractPartner->from_company= $request->from_company;
-        $contractPartner->from= $request->from_company;
-        $contractPartner->to= $request->from_company;
-        $contractPartner->percentage= $request->from_company;
-        $contractPartner->file_name= $request->from_company;
-        $contractPartner->file= $request->from_company;
+        $contractPartner->from= $request->from_date;
+        $contractPartner->to= $request->to_date;
+        $contractPartner->percentage= $request->percentage;
+        $contractPartner->file_name= $request->file_name;
+        if($request->file){
+            unlink($contractPartner->file);
+
+            $objfile =$request->file;
+            $fileName = time() . $objfile->getClientOriginalName();
+            $pathFile = public_path("storage/ContractPartners");
+            $objfile->move($pathFile, $fileName);
+            $fileNamePath = "storage/ContractPartners" . '/' . $fileName;
+
+            $contractPartner->file= $fileNamePath;
+
+        }
+        ContractPartnersRelation::where('contract_id',$contractPartner->id)->delete();
+        $counter = count($request->to_company);
+        for($x=0;  $x  < $counter; $x++ ){
+            ContractPartnersRelation::create([
+                'contract_id'=> $contractPartner->id,
+                'partner_id'=>$request->to_company[$x]
+            ]);
+
+        }
+        $contractPartner->save();
+        return redirect()->route('contract-partner.index')->with('message','تم تعديل العقد  بنجاح ');
+
     }
 
     /**
@@ -122,8 +145,13 @@ class ContractPartnersController extends Controller
      * @param  \App\Models\ContractPartners  $contractPartners
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ContractPartners $contractPartners)
+    public function destroy(ContractPartners $contractPartner)
     {
-        //
+        ContractPartnersRelation::where('contract_id',$contractPartner->id)->delete();
+        unlink($contractPartner->file);
+
+       $contractPartner->delete();
+        return redirect()->route('contract-partner.index')->with('error','تم حذف العقد  بنجاح ');
+
     }
 }
