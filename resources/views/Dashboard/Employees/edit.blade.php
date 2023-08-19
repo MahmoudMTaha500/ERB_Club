@@ -199,7 +199,7 @@
                                                         <label><input name="permession[]" type="checkbox" @if($user->hasPermission('price-list-delete')) checked  @endif value="price-list-delete" />حذف</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-3 mb-3">
                                                     <div class="checkbox">
                                                         <h5 for="">الباكدج</h5>
                                                         <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('package-create')) checked  @endif value="package-create" />انشاء</label>
@@ -214,6 +214,246 @@
                                                         <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('package-delete')) checked  @endif value="package-delete" />حذف</label>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">العقود</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('contracts-create')) checked  @endif value="contracts-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('contracts-update')) checked  @endif value="contracts-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('contracts-read')) checked  @endif value="contracts-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('contracts-delete')) checked  @endif value="contracts-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">عقود الشركاء</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('contracts-partners-create')) checked  @endif value="contracts-partners-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('contracts-partners-update')) checked  @endif value="contracts-partners-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('contracts-partners-read')) checked  @endif value="contracts-partners-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('contracts-partners-delete')) checked  @endif value="contracts-partners-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">الاعبين</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('players-create')) checked  @endif value="players-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('players-update')) checked  @endif value="players-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('players-read')) checked  @endif value="players-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('players-delete')) checked  @endif value="players-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">الانشاطه</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('activity-create')) checked  @endif value="activity-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('activity-update')) checked  @endif value="activity-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('activity-read')) checked  @endif value="activity-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('activity-delete')) checked  @endif value="activity-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">ايصالات التوريد</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Incoming-receipts-create')) checked  @endif value="Incoming-receipts-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('Incoming-receipts-update')) checked  @endif value="Incoming-receipts-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Incoming-receipts-read')) checked  @endif value="Incoming-receipts-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Incoming-receipts-delete')) checked  @endif value="Incoming-receipts-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">ايصالات الصرف</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Exchange-receipts-create')) checked  @endif value="Exchange-receipts-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('Exchange-receipts-update')) checked  @endif value="Exchange-receipts-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Exchange-receipts-read')) checked  @endif value="Exchange-receipts-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Exchange-receipts-delete')) checked  @endif value="Exchange-receipts-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">انواع الايصالات</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('type-receipts-create')) checked  @endif value="type-receipts-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('type-receipts-update')) checked  @endif value="type-receipts-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('type-receipts-read')) checked  @endif value="type-receipts-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('type-receipts-delete')) checked  @endif value="type-receipts-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">العهده</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('custody-create')) checked  @endif value="custody-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('custody-update')) checked  @endif value="custody-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('custody-read')) checked  @endif value="custody-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('custody-delete')) checked  @endif value="custody-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">تسويات العهده</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('settlements-create')) checked  @endif value="settlements-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('settlements-update')) checked  @endif value="settlements-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('settlements-read')) checked  @endif value="settlements-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('settlements-delete')) checked  @endif value="settlements-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">الخصومات</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('deductions-create')) checked  @endif value="deductions-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('deductions-update')) checked  @endif value="deductions-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('deductions-read')) checked  @endif value="deductions-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('deductions-delete')) checked  @endif value="deductions-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">حضور الاعبين</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Attendance-players-create')) checked  @endif value="Attendance-players-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('Attendance-players-update')) checked  @endif value="Attendance-players-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Attendance-players-read')) checked  @endif value="Attendance-players-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Attendance-players-delete')) checked  @endif value="Attendance-players-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">حضور المدربين</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Attendance-trainers-create')) checked  @endif value="Attendance-trainers-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('Attendance-trainers-update')) checked  @endif value="Attendance-trainers-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Attendance-trainers-read')) checked  @endif value="Attendance-trainers-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('Attendance-trainers-delete')) checked  @endif value="Attendance-trainers-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">الملاعب</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('stadiums-create')) checked  @endif value="stadiums-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('stadiums-update')) checked  @endif value="stadiums-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('stadiums-read')) checked  @endif value="stadiums-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('stadiums-delete')) checked  @endif value="stadiums-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">ايجار الملاعب و الصالات</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('stadiums-rent-create')) checked  @endif value="stadiums-rent-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('stadiums-rent-update')) checked  @endif value="stadiums-rent-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('stadiums-rent-read')) checked  @endif value="stadiums-rent-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('stadiums-rent-delete')) checked  @endif value="stadiums-rent-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">المسابقات</h5>
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('tournament-create')) checked  @endif value="tournament-create" />انشاء</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('tournament-update')) checked  @endif value="tournament-update" />تعديل</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('tournament-read')) checked  @endif value="tournament-read" />عرض</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('tournament-delete')) checked  @endif value="tournament-delete" />حذف</label>
+                                                    </div>
+                                                </div>
+{{--                                                <div class="col-md-3 mb-3">--}}
+{{--                                                    <div class="checkbox">--}}
+{{--                                                        <h5 for="">الباكدج</h5>--}}
+{{--                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('package-create')) checked  @endif value="package-create" />انشاء</label>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="checkbox">--}}
+{{--                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('package-update')) checked  @endif value="package-update" />تعديل</label>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="checkbox">--}}
+{{--                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('package-read')) checked  @endif value="package-read" />عرض</label>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="checkbox">--}}
+{{--                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('package-delete')) checked  @endif value="package-delete" />حذف</label>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
                                                 {{--                                                <div class="col-md-3">--}}
                                                 {{--                                                    <div class="checkbox">--}}
                                                 {{--                                                        <h5 for="">الطلاب</h5>--}}
@@ -279,19 +519,16 @@
 @section('script')
 
     <script>
+        showPermissions()
         $(".employee").change(function(){
-            if($(this).val() == 'user'){
-                $('#permiossn').show()
-            }else{
-                $('#permiossn').hide()
-            }
+            showPermissions()
         });
-        $(document).ready(function(){
+        function showPermissions(){
             if($(".employee").val() == 'user'){
                 $('#permiossn').show()
             }else{
                 $('#permiossn').hide()
             }
-        });
+        }
     </script>
 @endsection

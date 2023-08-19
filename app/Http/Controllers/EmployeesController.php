@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use  App\Models\User;
 use Illuminate\Support\Facades\File;
@@ -27,7 +28,8 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        return view('Dashboard.Employees.create');
+        $permissions  = Permission::get();
+        return view('Dashboard.Employees.create',compact('permissions'));
     }
 
     /**
@@ -69,7 +71,11 @@ class EmployeesController extends Controller
             $admin->attachRole($request->role);
         } else{
             $admin->attachRole($request->role);
-            $admin->attachPermissions($request->permession);
+
+            if($request->permession){
+                $admin->attachPermissions($request->permession);
+
+            }
         }
 
 
@@ -149,7 +155,10 @@ class EmployeesController extends Controller
             $role = \DB::table('role_user')->where('user_id',$id)->delete();
             $per = \DB::table('permission_user')->where('user_id',$id)->delete();
             $admin->attachRole($request->role);
-            $admin->attachPermissions($request->permession);
+            if($request->permession) {
+
+                $admin->attachPermissions($request->permession);
+            }
         }
         $admin->save();
         return redirect()->route('employee.index')->with('message','تم تعديل المؤظف بنجاح ');

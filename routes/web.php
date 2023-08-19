@@ -20,7 +20,7 @@ Route::get('/', "App\Http\Controllers\LoginController@index");
 Route::resource('login',"App\Http\Controllers\LoginController");
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware', 'auth' => 'role:user|administrator|superadministrator']], function() {
 
     Route::get('/', function () {
         return view('Dashboard.dashboard');
