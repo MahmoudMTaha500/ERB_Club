@@ -11,7 +11,7 @@
 
 
 
-            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('branches-show')  )
+            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('branches-read')  )
 
 
 
@@ -30,7 +30,7 @@
                 </ul>
             </li>
             @endif
-            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('sports-show')  )
+            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('sports-read')  )
 
             <li class=" nav-item"><a href="#"><i class="icon-game-controller"></i><span class="menu-title"
                                                                               data-i18n="nav.flot_charts.main">الالعاب</span></a>
@@ -49,7 +49,7 @@
                 </ul>
             </li>
             @endif
-            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('levels-show')  )
+            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('levels-read')  )
 
 
             <li class=" nav-item"><a href="#"><i class="la la-level-up"></i><span class="menu-title"
@@ -67,7 +67,7 @@
                 </ul>
             </li>
             @endif
-            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('price-list-show')  )
+            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('price-list-read')  )
 
 
             <li class=" nav-item"><a href="#"><i class="la la-money"></i><span class="menu-title"
@@ -86,7 +86,7 @@
                 </ul>
             </li>
             @endif
-            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('package-show')  )
+            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('package-read')  )
 
             <li class=" nav-item"><a href="#"><i class="la la-list"></i><span class="menu-title"
                                                                               data-i18n="nav.flot_charts.main"> الباكدج</span></a>
@@ -133,7 +133,7 @@
                 </ul>
             </li>
             @endif
-            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('players-show')  )
+            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('players-read')  )
 
             <li class=" nav-item"><a href="#"><i class="icon-user-following"></i><span class="menu-title"
                                                                               data-i18n="nav.flot_charts.main"> اللاعبين </span></a>
@@ -151,7 +151,7 @@
                 </ul>
             </li>
             @endif
-            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('Incoming-receipts-show')  || auth()->user()->hasPermission('type-receipts-show'))
+            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('Incoming-receipts-read')  || auth()->user()->hasPermission('type-receipts-read'))
 
             <li class=" nav-item  @if(Route::is('receipt.*') || Route::is('receipt-type.*') ) open @endif"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
                                                                               data-i18n="nav.flot_charts.main"> ايصالات التوريد </span></a>
@@ -180,7 +180,7 @@
                 </ul>
             </li>
             @endif
-                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('Exchange-receipts-show') )
+                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('Exchange-receipts-read') )
 
             <li class=" nav-item  @if(Route::is('receipt-pay.*') || Route::is('receipt-type-pay.*') ) open @endif"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main"> ايصالات الصرف </span></a>
@@ -204,7 +204,7 @@
                 </ul>
             </li>
                 @endif
-                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('custody-show') )
+                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('custody-read') )
 
             <li class=" nav-item"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main">  العهده </span></a>
@@ -216,7 +216,7 @@
                 </ul>
             </li>
                 @endif
-                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('settlements-show') )
+                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('settlements-read') )
 
             <li class=" nav-item"><a href="#"><i class="la la-file-zip-o"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main">  طلبات تسويه العهده  </span></a>
@@ -228,7 +228,7 @@
                 </ul>
             </li>
                 @endif
-                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('deductions-show') )
+                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('deductions-read') )
 
 
             <li class=" nav-item"><a href="#"><i class="ft-user-minus"></i><span class="menu-title"
@@ -246,7 +246,7 @@
                 </ul>
             </li>
                 @endif
-                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('contracts-show') )
+                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('contracts-read') )
 
             <li class=" nav-item"><a href="#"><i class="ft-align-justify"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main"> بنود العقد </span></a>
@@ -263,7 +263,7 @@
                 </ul>
             </li>
                 @endif
-                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('contracts-show') )
+                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('contracts-read') )
 
             <li class=" nav-item"><a href="#"><i class="la la-commenting"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main">  العقود </span></a>
@@ -281,7 +281,7 @@
                 </ul>
             </li>
                 @endif
-                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('contracts-partners-show') )
+                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('contracts-partners-read') )
 
             <li class=" nav-item"><a href="#"><i class="la la-commenting"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main">  عقود الشركاء </span></a>
@@ -299,7 +299,7 @@
                 </ul>
             </li>
                 @endif
-            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('stadiums-rent-show') )
+            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('stadiums-rent-read') )
 
             <li class=" nav-item"><a href="#"><i class="la la-commenting"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main">   جدول الملاعب و التدريبات </span></a>
@@ -314,7 +314,7 @@
                 </ul>
             </li>
             @endif
-            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('Attendance-players-show')  || auth()->user()->hasPermission('Attendance-trainers-show')  )
+            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('Attendance-players-read')  || auth()->user()->hasPermission('Attendance-trainers-read')  )
 
             <li class=" nav-item"><a href="#"><i class="la la-report"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main">  الحضور و الانصراف  </span></a>
@@ -329,7 +329,7 @@
                 </ul>
             </li>
             @endif
-            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('stadiums-show') )
+            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('stadiums-read') )
 
             <li class=" nav-item"><a href="#"><i class="la la-futbol-o"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main"> الملاعب </span></a>
@@ -358,7 +358,7 @@
 
 {{--                </ul>--}}
 {{--            </li>--}}
-            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('tournament-show') )
+            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('tournament-read') )
 
             <li class=" nav-item"><a href="#"><i class="ft-layers"></i><span class="menu-title"
                                                                                     data-i18n="nav.flot_charts.main">   المسابقات </span></a>
