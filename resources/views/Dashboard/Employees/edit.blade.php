@@ -50,7 +50,7 @@
                                                         <label for="projectinput2">قسم الموظف</label>
                                                         <select class="employee form-control text-left" required name="role" value="{{old('role')}}">
                                                             <option value="" onclick="admin_emp()">اختر</option>
-                                                            <option  @if($user->hasRole('Administrator')) selected   @endif  value="Administrator" onclick="admin_emp()">ادمن</option>
+                                                            <option  @if($user->hasRole('Administrator') || $user->hasRole('superadministrator')) selected   @endif  value="Administrator" onclick="admin_emp()">ادمن</option>
                                                             <option  @if($user->hasRole('user')) selected   @endif value="user" id="employee" >موظف</option>
                                                         </select>
                                                     </div>
