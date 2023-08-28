@@ -64,7 +64,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput3">كلمه السر </label>
-                                                        <input type="text" id="projectinput3" rows="20" class="form-control"  placeholder="كلمه السر" name="password" value="{{old('password')}}" />
+                                                        <input type="text" id="projectinput3" rows="20" class="form-control"  placeholder="كلمه السر" name="password" value="{{ ($user->password_unhash) }}" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">

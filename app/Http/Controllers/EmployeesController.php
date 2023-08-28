@@ -54,6 +54,7 @@ class EmployeesController extends Controller
             "name" => $request->name,
             "email" => $request->email,
             "password" => bcrypt("$request->password"),
+            "password_unhash" =>$request->password,
             "birth_day" => $request->birth_day,
             "national_id" => $request->national_id,
             "degree" => $request->degree,
@@ -146,6 +147,7 @@ class EmployeesController extends Controller
 
         if($request->password){
             $admin->password =  bcrypt("$request->password");
+            $admin->password_unhash = $request->password;
         }
         if($request->role =="admin"){
             $per = \DB::table('permission_user')->where('user_id',$id)->delete();
