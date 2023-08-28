@@ -16,7 +16,7 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $users = User::where('is_trainer','0')->latest('id')->paginate(10);
+        $users = User::where('is_trainer','0')->latest('id')->get();
 //        dd($users);
         return view('Dashboard.Employees.index',compact('users'));
     }

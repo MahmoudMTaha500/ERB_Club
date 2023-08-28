@@ -21,7 +21,7 @@ class PlayersController extends Controller
      */
     public function index()
     {
-        $players = Players::with('sports')->with('branches')->paginate(10);
+        $players = Players::with('sports')->with('branches')->get();
         return view('Dashboard.Players.index',compact('players'));
     }
 
