@@ -48,10 +48,16 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">قسم الموظف</label>
-                                                        <select class="employee form-control text-left" required name="role" value="{{old('role')}}">
-                                                            <option value="" onclick="admin_emp()">اختر</option>
-                                                            <option  @if($user->hasRole('administrator') || $user->hasRole('superadministrator')) selected   @endif  value="Administrator" onclick="admin_emp()">ادمن</option>
-                                                            <option  @if($user->hasRole('user')) selected   @endif value="user" id="employee" >موظف</option>
+                                                        <select class="employee form-control text-left" required  name="role" value="{{old('role')}}">
+                                                            <option value="" >اختر</option>
+                                                            <option @if($user->department== "Administrator" )  selected @endif value="Administrator" >ادمن</option>
+                                                            <option @if($user->department== "user     " )  selected @endif value="user" id="employee" >موظف</option>
+                                                            <option @if($user->department== "Sports_activity_manager" )  selected @endif value="Sports_activity_manager" id="Sports_activity_manager" >مدير النشاط الرياضي</option>
+                                                            <option @if($user->department== "Managing_Director" )  selected @endif value="Managing_Director" id="Managing_Director" >المدير الاداري  </option>
+                                                            <option @if($user->department== "Branch_Manger" )  selected @endif value="Branch_Manger" id="Branch_Manger" >مدير فرع  </option>
+                                                            <option @if($user->department== "Technical_Director" )  selected @endif value="Technical_Director" id="Technical_Director" >مدير فني  </option>
+                                                            <option @if($user->department== "Financial_Manager" )  selected @endif value="Financial_Manager" id="Financial_Manager" >مدير مالي  </option>
+                                                            <option @if($user->department== "Hr_Manager" )  selected @endif value="Hr_Manager" id="Hr_Manager" >مدير الموارد البشرية </option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -136,7 +142,7 @@
                                             </div>
                                             <hr class="form-group">
                                             </div>
-                                            <div class="row" id="permiossn" style="display: none;">
+                                            <div class="row" id="permissionID" style="display: none;">
                                                 <div class="col-md-3 mb-3">
                                                     <div class="checkbox">
                                                         <h5 for="">الفروع</h5>
@@ -439,11 +445,11 @@
                                                         <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('tournament-delete')) checked  @endif value="tournament-delete" />حذف</label>
                                                     </div>
                                                 </div>
-{{--                                                <div class="col-md-3 mb-3">--}}
-{{--                                                    <div class="checkbox">--}}
-{{--                                                        <h5 for="">الباكدج</h5>--}}
-{{--                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('package-create')) checked  @endif value="package-create" />انشاء</label>--}}
-{{--                                                    </div>--}}
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="checkbox">
+                                                        <h5 for="">تاريخ الايصال</h5>
+                                                        <label><input name="permession[]" type="checkbox" @if($user->hasPermission('date-receipts-create')) checked  @endif value="date-receipts-create" />انشاء</label>
+                                                    </div>
 {{--                                                    <div class="checkbox">--}}
 {{--                                                        <label><input name="permession[]" type="checkbox"   @if($user->hasPermission('package-update')) checked  @endif value="package-update" />تعديل</label>--}}
 {{--                                                    </div>--}}
@@ -453,7 +459,7 @@
 {{--                                                    <div class="checkbox">--}}
 {{--                                                        <label><input name="permession[]" type="checkbox"  @if($user->hasPermission('package-delete')) checked  @endif value="package-delete" />حذف</label>--}}
 {{--                                                    </div>--}}
-{{--                                                </div>--}}
+                                                </div>
                                                 {{--                                                <div class="col-md-3">--}}
                                                 {{--                                                    <div class="checkbox">--}}
                                                 {{--                                                        <h5 for="">الطلاب</h5>--}}
@@ -524,11 +530,120 @@
             showPermissions()
         });
         function showPermissions(){
-            if($(".employee").val() == 'user'){
-                $('#permiossn').show()
+
+            if($(".employee").val() == 'Administrator' || $(".employee").val() == "" ){
+                $('#permissionID').hide()
             }else{
-                $('#permiossn').hide()
+                $('#permissionID').show()
+
             }
+            assginRolesManager();
+
+        }
+        function assginRolesManager(){
+            $('#permission').show();
+            $("input[type=checkbox]").prop("checked",false);
+
+            if($(".employee").val() == 'Sports_activity_manager'){
+
+
+                fullPermissions("players");
+                fullPermissions("activity");
+                fullPermissions("levels");
+                fullPermissions("package");
+                fullPermissions("price-list");
+                fullPermissions("stadiums");
+                fullPermissions("Attendance-players");
+                fullPermissions("Attendance-trainers");
+
+                $("input[type=checkbox][value=contracts-read]").prop("checked",true);
+
+                $("input[type=checkbox][value=Exchange-receipts-create]").prop("checked",true);
+                $("input[type=checkbox][value=Exchange-receipts-read]").prop("checked",true);
+
+                $("input[type=checkbox][value=Incoming-receipts-create]").prop("checked",true);
+                $("input[type=checkbox][value=Incoming-receipts-read]").prop("checked",true);
+
+
+            }
+            if($(".employee").val() == 'Managing_Director' || $(".employee").val()=='Branch_Manger') {
+                fullPermissions("players");
+                $("input[type=checkbox][value=activity-read]").prop("checked",true);
+                $("input[type=checkbox][value=levels-read]").prop("checked",true);
+                $("input[type=checkbox][value=package-read]").prop("checked",true);
+                $("input[type=checkbox][value=price-list-read]").prop("checked",true);
+
+                $("input[type=checkbox][value=Exchange-receipts-create]").prop("checked",true);
+                $("input[type=checkbox][value=Exchange-receipts-read]").prop("checked",true);
+
+                $("input[type=checkbox][value=Incoming-receipts-create]").prop("checked",true);
+                $("input[type=checkbox][value=Incoming-receipts-read]").prop("checked",true);
+
+                $("input[type=checkbox][value=Attendance-players-create]").prop("checked",true);
+                $("input[type=checkbox][value=Attendance-players-read]").prop("checked",true);
+
+                $("input[type=checkbox][value=Attendance-trainers-create]").prop("checked",true);
+                $("input[type=checkbox][value=Attendance-trainers-read]").prop("checked",true);
+            }
+            if( $(".employee").val() == "Technical_Director"  ){
+                $("input[type=checkbox][value=activity-read]").prop("checked",true);
+                $("input[type=checkbox][value=levels-read]").prop("checked",true);
+                $("input[type=checkbox][value=players-read]").prop("checked",true);
+                $("input[type=checkbox][value=contracts-read]").prop("checked",true);
+                $("input[type=checkbox][value=Attendance-trainers-create]").prop("checked",true);
+                $("input[type=checkbox][value=Attendance-players-read]").prop("checked",true);
+            }
+            if($('.employee').val()== 'Financial_Manager'){
+                $("input[type=checkbox][value=players-read]").prop("checked",true);
+                $("input[type=checkbox][value=contracts-read]").prop("checked",true);
+                fullPermissions("activity");
+                fullPermissions("levels");
+                fullPermissions("package");
+                fullPermissions("price-list");
+                fullPermissions("stadiums");
+                fullPermissions("stadiums-rent");
+                fullPermissions("Incoming-receipts");
+                fullPermissions("Exchange-receipts");
+                fullPermissions("type-receipts");
+                fullPermissions("custody");
+                fullPermissions("settlements");
+                fullPermissions("deductions");
+                fullPermissions("contracts-partners");
+
+            }
+            if($('.employee').val()== 'Hr_Manager') {
+
+                fullPermissions("custody");
+                fullPermissions("contracts");
+                fullPermissions("settlements");
+                fullPermissions("deductions");
+                fullPermissions("Attendance-players");
+                fullPermissions("Attendance-trainers");
+                $("input[type=checkbox][value=Exchange-receipts-read]").prop("checked",true);
+                $("input[type=checkbox][value=Incoming-receipts-read]").prop("checked",true);
+                $("input[type=checkbox][value=players-read]").prop("checked",true);
+                $("input[type=checkbox][value=levels-read]").prop("checked",true);
+                $("input[type=checkbox][value=package-read]").prop("checked",true);
+                $("input[type=checkbox][value=activity-read]").prop("checked",true);
+                $("input[type=checkbox][value=price-list-read]").prop("checked",true);
+
+
+
+
+            }
+
+        }
+        function resetForm() {
+
+            document.getElementById("myForm").reset();
+
+        }
+        function fullPermissions(value){
+            $("input[type=checkbox][value="+value+"-create]").prop("checked",true);
+            $("input[type=checkbox][value="+value+"-read]").prop("checked",true);
+            $("input[type=checkbox][value="+value+"-update]").prop("checked",true);
+            $("input[type=checkbox][value="+value+"-delete]").prop("checked",true);
         }
     </script>
 @endsection
+

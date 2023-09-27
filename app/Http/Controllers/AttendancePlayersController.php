@@ -19,6 +19,7 @@ class AttendancePlayersController extends Controller
      */
     public function index()
     {
+        $this->CanDoAction(['administrator','superadministrator'],'Attendance-players-read');
         $today = Carbon::today();
         $players= TrainerAndPlayer::with('EventTrainer.players')->where('date',$today)->paginate(10);
 //        $players = Players::paginate(10);

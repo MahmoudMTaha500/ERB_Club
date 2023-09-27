@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use  App\Models\User;
 use Illuminate\Support\Facades\File;
@@ -17,7 +18,7 @@ class EmployeesController extends Controller
     public function index()
     {
         $users = User::where('is_trainer','0')->latest('id')->get();
-//        dd($users);
+//        dd($roles);
         return view('Dashboard.Employees.index',compact('users'));
     }
 
@@ -66,16 +67,16 @@ class EmployeesController extends Controller
             "degree_certificate" => $request->degree_certificate,
             "army_certificate" => $request->army_certificate,
             "feish" => $request->feish,
+            "department" => $request->role,
 
         ]);
-        if($request->role =="Administrator"){
+        if($request->role == "Administrator"){
             $admin->attachRole($request->role);
-        } else{
-            $admin->attachRole($request->role);
-
+        } else
+        {
+            $admin->attachRole('User');
             if($request->permession){
                 $admin->attachPermissions($request->permession);
-
             }
         }
 

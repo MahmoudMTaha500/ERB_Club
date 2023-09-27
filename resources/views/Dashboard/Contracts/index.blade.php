@@ -143,8 +143,13 @@
 
                                                 <td class="text-truncate">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
+                                                        @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('contracts-update') )
+
                                                         <a href="{{route('contract.edit', $contract->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
-                                                        <form action="{{route('contract.destroy' ,$contract->id)}}" method="POST" class="btn-group">
+                                                        @endif
+                                                            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('contracts-delete') )
+
+                                                            <form action="{{route('contract.destroy' ,$contract->id)}}" method="POST" class="btn-group">
                                                             @csrf @method('delete')
                                                             <button
 
@@ -154,6 +159,7 @@
                                                                 حذف
                                                             </button>
                                                         </form>
+                                                            @endif
                                                     </div>
                                                 </td>
                                             </tr>

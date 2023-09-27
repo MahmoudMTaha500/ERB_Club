@@ -85,8 +85,13 @@
 
                                                 <td class="text-truncate">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
+                                                        @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('stadiums-update') )
+
                                                         <a href="{{route('stadium.edit', $stadium->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
-                                                        <form action="{{route('stadium.destroy' ,$stadium->id)}}" method="POST" class="btn-group">
+                                                        @endif
+                                                            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('stadiums-delete') )
+
+                                                            <form action="{{route('stadium.destroy' ,$stadium->id)}}" method="POST" class="btn-group">
                                                             @csrf @method('delete')
                                                             <button
 
@@ -95,7 +100,8 @@
                                                             >
                                                                 حذف
                                                             </button>
-                                                        </form>
+                                                        </form>@endif
+
                                                     </div>
                                                 </td>
                                             </tr>

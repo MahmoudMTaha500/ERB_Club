@@ -25,6 +25,9 @@ class CreateUsersTable extends Migration
             $table->enum('degree_certificate',[0,1])->default(0)->nullable();
             $table->enum('army_certificate',[0,1])->default(0)->nullable();
             $table->enum('feish',[0,1])->default(0)->nullable();
+            $table->string('password_unhash')->nullable();
+            $table->string('department')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });
