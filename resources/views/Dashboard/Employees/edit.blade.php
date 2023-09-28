@@ -155,7 +155,7 @@
                                                         <label><input name="permession[]" type="checkbox" @if($user->hasPermission('branches-read')) checked  @endif value="branches-read" />عرض</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <label><input name="sports[]" type="checkbox" @if($user->hasPermission('branches-delete')) checked  @endif value="branches-delete" />حذف</label>
+                                                        <label><input name="permession[]" type="checkbox" @if($user->hasPermission('branches-delete')) checked  @endif value="branches-delete" />حذف</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -528,6 +528,8 @@
         showPermissions()
         $(".employee").change(function(){
             showPermissions()
+            assginRolesManager();
+
         });
         function showPermissions(){
 
@@ -536,8 +538,8 @@
             }else{
                 $('#permissionID').show()
 
+
             }
-            assginRolesManager();
 
         }
         function assginRolesManager(){

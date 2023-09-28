@@ -132,6 +132,7 @@ class EmployeesController extends Controller
         $admin->degree_certificate =  $request->degree_certificate;
         $admin->army_certificate =  $request->army_certificate;
         $admin->feish =  $request->feish;
+        $admin->department =  $request->role;
 
         $fileNamePath="";
         if($request->hasFile('image')){
@@ -150,14 +151,14 @@ class EmployeesController extends Controller
             $admin->password =  bcrypt("$request->password");
             $admin->password_unhash = $request->password;
         }
-        if($request->role =="admin"){
+        if($request->role =="Administrator"){
             $per = \DB::table('permission_user')->where('user_id',$id)->delete();
             $role = \DB::table('role_user')->where('user_id',$id)->delete();
             $admin->attachRole($request->role);
         } else{
             $role = \DB::table('role_user')->where('user_id',$id)->delete();
             $per = \DB::table('permission_user')->where('user_id',$id)->delete();
-            $admin->attachRole($request->role);
+            $admin->attachRole("User");
             if($request->permession) {
 
                 $admin->attachPermissions($request->permession);
