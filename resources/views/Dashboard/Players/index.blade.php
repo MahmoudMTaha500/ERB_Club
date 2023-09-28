@@ -36,7 +36,7 @@
                     <div id="recent-transactions" class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">اللاعبيين ({{$players->total()}})</h4>
+                                <h4 class="card-title">اللاعبيين ({{$players->count()}})</h4>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -48,7 +48,7 @@
                             </div>
                             <div class="card-content">
                                 <div class="table-responsive">
-                                    <table id="tablecontents" class="table table-hover table-xl mb-0 sortable">
+                                    <table id="myTable" class="table table-hover table-xl mb-0 sortable">
                                         <thead>
                                         <tr>
                                             <th class="border-top-0">  اسم اللاعب</th>
@@ -93,8 +93,13 @@
 
                                                 <td class="text-truncate">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
+                                                        @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('players-update')  )
+
                                                         <a href="{{route('player.edit', $player->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
-                                                        <form action="{{route('player.destroy' ,$player->id)}}" method="POST" class="btn-group">
+                                                        @endif
+                                                            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('players-delete')  )
+
+                                                            <form action="{{route('player.destroy' ,$player->id)}}" method="POST" class="btn-group">
                                                             @csrf @method('delete')
                                                             <button
 
@@ -104,6 +109,7 @@
                                                                 حذف
                                                             </button>
                                                         </form>
+                                                            @endif
                                                     </div>
                                                 </td>
                                             </tr>
@@ -124,12 +130,15 @@
                         </div>
                     </div>
                 </div>
-                @if($players->hasPages())
-                    {{$players->appends(request()->input())->links('pagination::bootstrap-4')}}
-                @endif
+
                 <!--/ Recent Transactions -->
             </div>
         </div>
     </div>
 @endsection
+@section('script')
 
+    <script>
+        let table = new DataTable('#myTable');
+    </script>
+@endsection

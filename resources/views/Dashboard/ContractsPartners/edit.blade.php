@@ -1,23 +1,70 @@
 @extends('Dashboard.includes.admin')
 
 @section('content')
+    <div id="exampleModal" class="modal fade">
+        <div class="modal-dialog">
+            <form class="form" id="" action="{{route('partner.store')}}" method="POST"
+            >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">×</span> <span class="sr-only">close</span>
+                        </button>
+                        <h4 id="modalTitle" class="modal-title"></h4>
+                    </div>
+                    <div id="modalBody" class="modal-body">
+
+
+                        @csrf
+                        <div class="form-body">
+
+                            <div class="row">
+
+                                <div class="col-md-12"  >
+                                    <div class="form-group">
+                                        <label for="projectinput2"> اسم الشريك الجديد  </label>
+                                        <input id="name" class=" form-control" required  name="name"  >
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="" class="btn btn-primary"
+                        >save
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
 
 
     <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-header row">
                 <div class="content-header-left col-md-6 col-12 mb-2">
-                    <h3 class="content-header-title">قسم العقود</h3>
+                    <h3 class="content-header-title">    قسم  العقود الشركاء </h3>
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="">لوحة التحكم</a></li>
-                                <li class="breadcrumb-item active">اضافة عقد</li>
+                                <li class="breadcrumb-item active">تعديل عقد</li>
                             </ol>
                         </div>
                     </div>
                 </div>
             </div>
+
+
             <div class="content-body">
                 @include('Dashboard.includes.alerts.errors')
 
@@ -30,35 +77,53 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('contract.store')}}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" id="myForm" action="{{route('contract-partner.update',$contractPartner->id)}}" method="POST" enctype="multipart/form-data">
                                         @csrf
+                                        @method('put')
                                         <div class="form-body">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  الطرف الاول</label>
 
-                                                        <select class=" form-control sport_val"  name="from_employee">
+                                                        <select class=" form-control "  name="from_company" readonly>
                                                             <option  selected value="">حدد الطرف الاول</option>
 
-                                                            @foreach($employees as $employee)
-                                                                <option  @if($employee->id == $contract->from_employee) selected @endif value="{{$employee->id}}">{{$employee->name}}</option>
+                                                            @foreach($partners as $partner)
+                                                                <option @if($partner->id == 1 ) selected @endif  value="{{$partner->id}}">{{$partner->name}}</option>
 
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class=" col-md-6">
+                                                <div class=" col-md-4">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  الطرف التاني</label>
-                                                        <select class=" form-control sport_val"  name="to_employee">
-                                                            <option  selected value="">حدد الطرف التاني</option>
+                                                        <select class="select2-placeholder-multiple form-control" multiple="multiple" name="to_company[]">
 
-                                                            @foreach($employees as $employee)
-                                                                <option   @if($employee->id == $contract->to_employee) selected @endif value="{{$employee->id}}">{{$employee->name}}</option>
+                                                            @foreach($partners as $partner)
+                                                                @if($partner->id > 1 )
 
+                                                                    <option
+                                                                        @foreach($contractPartner->ContractPartners as $p)
+
+                                                                        @if ($p->id == $partner->id)
+                                                                            selected="selected"
+                                                                        @endif
+                                                                        @endforeach
+
+                                                                            value="{{$partner->id}}">{{$partner->name}}</option>
+                                                                @endif
                                                             @endforeach
                                                         </select>
+                                                    </div>
+                                                </div>
+                                                <div class=" col-md-2 mt-2">
+                                                    <div class="form-group">
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                                            اضاف شريك
+                                                        </button>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -67,109 +132,48 @@
                                                     <div class="form-group">
                                                         <label for="projectinput2"> مده التعاقد  من</label>
 
-                                                        <input type="date" class="form-control" name="from_date" value="{{$contract->from->format('Y-m-d')}}">
+                                                        <input type="date" class="form-control" name="from_date" placeholder="dd-mm-yyyy" value="{{$contractPartner->from->format('Y-m-d')}}"
+                                                               min="1997-01-01" max="2030-12-31">
                                                     </div>
                                                 </div>
                                                 <div class=" col-md-6">
                                                     <div class="form-group">
                                                         <label for="projectinput2">   مده التعاقد  الي </label>
-                                                        <input type="date" class="form-control" name="to_date" value="{{$contract->to->format('Y-m-d')}}">
+                                                        <input type="date" class="form-control" name="to_date" value="{{$contractPartner->to->format('Y-m-d')}}">
 
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row targetDiv" id="div0">
 
-                                                <div class="col-md-12">
-                                                    <div id="group1" class="fvrduplicate">
-                                                        <div class="row entry">
-                                                            <div class=" col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="projectinput2">   البنود</label>
-                                                                    <select class=" form-control item_class"  name="item_id[]" id="item_id" onchange="getItemValues(this)">
-                                                                        <option  selected value="">حدد البند </option>
-
-                                                                        @foreach($items as $item)
-                                                                            <option data-type="{{$item->type}}" data-item_value="{{$item->item_value}}"
-                                                                                    value="{{$item->id}}">{{$item->item_name}}</option>
-
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <div class="form-group price_row">
-                                                                    <label> قيمه البند</label>
-                                                                    <input class="form-control form-control-sm item_value  " name="item_value[]" type="number"  placeholder="قيمه البند ">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class=" col-md-1 mt-2">
-
-                                                                <button type="button" class="btn btn-success btn-add">
-                                                                    <i class="fa fa-plus" aria-hidden="true">+</i>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @forelse($contract->contract_details as $details)
-                                                <div class="col-md-12">
-                                                    <div id="group1" class="fvrduplicate">
-                                                        <div class="row entry">
-                                                            <div class=" col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="projectinput2">   البنود</label>
-                                                                    <select class=" form-control item_class"  name="item_id[]" id="item_id" onchange="getItemValues(this)">
-                                                                        <option  selected value="">حدد البند </option>
-
-                                                                        @foreach($items as $item)
-                                                                            <option data-type="{{$item->type}}" data-item_value="{{$item->item_value}}"
-                                                                                    @if($item->id == $details->item_id) selected @endif
-                                                                                    value="{{$item->id}}">{{$item->item_name}}</option>
-
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <div class="form-group price_row">
-                                                                    <label> قيمه البند</label>
-                                                                    <input class="form-control form-control-sm item_value  " name="item_value[]"
-                                                                           @if($details->item->type == "text")
-                                                                               type="text"
-                                                                           @else   type="number" @endif
-
-                                                                           value="{{ $details->item_value }}" placeholder="قيمه البند ">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class=" col-md-1 mt-2">
-
-                                                                <button type="button" class="btn btn-danger btn-remove">
-                                                                    <i class="fa fa-minus" aria-hidden="true">-</i>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                    @empty
-                                                    <div class="col-md-12 " >
-                                                    <h4 class="text-center">
-                                                        لايوجد بنود بهذا العقد
-                                                    </h4>
-                                                    </div>
-                                                @endforelse
-                                            </div>
                                             <div class="row">
 
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>   النسبه  </label>
+                                                        <input class="form-control form-control-sm "  name="percentage"
+                                                               type="number" placeholder="  نسبه التعاقد بين الشركاء " value="{{$contractPartner->percentage}}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>  نوع التعاقد </label>
                                                         <input class="form-control form-control-sm "  name="type_of_contract"
-                                                               type="text" placeholder="  نوع التعاقد " value="{{ $contract->type_of_contract }}">
+                                                               type="text" placeholder="  نوع التعاقد " value="{{$contractPartner->type_of_contract}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label> اسم العقد   </label>
+                                                        <input class="form-control form-control-sm "  name="file_name"
+                                                               type="text"value="{{$contractPartner->file_name}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>   ملف العقد </label>
+                                                        <input class="form-control form-control-sm "  name="file"
+                                                               type="file" placeholder="    ">
                                                     </div>
                                                 </div>
                                             </div>
@@ -177,7 +181,16 @@
 
                                         </div>
                                         <div class="form-actions center">
-                                            <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button"  class="btn btn-danger   w-100" onclick="resetForm();">مسح  </button>
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -193,47 +206,12 @@
 @section('script')
 
     <script>
-        function getItemValues(object){
-            var type =   $(object).children(":selected").data("type");
-
-            if(type == "percentage")
-            {
-                $(object).parent().parent().parent().find('.item_value').attr('type' ,'number');
-                var item_value =   $(object).children(":selected").data("item_value");
-                $(object).parent().parent().parent().find('.item_value').val(item_value);
 
 
-            }
-            if(type == "text")
-            {
-                $(object).parent().parent().parent().find('.item_value').attr('type','text');
-                var item_value =   $(object).children(":selected").data("item_value");
+        function resetForm() {
 
-                $(object).parent().parent().parent().find('.item_value').val(item_value);
-            }
-            if(type == "number")
-            {
-                $(object).parent().parent().parent().find('.item_value').attr('type','number');
-                var item_value =   $(object).children(":selected").data("item_value");
-                $(object).parent().parent().parent().find('.item_value').val(item_value);
-            }
+            document.getElementById("myForm").reset();
+
         }
-
-        $(function() {
-            $(document).on('click', '.btn-add', function(e) {
-                e.preventDefault();
-                var controlForm = $(this).closest('.fvrduplicate'),
-                    currentEntry = $(this).parents('.entry:first'),
-                    newEntry = $(currentEntry.clone()).appendTo(controlForm);
-                newEntry.find('input').val('');
-                controlForm.find('.entry:not(:last) .btn-add')
-                    .removeClass('btn-add').addClass('btn-remove')
-                    .removeClass('btn-success').addClass('btn-danger')
-                    .html('<i class="fa fa-minus" aria-hidden="true">-</i>');
-            }).on('click', '.btn-remove', function(e) {
-                $(this).closest('.entry').remove();
-                return false;
-            });
-        });
     </script>
 @endsection

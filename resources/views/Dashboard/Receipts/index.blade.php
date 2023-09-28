@@ -256,7 +256,12 @@
 
                                                     <td class="text-truncate">
                                                         <div class="btn-group" role="group" aria-label="Basic example">
+                                                            @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('Incoming-receipts-update')  )
+
                                                             <a href="{{route('receipt.edit', $receipt->id)}}" class="btn btn-info btn-sm round"> تعديل</a>
+                                                            @endif
+                                                                @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('Incoming-receipts-delete')  )
+
                                                             <form action="{{route('receipt.destroy' ,$receipt->id)}}" method="POST" class="btn-group">
                                                                 @csrf @method('delete')
                                                                 <button
@@ -267,6 +272,7 @@
                                                                     حذف
                                                                 </button>
                                                             </form>
+                                                                @endif
                                                         </div>
                                                     </td>
                                                 </tr>

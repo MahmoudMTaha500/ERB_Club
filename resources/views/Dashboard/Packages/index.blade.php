@@ -129,6 +129,8 @@
                                                 <td class="text-truncate">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
 {{--                                                        <a href="{{route('package.edit', $package->id)}}" class="btn btn-info btn-sm round"> تعديل</a>--}}
+                                                        @if( auth()->user()->hasRole(['administrator','superadministrator']) || auth()->user()->hasPermission('package-delete')  )
+
                                                         <form action="{{route('package.destroy' ,$package->id)}}" method="POST" class="btn-group">
                                                             @csrf @method('delete')
                                                             <button
@@ -139,6 +141,7 @@
                                                                 حذف
                                                             </button>
                                                         </form>
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>

@@ -9,7 +9,7 @@ use App\Http\Requests\StoreTrainerAttendanceRequest;
 use App\Http\Requests\UpdateTrainerAttendanceRequest;
 use Carbon\Carbon;
 
-class TrainerAttendanceController extends Controller
+class   TrainerAttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.

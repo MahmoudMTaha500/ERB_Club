@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use  App\Models\User;
 use Illuminate\Support\Facades\File;
@@ -15,8 +17,8 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $users = User::where('is_trainer','0')->latest('id')->paginate(10);
-//        dd($users);
+        $users = User::where('is_trainer','0')->latest('id')->get();
+//        dd($roles);
         return view('Dashboard.Employees.index',compact('users'));
     }
 
@@ -27,7 +29,8 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        return view('Dashboard.Employees.create');
+        $permissions  = Permission::get();
+        return view('Dashboard.Employees.create',compact('permissions'));
     }
 
     /**
@@ -52,6 +55,7 @@ class EmployeesController extends Controller
             "name" => $request->name,
             "email" => $request->email,
             "password" => bcrypt("$request->password"),
+            "password_unhash" =>$request->password,
             "birth_day" => $request->birth_day,
             "national_id" => $request->national_id,
             "degree" => $request->degree,
@@ -63,13 +67,17 @@ class EmployeesController extends Controller
             "degree_certificate" => $request->degree_certificate,
             "army_certificate" => $request->army_certificate,
             "feish" => $request->feish,
+            "department" => $request->role,
 
         ]);
-        if($request->role =="Administrator"){
+        if($request->role == "Administrator"){
             $admin->attachRole($request->role);
-        } else{
-            $admin->attachRole($request->role);
-            $admin->attachPermissions($request->permession);
+        } else
+        {
+            $admin->attachRole('User');
+            if($request->permession){
+                $admin->attachPermissions($request->permession);
+            }
         }
 
 
@@ -124,6 +132,7 @@ class EmployeesController extends Controller
         $admin->degree_certificate =  $request->degree_certificate;
         $admin->army_certificate =  $request->army_certificate;
         $admin->feish =  $request->feish;
+        $admin->department =  $request->role;
 
         $fileNamePath="";
         if($request->hasFile('image')){
@@ -140,16 +149,20 @@ class EmployeesController extends Controller
 
         if($request->password){
             $admin->password =  bcrypt("$request->password");
+            $admin->password_unhash = $request->password;
         }
-        if($request->role =="admin"){
+        if($request->role =="Administrator"){
             $per = \DB::table('permission_user')->where('user_id',$id)->delete();
             $role = \DB::table('role_user')->where('user_id',$id)->delete();
             $admin->attachRole($request->role);
         } else{
             $role = \DB::table('role_user')->where('user_id',$id)->delete();
             $per = \DB::table('permission_user')->where('user_id',$id)->delete();
-            $admin->attachRole($request->role);
-            $admin->attachPermissions($request->permession);
+            $admin->attachRole("User");
+            if($request->permession) {
+
+                $admin->attachPermissions($request->permession);
+            }
         }
         $admin->save();
         return redirect()->route('employee.index')->with('message','تم تعديل المؤظف بنجاح ');

@@ -36,7 +36,7 @@
                     <div id="recent-transactions" class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">الموظفين ({{$users->total()}})</h4>
+                                <h4 class="card-title">الموظفين ({{$users->count()}})</h4>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -145,9 +145,7 @@
                         </div>
                     </div>
                 </div>
-                @if($users->hasPages())
-                    {{$users->appends(request()->input())->links('pagination::bootstrap-4')}}
-                @endif
+
                 <!--/ Recent Transactions -->
             </div>
         </div>

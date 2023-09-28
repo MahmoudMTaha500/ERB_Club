@@ -18,7 +18,7 @@ class CreatePriceListsTable extends Migration
             $table->bigInteger('sport_id');
             $table->string('name');
             $table->bigInteger('price');
-            $table->longText('desc');
+            $table->longText('desc')->nullable();
             $table->timestamps();
         });
     }
