@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branchs;
+use App\Models\Levels;
 use App\Models\PriceList;
 use App\Http\Requests\StorePriceListRequest;
 use App\Http\Requests\UpdatePriceListRequest;
 use App\Models\Sports;
+use Illuminate\Http\Request;
 
 class PriceListController extends Controller
 {
@@ -28,8 +31,9 @@ class PriceListController extends Controller
      */
     public function create()
     {
-        $sports = Sports::get();
-        return view('Dashboard.PriceLists.create',compact('sports'));
+        $branches = Branchs::get();
+
+        return view('Dashboard.PriceLists.create',compact('branches'));
     }
 
     /**
@@ -40,10 +44,13 @@ class PriceListController extends Controller
      */
     public function store(StorePriceListRequest $request)
     {
+//        dd($request->all());
         PriceList::create([
             'name'=>$request->name,
             'price'=>$request->price,
+            'branch_id'=>$request->branch_id,
             'sport_id'=>$request->sport_id,
+            'level_id'=>$request->level_id,
             'desc'=>$request->desc,
         ]);
         return redirect()->route('price-list.index')->with('message','تم اضافه قائمه سعر بنجاح ');
@@ -69,10 +76,11 @@ class PriceListController extends Controller
      */
     public function edit(PriceList $priceList)
     {
-        $sports = Sports::get();
+        $branches = Branchs::get();
 
 
-        return view('Dashboard.PriceLists.edit',compact('priceList','sports'));
+
+        return view('Dashboard.PriceLists.edit',compact('priceList','branches'));
 
     }
 
@@ -87,7 +95,10 @@ class PriceListController extends Controller
     {
         $priceList->name = $request->name;
         $priceList->price = $request->price;
+        $priceList->branch_id = $request->branch_id;
         $priceList->sport_id = $request->sport_id;
+        $priceList->level_id = $request->level_id;
+
         $priceList->desc = $request->desc;
         $priceList->save();
         return redirect()->route('price-list.index')->with('message','تم تعديل قائمه سعر بنجاح ');
@@ -106,4 +117,34 @@ class PriceListController extends Controller
         return redirect()->route('price-list.index')->with('error','تم حذف قائمه سعر بنجاح ');
 
     }
+
+    /**
+     * Get Price List For Players.
+     *
+     * @param  \App\Models\PriceList  $priceList
+     * @return \Illuminate\Http\Response
+     */
+       public function getPriceList(Request $request){
+          $sport_id = $request->sport_id;
+          $level_id = $request->level_id;
+          $priceLists = PriceList::where(['sport_id'=> $sport_id,'level_id'=>$level_id])->get();
+           if($priceLists){
+
+               $option  = "
+      <option value=0  > حدد قائمه سعر  </option> ";
+
+               foreach ($priceLists as $list){
+
+                   $option .= "
+      <option value=$list->id  > $list->name </option> ";
+               }
+
+
+
+           } else{
+               $option  = "
+      <option value=0  > حدد قائمه سعر  </option> ";
+           }
+           return  Response()->json(['price_list'=>$option]);
+       }
 }

@@ -28,6 +28,8 @@ class CreatePlayersTable extends Migration
             $table->string('father_email')->unique();
             $table->integer('branch_id');
             $table->integer('sport_id');
+            $table->integer('level_id')->nullable();
+            $table->integer('package_id')->nullable();
             $table->string('anther_sport')->nullable();
             $table->string('join_by')->nullable();
             $table->string('goal_of_sport')->nullable();

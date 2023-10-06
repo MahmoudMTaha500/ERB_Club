@@ -9,8 +9,16 @@ class PriceList extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    public function Branch(){
+
+        return $this->belongsTo('App\Models\Branchs','branch_id','id');
+    }
     public function sports(){
 
         return $this->belongsTo('App\Models\Sports','sport_id','id');
+    }
+    public function level(){
+
+        return $this->belongsTo('App\Models\Levels','level_id','id');
     }
 }

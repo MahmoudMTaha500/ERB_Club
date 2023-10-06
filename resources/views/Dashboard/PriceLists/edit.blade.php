@@ -35,7 +35,7 @@
                                         @method('put')
                                         <div class="form-body">
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4>
                                                     <div class="form-group">
                                                         <label for="projectinput2">     اسم القائمه  </label>
                                                         <input type="text" class="form-control"  name="name"   value="{{ $priceList->name }}">
@@ -43,31 +43,52 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">     الالعاب</label>
-                                                        <select class=" form-control" id="multi_placehodler" name="sport_id" >
-                                                            @foreach($sports as $sport)
-                                                                <option value="{{$sport->id}}"
-                                                                        @if($sport->id == $priceList->sports->id) selected @endif
-                                                                >{{$sport->name}}</option>
+                                                        <label for="projectinput2">  الفرع</label>
+                                                        <select class="select2-placeholder-multiple form-control" id="branch_id" onclick="getSports()" name="branch_id" >
+                                                            <option value="" selected >اختر فرع </option>
+
+                                                            @foreach($branches as $branch)
+                                                                <option value="{{$branch->id}}">{{$branch->name}}</option>
 
                                                             @endforeach
                                                         </select>
 
                                                     </div>
                                                 </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">     الالعاب</label>
+                                                        <select class="select2-placeholder-multiple form-control" id="sport_id" name="sport_id" >
+                                                            <option value="" selected>اختر لعبه </option>
+                                                        </select>
+
+
+
+                                                    </div>
+                                                </div>
                                             </div>
 
                                                 <div class="row">
-                                                    <div class="col-md-6">
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="projectinput2">     المستويات</label>
+                                                            <select class="select2-placeholder-multiple form-control" id="level_id" name="level_id" >
+                                                                <option value="" selected>اختر مستوي </option>
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="projectinput2">  سعر اللعبه  </label>
                                                             <input type="number" class="form-control" name="price"  value="{{ $priceList->price }}" required>
 
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="projectinput2"> وصف  </label>
                                                             <textarea  class="form-control" name="desc"  required>

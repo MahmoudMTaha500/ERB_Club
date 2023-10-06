@@ -346,6 +346,18 @@
                 </ul>
             </li>
             @endif
+            @if( auth()->user()->hasRole(['administrator','superadministrator'])  )
+
+                <li class=" nav-item"><a href="#"><i class="la la-clone"></i><span class="menu-title"
+                                                                                      data-i18n="nav.flot_charts.main"> التقارير </span></a>
+                    <ul class="menu-content">
+                        <li><a class="menu-item" href="{{route('report.index')}}" data-i18n="nav.flot_charts.flot_line_charts">
+                                كل التقارير</a>
+                        </li>
+
+                    </ul>
+                </li>
+            @endif
 {{--            <li class=" nav-item"><a href="#"><i class="la la-commenting"></i><span class="menu-title"--}}
 {{--                                                                                    data-i18n="nav.flot_charts.main">  تعاقدات الشركاء </span></a>--}}
 {{--                <ul class="menu-content">--}}

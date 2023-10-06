@@ -36,36 +36,59 @@
                                             <div class="row">
 
 
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="projectinput2">     اسم القائمه  </label>
                                                         <input type="text" class="form-control"  name="name" >
 
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">     الالعاب</label>
-                                                        <select class="select2-placeholder-multiple form-control" id="multi_placehodler" name="sport_id" >
-                                                            @foreach($sports as $sport)
-                                                                <option value="{{$sport->id}}">{{$sport->name}}</option>
+                                                        <label for="projectinput2">  الفرع</label>
+                                                            <select class="select2-placeholder-multiple form-control" id="branch_id" onclick="getSports()" name="branch_id" >
+                                                            <option value="" selected >اختر فرع </option>
+
+                                                            @foreach($branches as $branch)
+                                                                <option value="{{$branch->id}}">{{$branch->name}}</option>
 
                                                             @endforeach
                                                         </select>
 
                                                     </div>
                                                 </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">     الالعاب</label>
+                                                        <select class="select2-placeholder-multiple form-control" id="sport_id" name="sport_id" >
+                                                            <option value="" selected>اختر لعبه </option>
+                                                        </select>
+
+
+
+                                                    </div>
+                                                </div>
+
 
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">     المستويات</label>
+                                                        <select class="select2-placeholder-multiple form-control" id="level_id" name="level_id" >
+                                                            <option value="" selected>اختر مستوي </option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  سعر اللعبه  </label>
                                                         <input type="number" class="form-control" name="price"  required>
 
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="projectinput2"> وصف  </label>
                                                         <textarea  class="form-control" name="desc"  required>
@@ -112,6 +135,33 @@
             document.getElementById("myForm").reset();
 
         }
+        $('#branch_id').on('change', function () {
+            var ids =$("#branch_id").val();
+            var  route = "{{route('get-sports')}}";
+            $.ajax(route,   // request url
+                {
+                    type: 'GET',  // http method
+                    data: { "branch_id": ids },
+                    success: function (data, status, xhr) {// success callback function
+                        $("#sport_id").html(data.data);
+
+                    }
+                });
+        });
+
+        $('#sport_id').on('change', function () {
+            var ids =$("#sport_id").select2("val");
+            var  route = "{{route('get-levels')}}";
+            $.ajax(route,   // request url
+                {
+                    type: 'GET',  // http method
+                    data: { "sport_id": ids },
+                    success: function (data, status, xhr) {// success callback function
+                        $("#level_id").html(data.data);
+
+                    }
+                });
+        });
 
     </script>
 @endsection

@@ -75,8 +75,6 @@
                                                     <div class="form-group">
                                                         <label for="projectinput2">  من  </label>
                                                         <select class=" form-control"  name="from" id="player_id" >
-                                                            <option value="" selected>اختر لاعب
-                                                            </option>
                                                             @foreach($players as $player)
                                                                 <option  data-price="{{ $player->PlayerSportPrice }}"  value="{{$player->id}}">{{$player->name}}</option>
 
@@ -111,34 +109,6 @@
                                                 </div>
 
 
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                            <label for="projectinput2">  تصنيف الادخال</label>
-                                                            <select class=" form-control"  id="price_list" name="price_list" >
-                                                                <option value="" selected>اختر  تصنيف الادخال
-                                                                </option>
-                                                            </select>
-                                                        <input type="hidden" name="typePrice" id="type_price">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-
-                                                    <div class="form-group">
-                                                        <label for="projectinput2">  الفرع</label>
-                                                        <select class="select2-placeholder-multiple form-control" id="branch_id"  name="branch_id" >
-                                                            <option value="" selected >اختر فرع </option>
-
-                                                            @foreach($branches as $branch)
-                                                                <option value="{{$branch->id}}">{{$branch->name}}</option>
-
-                                                            @endforeach
-                                                        </select>
-
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -227,13 +197,8 @@
         });
 
         $('#player_id').change(function (){
-
-            getPlayersData();
-
-        });
-       $("#price_list").change(function(){
            get_price();
-       });
+        });
 
         /*+
            function of js to keep code and didn't duplicate
@@ -248,12 +213,9 @@
             if($('input[name="from_type"]:checked').val() =='players'){
                 $('#from_players').show();
                 $('#from_others').hide();
-                $("#price_list").removeAttr('disabled');
-
             }
             if($('input[name="from_type"]:checked').val() =='others'){
                 $('#from_others').show();
-                $("#price_list").attr('disabled','disabled');
 
                 $('#from_players').hide();
             }
@@ -280,29 +242,14 @@
         }
         function get_price(){
           var player_id =$("#player_id").val();
-          var id =$("#price_list").val();
           var route = "{{route('get-players-sports-price')}}";
-           var typePrice =  $("#price_list").find(':selected').attr('data-typeprice');
-           $("#type_price").val(typePrice);
           $.ajax(route,{
               type: 'GET',  // http method
-             data:{"player_id":player_id, "id":id,"typePrice":typePrice},
+             data:{"player_id":player_id},
               success: function(data){
                   $('#amount').val(data.price)
               }
           });
-        }
-        function  getPlayersData(){
-            var player_id =$("#player_id").val();
-            var route = "{{route('get-players-data')}}";
-            $.ajax(route,{
-                type: 'GET',  // http method
-                data:{"player_id":player_id},
-                success: function(data){
-                    $('#price_list').html(data.optionPriceList)
-                    $('#package_id').html(data.optionPackage)
-                }
-            });
         }
 
     </script>

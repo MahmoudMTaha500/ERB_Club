@@ -61,6 +61,8 @@
                                             <th class="border-top-0">   البريد الالكتروني لاب</th>
                                             <th class="border-top-0">   الفرع</th>
                                             <th class="border-top-0">   اللعبه</th>
+                                            <th class="border-top-0">   المستوي</th>
+                                            <th class="border-top-0">   الباكدج</th>
                                             <th class="border-top-0">   االالعاب اخري</th>
                                             <th class="border-top-0">  الانضمام عن طريق</th>
                                             <th class="border-top-0">   الهدف من اللعبه</th>
@@ -82,6 +84,8 @@
                                                 <td>{{$player->father_email}}</td>
                                                 <td>{{$player->branches->name}}</td>
                                                 <td>{{$player->sports->name}}</td>
+                                                <td>{{$player->level->name ?? '---'}}</td>
+                                                <td>{{$player->package->name ?? '---'}}</td>
                                                 <td>{{$player->anther_sport}}</td>
                                                 <td>{{$player->join_by}}</td>
                                                 <td>{{$player->goal_of_sport}}</td>

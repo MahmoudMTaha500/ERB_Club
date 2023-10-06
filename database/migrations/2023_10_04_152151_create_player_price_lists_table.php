@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePriceListsTable extends Migration
+class CreatePlayerPriceListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreatePriceListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('price_lists', function (Blueprint $table) {
+        Schema::create('player_price_lists', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('branch_id');
-            $table->bigInteger('sport_id');
-            $table->bigInteger('level_id')->nullable();
-            $table->string('name');
-            $table->bigInteger('price');
-            $table->longText('desc')->nullable();
+            $table->integer('player_id');
+            $table->integer('price_list_id');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreatePriceListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('price_lists');
+        Schema::dropIfExists('player_price_lists');
     }
 }
