@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Branchs;
 use App\Models\Levels;
+use App\Models\Packages;
+use App\Models\PlayerPriceList;
 use App\Models\Players;
 use App\Http\Requests\StorePlayersRequest;
 use App\Http\Requests\UpdatePlayersRequest;
 use App\Models\PlayersFiles;
+use App\Models\Receipts;
 use App\Models\Sports;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
 
 
 class PlayersController extends Controller
@@ -33,7 +37,9 @@ class PlayersController extends Controller
     public function create()
     {
         $branches = Branchs::get();
-        return view("Dashboard.Players.create",compact('branches'));
+        $packages = Packages::get();
+
+        return view("Dashboard.Players.create",compact('branches','packages'));
     }
 
     /**
@@ -58,6 +64,8 @@ class PlayersController extends Controller
             'father_email'=>$request->father_email,
             'branch_id'=>$request->branch_id,
             'sport_id'=>$request->sport_id,
+            'level_id'=>$request->level_id,
+            'package_id'=>$request->package_id,
             'anther_sport'=>$request->anther_sports,
             'join_by'=>$request->join_by,
             'goal_of_sport'=>$request->goal_of_sport,
@@ -86,6 +94,20 @@ class PlayersController extends Controller
             }
 
         }
+        if($request->price_list){
+
+                $priceListCount = count($request->input('price_list'));
+
+            for($counter = 0 ; $counter < $priceListCount;  $counter++ ){
+
+                PlayerPriceList::create([
+                        'player_id'=>$player->id,
+                        'price_list_id'=>$request->price_list[$counter]
+                    ]);
+
+                }
+
+        }
         return redirect()->route('player.index')->with('message','تم اضافه اللاعب بنجاح ');
 
     }
@@ -110,8 +132,9 @@ class PlayersController extends Controller
     public function edit(Players $player)
     {
         $branches = Branchs::get();
+        $packages = Packages::get();
 //        dd($player_files);
-        return view("Dashboard.Players.edit",compact('branches','player'));
+        return view("Dashboard.Players.edit",compact('branches','player','packages'));
 
     }
 
@@ -137,6 +160,8 @@ class PlayersController extends Controller
         $player->father_email = $request->father_email;
         $player->branch_id = $request->branch_id;
         $player->sport_id = $request->sport_id;
+        $player->level_id = $request->level_id;
+        $player->package_id = $request->package_id;
         $player->anther_sport = $request->anther_sports;
         $player->join_by = $request->join_by;
         $player->goal_of_sport = $request->goal_of_sport;
@@ -147,6 +172,7 @@ class PlayersController extends Controller
         $player->medical =  $request->medical;
         $player->save();
         if($request->file){
+            PlayersFiles::where('player_id',$player->id)->delete();
 
             for($x=0;  $x < count($request->name_of_file)   ;$x++)
             {
@@ -165,6 +191,21 @@ class PlayersController extends Controller
             }
 
         }
+
+        if($request->price_list){
+            PlayerPriceList::where('player_id',$player->id)->delete();
+            $priceListCount = count($request->input('price_list'));
+
+            for($counter = 0 ; $counter < $priceListCount;  $counter++ ){
+
+                PlayerPriceList::create([
+                    'player_id'=>$player->id,
+                    'price_list_id'=>$request->price_list[$counter]
+                ]);
+
+            }
+
+        }
         return redirect()->route('player.index')->with('message','تم تعديل اللاعب بنجاح ');
 
 
@@ -178,7 +219,10 @@ class PlayersController extends Controller
      */
     public function destroy(Players $player)
     {
-        PlayersFiles::where('player_id',$player->is)->delete();
+        PlayersFiles::where('player_id',$player->id)->delete();
+        PlayerPriceList::where('player_id',$player->id)->delete();
+
+
         $player->delete();
         return redirect()->route('player.index')->with('error','تم حذف اللاعب مع ملفاته بنجاح ');
 
@@ -194,28 +238,65 @@ class PlayersController extends Controller
     }
 
     public function getSports(Request  $request){
-//    dd($request->all());
-//        $branches_request = $request->branch_id;
-//        $levels = Sports::whereHas('branches' , function ($query) use ($branches_request){
-//            $query->whereIn('branch_id',$branches_request);
-//        })->get();
-//
-//        $selected='';
-//        $option='';
-//        foreach ($levels as  $sport){
-//            if($request->level_id){
-//                foreach ($level->sports as $lv)
-//                {
-//                    if($lv->id == $sport->id)
-//                        $selected = 'selected';
-//                }
-//            }
-//            $option .= "
-//      <option value=$sport->id $selected > $sport->name </option> ";
-//            $selected = ' ';
-//        }
-//
-//        return     \Response::json(['data'=>$option])  ;
+        $branches_request = $request->branch_id;
+        $sports = Sports::whereHas('branches' , function ($query) use ($branches_request){
+            $query->whereIn('branch_id',$branches_request);
+        })->get();
+        if($request->player_id){
+            $player = Players::find($request->player_id);
+
+        }
+
+        $selected='';
+        $option='';
+        foreach ($sports as  $sport){
+            if($player->sport_id == $sport->id ){
+                        $selected = 'selected';
+            }
+            $option .= "
+      <option value=$sport->id $selected > $sport->name </option> ";
+            $selected = ' ';
+        }
+
+        return     \Response::json(['data'=>$option])  ;
 
     }
+
+    /**
+    * get players data for receipts
+    */
+    public function getPlayerData(Request $request)
+    {
+
+        $player = Players::with('playerPriceLists','package')->find($request->player_id);
+        $selected = "";
+        $id=0;
+        if($request->receipt_id){
+         $receipt =    Receipts::find($request->receipt_id);
+         $id = $receipt->price_list_id ?  $receipt->price_list_id : $receipt->package_id;
+
+        }
+        $priceLists = $player->playerPriceLists;
+
+        $optionPriceList='  <option value="" selected>اختر  قائمه سعر  </option>  ';
+        foreach ($priceLists as $pl){
+            if($id == $pl->id){
+                $selected = "selected";
+            }
+            $optionPriceList .=  "<option $selected data-typeprice='price_list'   value=$pl->id  > $pl->name </option> ";
+            $selected = ' ';
+
+        }
+        /***************** Package Options  *******************************/
+
+        $packages = $player->package;
+        if($id == $packages->id){
+            $selected = "selected";
+        }
+        $optionPriceList .= " <option $selected  data-typeprice='package' value=$packages->id  > $packages->name --package </option> ";
+        $selected = "";
+        return     \Response::json(['optionPriceList'=>$optionPriceList])  ;
+
+    }
+
 }

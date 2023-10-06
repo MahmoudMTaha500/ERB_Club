@@ -136,6 +136,37 @@
 
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="projectinput2">     المستويات</label>
+                                                            <select class="select2-placeholder-multiple form-control" id="level_id" name="level_id" >
+                                                                <option value="" selected>اختر مستوي </option>
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="projectinput2">     قائمه الاسعار</label>
+                                                            <select class="select2-placeholder-multiple form-control"  multiple="multiple" id="price_list" name="price_list[]" >
+                                                                <option value="" selected>اختر  قائمه سعر  </option>
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="projectinput2">  الباكدج</label>
+                                                            <select class=" form-control" id="package_id"  name="package_id" >
+                                                                <option value="0"> حدد الباكدج</option>
+                                                                @foreach($packages as $package)
+                                                                    <option value="{{$package->id}}">{{$package->name}}</option>
+
+                                                                @endforeach
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -261,6 +292,38 @@
                     }
                 });
         });
+        $('#sport_id').on('change', function () {
+            var ids =$("#sport_id").select2("val");
+            var  route = "{{route('get-levels')}}";
+            $.ajax(route,   // request url
+                {
+                    type: 'GET',  // http method
+                    data: { "sport_id": ids },
+                    success: function (data, status, xhr) {// success callback function
+                        $("#level_id").html(data.data);
+
+                    }
+                });
+            getPriceList();
+        });
+        $("#level_id").on('change',function (){
+            getPriceList();
+        });
+        function  getPriceList(){
+            var sport_id =$("#sport_id").select2("val");
+            var level_id =$("#level_id").select2("val");
+
+            var  route = "{{route('get-price-list-player')}}";
+            $.ajax(route,   // request url
+                {
+                    type: 'GET',  // http method
+                    data: { "sport_id": sport_id,"level_id":level_id },
+                    success: function (data, status, xhr) {// success callback function
+                        $('#price_list').html(data.price_list);
+
+                    }
+                });
+        }
         $('#add_ele').click(function(){
             var html = ' <div class="row remve_ele"> <div class="col-6"><div class="form-group"> <label for="" class="control-label mb-1"> Name Of File:</label> <input  name="name_of_file[]" type="text" class="form-control" required   value="" placeholder="type your File">  </div>';
             html += '</div><div class="col-5"> <div class="form-group"><label for="cc-payment" class="control-label mb-1">File :</label><input  name="file[]" type="file" class="form-control" required  value=""></div></div> <div class="col-1">';

@@ -72,7 +72,7 @@
                                                 <div class="col-md-4"  style="display: none" id="from_players">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  من  </label>
-                                                        <select class=" form-control"  name="from" >
+                                                        <select class=" form-control"  name="from" id="player_id" >
                                                             @foreach($players as $player)
                                                                 <option
                                                                     @if($receipt->from == $player->id &&  $receipt->type_of_from == 'players') selected @endif
@@ -113,6 +113,34 @@
                                                 </div>
 
 
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">  تصنيف الادخال</label>
+                                                        <select class=" form-control"  id="price_list" name="price_list" >
+                                                            <option value="" selected>اختر  تصنيف الادخال
+                                                            </option>
+                                                        </select>
+                                                        <input type="hidden" name="typePrice" id="type_price">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">  الفرع</label>
+                                                        <select class="select2-placeholder-multiple form-control" id="branch_id"  name="branch_id" >
+                                                            <option value="" selected >اختر فرع </option>
+
+                                                            @foreach($branches as $branch)
+                                                                <option   @if($receipt->branch_id == $branch->id ) selected @endif value="{{$branch->id}}">{{$branch->name}}</option>
+
+                                                            @endforeach
+                                                        </select>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -171,7 +199,7 @@
             typeOfAmount();
             calcPaidAndRemain();
 
-
+            getPlayersData();
 
             $('.from_type').change(function (){
                 checkfromType();
@@ -184,6 +212,21 @@
                 calcPaidAndRemain();
             });
 
+        });
+        $("#amount").change(function(){
+            var amount = $(this).val()*1;
+
+            $('#paid').val(amount);
+        });
+
+
+        $('#player_id').change(function (){
+
+            getPlayersData();
+
+        });
+        $("#price_list").change(function(){
+            get_price();
         });
 
         /*+
@@ -217,6 +260,34 @@
                 $('#remain').val(remain);
             }
 
+        }
+        function get_price(){
+            var player_id =$("#player_id").val();
+            var id =$("#price_list").val();
+            var route = "{{route('get-players-sports-price')}}";
+            var typePrice =  $("#price_list").find(':selected').attr('data-typeprice');
+            $("#type_price").val(typePrice);
+            $.ajax(route,{
+                type: 'GET',  // http method
+                data:{"player_id":player_id, "id":id,"typePrice":typePrice},
+                success: function(data){
+                    $('#amount').val(data.price)
+                }
+            });
+        }
+        function  getPlayersData(){
+            var player_id =$("#player_id").val();
+            var receipts_id = "{{$receipt->id}}";
+            var route = "{{route('get-players-data')}}";
+
+            $.ajax(route,{
+                type: 'GET',  // http method
+                data:{"player_id":player_id,"receipt_id":receipts_id},
+                success: function(data){
+                    $('#price_list').html(data.optionPriceList)
+                    $('#package_id').html(data.optionPackage)
+                }
+            });
         }
 
     </script>

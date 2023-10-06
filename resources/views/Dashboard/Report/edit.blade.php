@@ -7,12 +7,12 @@
         <div class="content-wrapper">
             <div class="content-header row">
                 <div class="content-header-left col-md-6 col-12 mb-2">
-                    <h3 class="content-header-title">قسم الايصالات التوريد</h3>
+                    <h3 class="content-header-title"> قسم الايصالات التوريد</h3>
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="">لوحة التحكم</a></li>
-                                <li class="breadcrumb-item active">   اضافة ايصال توريد</li>
+                                <li class="breadcrumb-item active">تعديل ايصال توريد</li>
                             </ol>
                         </div>
                     </div>
@@ -25,18 +25,20 @@
                     <div class="col-lg-10">
                         <div class="card" style="zoom: 1;">
                             <div class="card-header">
-                                <h4 class="card-title" id="bordered-layout-card-center">اضافة ايصال توريد جديد</h4>
+                                <h4 class="card-title" id="bordered-layout-card-center">تعديل ايصال التوريد </h4>
                                 <a href="/sat/courses/create.php" class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form class="form" id="myForm" action="{{route('receipt.store')}}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" action="{{route('receipt.update',$receipt->id)}}" method="POST" enctype="multipart/form-data">
                                         @csrf
+                                        @method('put')
+
                                         <div class="form-body">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput2">  اسم محرر الايصال </label>
+                                                        <label for="projectinput2">  اسم المستلم </label>
                                                         <input type="text" class="form-control" disabled name="name" value="{{ auth()->user()->name }}" required>
 
                                                     </div>
@@ -45,18 +47,14 @@
 
                                                     <div class="form-group">
                                                         <label for="projectinput2">   جزئي </label>
-                                                        <input type="checkbox" class="form-control"  id="type_of_amount" name="type_of_amount"  value="part" >
+                                                        <input type="checkbox" class="form-control" @if($receipt->type_of_amount == 'part') checked @endif  id="type_of_amount" name="type_of_amount"  value="part" >
 
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  تاريخ الايصال</label>
-                                                        <input type="date" name="date"
-                                                               class="form-control"
-                                                               @if(auth()->user()->hasPermission('date-receipts-create') || auth()->user()->hasRole(['administrator','superadministrator']))   @else disabled  @endif
-                                                               placeholder="dd-mm-yyyy" value = "{{ Carbon\Carbon::today()->format('Y-m-d') }}"
-                                                               min="1997-01-01" max="2030-12-31">
+                                                        <input type="date" name="date" class="form-control"  value="{{ $receipt->date_receipt->format('Y-m-d') }}">
                                                     </div>
                                                 </div>
 
@@ -64,21 +62,21 @@
                                             <div class="row">
                                                 <div class="col-md-2 mt-2" >
                                                     <div class="form-group">
-                                                    <label>من الاعبين</label>
-                                                        <input class="from_type " type="radio"  checked  id="players" name="from_type" value="players">
+                                                        <label>من الاعبين</label>
+                                                        <input class="from_type " type="radio" id="players"  @if($receipt->type_of_from == 'players') checked @endif  name="from_type" value="players">
                                                         <label>اخري </label>
-                                                        <input class=" from_type" type="radio" id="others" name="from_type" value="others">
+                                                        <input class=" from_type" type="radio" id="others" name="from_type"  @if($receipt->type_of_from == 'others') checked @endif value="others">
 
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4"  style="display: none" id="from_players">
                                                     <div class="form-group">
                                                         <label for="projectinput2">  من  </label>
-                                                        <select class=" form-control"  name="from" id="player_id" >
-                                                            <option value="" selected>اختر لاعب
-                                                            </option>
+                                                        <select class=" form-control"  name="from" >
                                                             @foreach($players as $player)
-                                                                <option  data-price="{{ $player->PlayerSportPrice }}"  value="{{$player->id}}">{{$player->name}}</option>
+                                                                <option
+                                                                    @if($receipt->from == $player->id &&  $receipt->type_of_from == 'players') selected @endif
+                                                                value="{{$player->id}}">{{$player->name}}</option>
 
                                                             @endforeach
                                                         </select>
@@ -90,7 +88,9 @@
                                                         <label for="projectinput2">  من  </label>
                                                         <select class="form-control"  name="from" >
                                                             @foreach($receiptTypes as $type)
-                                                                <option value="{{$type->id}}">{{$type->name}}</option>
+                                                                <option
+                                                                    @if($receipt->from == $type->id &&  $receipt->type_of_from == 'others') selected @endif
+                                                                    value="{{$type->id}}">{{$type->name}}</option>
 
                                                             @endforeach
                                                         </select>
@@ -102,7 +102,9 @@
                                                         <label for="projectinput2">  الي   </label>
                                                         <select class="select2-placeholder-multiple form-control"  name="to" >
                                                             @foreach($receiptTypes as $type)
-                                                                <option value="{{$type->id}}">{{$type->name}}</option>
+                                                                <option
+                                                                    @if($receipt->to == $type->id ) selected @endif
+                                                                    value="{{$type->id}}">{{$type->name}}</option>
 
                                                             @endforeach
                                                         </select>
@@ -111,53 +113,25 @@
                                                 </div>
 
 
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                            <label for="projectinput2">  تصنيف الادخال</label>
-                                                            <select class=" form-control"  id="price_list" name="price_list" >
-                                                                <option value="" selected>اختر  تصنيف الادخال
-                                                                </option>
-                                                            </select>
-                                                        <input type="hidden" name="typePrice" id="type_price">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-
-                                                    <div class="form-group">
-                                                        <label for="projectinput2">  الفرع</label>
-                                                        <select class="select2-placeholder-multiple form-control" id="branch_id"  name="branch_id" >
-                                                            <option value="" selected >اختر فرع </option>
-
-                                                            @foreach($branches as $branch)
-                                                                <option value="{{$branch->id}}">{{$branch->name}}</option>
-
-                                                            @endforeach
-                                                        </select>
-
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="">  المبلغ </label>
-                                                        <input type="number" name="amount" id="amount" class="form-control">
+                                                        <input type="number" name="amount" id="amount" value="{{$receipt->amount}}" class="form-control">
 
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="">  المدفوع </label>
-                                                        <input type="number"  disabled name="paid" id="paid" class="form-control part">
+                                                        <input type="number"  disabled name="paid" id="paid"  value="{{$receipt->paid}}" class="form-control part">
 
                                                     </div>
                                                 </div>
                                                 <div class="ol-md-3">
 
-                                                <div class="form-group">
+                                                    <div class="form-group">
                                                         <label for="">  المتبقي </label>
                                                         <input type="number" name="remain" id="remain" readonly class="form-control part">
 
@@ -169,22 +143,13 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for=""> البيان</label>
-                                                        <textarea class="form-control" rows="6" name="statement"></textarea>
+                                                        <textarea class="form-control" rows="6" name="statement"> {{$receipt->statement}}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="form-actions center">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
-
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <button type="button"  class="btn btn-danger   w-100" onclick="resetForm();">مسح  </button>
-
-                                                    </div>
-                                                </div>
+                                                <button type="submit" class="btn btn-primary w-100"><i class="la la-check-square-o"></i> حفظ</button>
                                             </div>
                                         </div>
                                     </form>
@@ -218,42 +183,19 @@
             $("#paid").change(function(){
                 calcPaidAndRemain();
             });
-            $("#amount").change(function(){
-                var amount = $(this).val()*1;
-
-                $('#paid').val(amount);
-            });
 
         });
-
-        $('#player_id').change(function (){
-
-            getPlayersData();
-
-        });
-       $("#price_list").change(function(){
-           get_price();
-       });
 
         /*+
            function of js to keep code and didn't duplicate
          */
-
-        function resetForm() {
-            document.getElementById("myForm").reset();
-            typeOfAmount();
-        }
-
         function checkfromType(){
             if($('input[name="from_type"]:checked').val() =='players'){
                 $('#from_players').show();
                 $('#from_others').hide();
-                $("#price_list").removeAttr('disabled');
-
             }
             if($('input[name="from_type"]:checked').val() =='others'){
                 $('#from_others').show();
-                $("#price_list").attr('disabled','disabled');
 
                 $('#from_players').hide();
             }
@@ -263,9 +205,7 @@
                 $('#paid').removeAttr("disabled")
             } else {
                 $('#paid').attr("disabled",'disabled');
-                var amount = $("#amount").val()*1;
-
-                $('#paid').val(amount);
+                $('#paid').val('');
                 $('#remain').val('');
             }
         }
@@ -277,32 +217,6 @@
                 $('#remain').val(remain);
             }
 
-        }
-        function get_price(){
-          var player_id =$("#player_id").val();
-          var id =$("#price_list").val();
-          var route = "{{route('get-players-sports-price')}}";
-           var typePrice =  $("#price_list").find(':selected').attr('data-typeprice');
-           $("#type_price").val(typePrice);
-          $.ajax(route,{
-              type: 'GET',  // http method
-             data:{"player_id":player_id, "id":id,"typePrice":typePrice},
-              success: function(data){
-                  $('#amount').val(data.price)
-              }
-          });
-        }
-        function  getPlayersData(){
-            var player_id =$("#player_id").val();
-            var route = "{{route('get-players-data')}}";
-            $.ajax(route,{
-                type: 'GET',  // http method
-                data:{"player_id":player_id},
-                success: function(data){
-                    $('#price_list').html(data.optionPriceList)
-                    $('#package_id').html(data.optionPackage)
-                }
-            });
         }
 
     </script>

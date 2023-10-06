@@ -51,7 +51,10 @@
                                     <table id="myTable" class="table table-hover table-xl mb-0 sortable">
                                         <thead>
                                         <tr>
-                                            <th class="border-top-0">  اسم اللعبه</th>
+                                            <th class="border-top-0">   اسم قائمه السعر</th>
+                                            <th class="border-top-0">   الفرع</th>
+                                            <th class="border-top-0">   اللعبه</th>
+                                            <th class="border-top-0">   المستوي</th>
                                             <th class="border-top-0"> السعر</th>
                                             <th class="border-top-0"> الوصف</th>
 
@@ -63,9 +66,10 @@
                                         @forelse($priceLists as $price_list )
 
                                             <tr class="row1" data-id="{{ $price_list->id }}" >
-                                                <td>
-                                                    {{$price_list->sports->name}}
-                                                </td>
+                                                <td>{{$price_list->name}}</td>
+                                                <td>{{$price_list->branch->name}}</td>
+                                                <td>{{$price_list->sports->name}}</td>
+                                                <td>{{$price_list->level->name ?? '---'}}</td>
                                                 <td>{{$price_list->price}}</td>
                                                 <td>{{$price_list->desc}}</td>
 

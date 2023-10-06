@@ -20,7 +20,9 @@ class CreateReceiptsTable extends Migration
 
             $table->date('date_receipt');
 
-
+           $table->integer('price_list_id')->nullable();
+           $table->integer('package_id')->nullable();
+           $table->integer('branch_id')->nullable();
             $table->integer('from');
             $table->integer('to');
             $table->string('type_of_from');

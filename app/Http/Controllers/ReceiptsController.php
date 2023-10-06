@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branchs;
+use App\Models\Packages;
 use App\Models\Players;
 use App\Models\PriceList;
 use App\Models\Receipts;
@@ -53,9 +55,11 @@ class ReceiptsController extends Controller
     public function create()
     {
         $players =Players::with('PlayerSportPrice')->get();
+        $branches = Branchs::get();
+
 //        dd($players[0]->PlayerSportPrice->price);
         $receiptTypes= ReceiptTypes::get();
-        return view('Dashboard.Receipts.create',compact('players','receiptTypes'));
+        return view('Dashboard.Receipts.create',compact('players','receiptTypes' , 'branches'));
     }
 
     /**
@@ -67,9 +71,17 @@ class ReceiptsController extends Controller
     public function store(StoreReceiptsRequest $request)
     {
 //        dd($request->all());
+        $priceListId=null;
+        $packageId=null;
+
+        if($request->typePrice == "price_list") {
+            $priceListId = $request->price_list;
+        } else{
+            $packageId = $request->price_list;
+
+        }
         Receipts::create([
             'user_id'=>auth()->user()->id,
-
             'type_of_from'=>$request->from_type,
             'from'=>$request->from,
             'to'=>$request->to,
@@ -78,6 +90,9 @@ class ReceiptsController extends Controller
             'paid'=>$request->paid,
             'statement'=>$request->statement,
             'date_receipt'=>$request->date,
+            'price_list_id'=>$priceListId,
+            'package_id'=>$packageId,
+            'branch_id'=>$request->branch_id,
         ]);
         return redirect()->route('receipt.index')->with('message','تم اضافه الايصال بنجاح ');
 
@@ -104,7 +119,9 @@ class ReceiptsController extends Controller
     {
         $receiptTypes= ReceiptTypes::get();
         $players =Players::get();
-        return view('Dashboard.Receipts.edit',compact('players','receipt','receiptTypes'));
+        $branches = Branchs::get();
+
+        return view('Dashboard.Receipts.edit',compact('players','receipt','receiptTypes','branches'));
     }
 
     /**
@@ -116,6 +133,16 @@ class ReceiptsController extends Controller
      */
     public function update(StoreReceiptsRequest $request, Receipts $receipt)
     {
+        $priceListId=null;
+        $packageId=null;
+
+        if($request->typePrice == "price_list") {
+            $priceListId = $request->price_list;
+        } else{
+            $packageId = $request->price_list;
+
+        }
+
         $receipt->user_id=auth()->user()->id;
         $receipt->from=$request->from;
         $receipt->to=$request->to;
@@ -124,6 +151,9 @@ class ReceiptsController extends Controller
         $receipt->amount=$request->amount;
         $receipt->paid=$request->paid;
         $receipt->statement=$request->statement;
+        $receipt->price_list_id=$priceListId;
+        $receipt->package_id=$packageId;
+        $receipt->branch_id=$request->branch_id;
         $receipt->date_receipt=$request->date;
         $receipt->save();
         return redirect()->route('receipt.index')->with('message','تم تعديل الايصال بنجاح ');
@@ -144,10 +174,20 @@ class ReceiptsController extends Controller
     }
 
     public function getPlayerSportPrice(Request  $request){
-    $player=      Players::find($request->player_id);
-        $sport_id =  $player->sport_id;
-          $price_list =  PriceList::where('sport_id',$sport_id)->get()->first();
-        return     \Response::json(['price'=>$price_list->price])  ;
+//    $player=      Players::find($request->player_id);
+//        $sport_id =  $player->sport_id;
+//        $level_id =  $player->level_id;
+//          $price_list =  PriceList::where(['sport_id'=>$sport_id, 'level_id'=>$level_id])->get()->first();
+        $price= 0;
+        if($request->typePrice  =="price_list"){
+           $priceList =  PriceList::find($request->id);
+            $price = $priceList->price;
+        }
+         if($request->typePrice=="package"){
+             $package = Packages::find($request->id);
+             $price = $package->manuel_price ? $package->manuel_price : $package->total_package;
+         }
+        return     \Response::json(['price'=>$price])  ;
     }
 
     public function filter($request){

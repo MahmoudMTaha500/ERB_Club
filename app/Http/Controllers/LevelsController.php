@@ -126,7 +126,14 @@ public function getSports(Request  $request){
 //    dd($request->all());
     $branches_request = $request->branch_id;
   $levels = Sports::whereHas('branches' , function ($query) use ($branches_request){
- $query->whereIn('branch_id',$branches_request);
+ if(is_array($branches_request)){
+     $query->whereIn('branch_id',$branches_request);
+
+ }else{
+     $query->where('branch_id',$branches_request);
+
+ }
+
   })->get();
     if($request->level_id){
         $level = Levels::with('sports')->find($request->level_id);
@@ -158,7 +165,7 @@ public function getLevels(Request $request){
         $users_levels = SportsAndLevelTrainer::where('user_id',$request->user_id)->get();
     }
     $selected='';
-    $option='';
+    $option=' <option value="" selected>اختر مستوي </option>    ';
 
     foreach ($levels as $level){
         if($request->user_id){

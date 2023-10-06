@@ -25,7 +25,21 @@ class Players extends Model
     }
     public  function PlayerSportPrice(): HasManyThrough
     {
+
         return $this->hasManyThrough(Sports::class,PriceList::class,'sport_id','id');
 
     }
+    public function level(){
+
+        return $this->belongsTo('App\Models\Levels','level_id','id');
+    }
+    public function package(){
+
+        return $this->belongsTo('App\Models\Packages','package_id','id');
+    }
+    public  function playerPriceLists(){
+        return $this->belongsToMany('App\Models\PriceList','player_price_lists','player_id','price_list_id');
+
+    }
 }
+

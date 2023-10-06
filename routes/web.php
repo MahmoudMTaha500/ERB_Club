@@ -30,9 +30,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware', 'auth' =>
  * */
 
     route::get('get-sports', "\App\Http\Controllers\LevelsController@getSports")->name('get-sports');
+    route::get('get-sports-player', "\App\Http\Controllers\PlayersController@getSports")->name('get-sports-player');
     route::get('get-levels', "\App\Http\Controllers\LevelsController@getLevels")->name('get-levels');
     route::get('get-price-list', "\App\Http\Controllers\PackagesController@getPriceList")->name('get-price-list');
     route::get('get-price', "\App\Http\Controllers\PackagesController@getPrice")->name('get-price');
+    route::get('get-price-list-player', "\App\Http\Controllers\PriceListController@getPriceList")->name('get-price-list-player');
 
    /*
     *  Routes Full Calender for Stadiums and Trainers
@@ -53,8 +55,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware', 'auth' =>
 
     #################################################.
 
-    route::get('get-sports-players', "\App\Http\Controllers\PlayersController@getSports")->name('get-sports-players');
     route::get('get-players-sports-price', "\App\Http\Controllers\ReceiptsController@getPlayerSportPrice")->name('get-players-sports-price');
+    route::get('get-players-data', "\App\Http\Controllers\PlayersController@getPlayerData")->name('get-players-data');
 
     #################################################.
     route::get('/file/delete/{id}',"\App\Http\Controllers\PlayersController@deleteFiles");
@@ -101,6 +103,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware', 'auth' =>
     Route::resource('tournament-follow', "\App\Http\Controllers\TournamentPlayersDetailsController");
     Route::resource('contract-partner',"\App\Http\Controllers\ContractPartnersController");
     Route::resource('partner',"\App\Http\Controllers\PartnersController");
+    Route::resource('report',"\App\Http\Controllers\ReportController");
 
 Route::get('logout',"App\Http\Controllers\LoginController@logout")->name('logout');
 });
