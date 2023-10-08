@@ -18,4 +18,7 @@ class Receipts extends Model
 public function receiptType(){
         return $this->belongsTo('App\Models\ReceiptTypes' , 'to','id');
 }
+    public function receiptTypeFrom(){
+        return $this->belongsTo('App\Models\ReceiptTypes' , 'from','id');
+    }
 }

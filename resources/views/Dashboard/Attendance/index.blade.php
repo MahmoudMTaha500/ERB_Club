@@ -52,14 +52,27 @@
                                             <th class="border-top-0"> حضور</th>
 
                                             <th class="border-top-0">   انصراف</th>
+                                            <th class="border-top-0">   من</th>
+                                            <th class="border-top-0">   الي</th>
 
 
-                                            <th class="border-top-0">مشاهده التفاصيل </th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @forelse($players as $play )
                                             @forelse($play->EventTrainer as $player )
+{{--                                                @php--}}
+{{--                                                $attendance = \App\Models\AttendancePlayers::where('player_id',$player->id)->first();--}}
+{{--                                               $checkIn=null;--}}
+{{--                                               $checkOut=null;--}}
+
+{{--                                                if($attendance->id){--}}
+{{--                                                       $checkIn = $attendance->check_id  ;--}}
+{{--                                                $checkOut = $attendance->check_out ;--}}
+{{--                                                }--}}
+
+
+{{--                                                @endphp--}}
 
                                             <tr class="row1" data-id="{{ $player->id }}" >
                                                 <td>{{$player->players->name}}</td>
@@ -69,7 +82,7 @@
                                                         @csrf
                                                         <input type="hidden" name="player_id" value="{{$player->id}}">
 
-                                                        <button class="btn btn-success" name="check" value="in"> حضور </button>
+                                                        <button class="btn btn-success"  name="check" value="in"> حضور </button>
                                                     </form>
                                                 </td>
                                                 <td>
@@ -80,9 +93,8 @@
                                                         <button class="btn btn-danger" name="check" value="out"> انصراف </button>
                                                     </form>
                                                 </td>
-                                   <td>
-                                       <button class="btn btn-bitbucket"> <i class="la la-eye"></i> </button>
-                                   </td>
+                                 <td>{{\App\Models\AttendancePlayers::where('player_id',$player->id)->first()->check_in ?? '---'}}</td>
+                                 <td>{{\App\Models\AttendancePlayers::where('player_id',$player->id)->first()->check_out ?? '---'}}</td>
                                             </tr>
                                             @empty
                                             @endforelse

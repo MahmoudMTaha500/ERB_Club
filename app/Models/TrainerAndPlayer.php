@@ -30,5 +30,13 @@ class TrainerAndPlayer extends Model
 
         return $this->belongsTo('App\Models\Sports','sport_id','id');
     }
+    public function event(){
+        return $this->hasMany('App\Models\EventTrainerPlayers','event_id','id');
+
+    }
+    public function attendance (){
+        return $this->belongsTo('App\Models\AttendancePlayers','player_id','id');
+
+    }
 
 }

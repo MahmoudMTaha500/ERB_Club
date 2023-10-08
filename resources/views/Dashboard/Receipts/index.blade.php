@@ -218,19 +218,15 @@
                                                            $player = \App\models\Players::find($id);
                                                            $name = $player->name;
                                                         }
-                                                        if($receipt->type_of_from=='others'){
-                                                          $receiptType = \App\Models\ReceiptTypes::find($id);
-                                                           $name = $receiptType->name;
 
-                                                        }
 
                                                         $remain = 0;
                                                         if($receipt->type_of_amount == 'part'){
                                                           $remain =  $receipt->amount - $receipt->paid;
                                                         }
                                                     @endphp
-                                                    <td>{{$name}}</td>
-                                                    <td>{{$receipt->receiptType->name}}</td>
+                                                    <td>{{$receipt->receiptTypeFrom->name ?? "---"}}</td>
+                                                    <td>{{$receipt->receiptType->name ?? '---'}}</td>
 
                                                     <td>{{ $receipt->type_of_amount == '' ? 'كلي ' : 'جزئي' }}</td>
 

@@ -41,5 +41,9 @@ class Players extends Model
         return $this->belongsToMany('App\Models\PriceList','player_price_lists','player_id','price_list_id');
 
     }
+    public function attendance (){
+        return $this->belongsTo('App\Models\AttendancePlayers','player_id','id');
+
+}
 }
 
