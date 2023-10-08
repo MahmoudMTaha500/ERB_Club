@@ -11,7 +11,7 @@ class EventTrainerPlayers extends Model
 protected $guarded=[];
 
 public function players(){
-    return $this->belongsTo('App\models\Players','player_id','id');
+    return $this->belongsTo('App\Models\Players','player_id','id');
 }
 
 }
