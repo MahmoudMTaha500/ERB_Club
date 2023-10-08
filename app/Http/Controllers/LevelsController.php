@@ -165,7 +165,7 @@ public function getLevels(Request $request){
         $users_levels = SportsAndLevelTrainer::where('user_id',$request->user_id)->get();
     }
     $selected='';
-    $option=' <option value="" selected>اختر مستوي </option>    ';
+    $option=' <option value="" >اختر مستوي </option>    ';
 
     foreach ($levels as $level){
         if($request->user_id){

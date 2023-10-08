@@ -171,7 +171,6 @@ class TrainerController extends Controller
             $admin->image =  $fileNamePath;
 
         }
-        $admin->save();
         JoinAndLeave::where('user_id',$admin->id)->delete();
         if($request->date_of_join != []){
             for($x=0; $x < count($request->date_of_join); $x++ ){
@@ -188,7 +187,7 @@ class TrainerController extends Controller
             }
         }
 
-        if($request->level_id){
+        if($request->level_id != []){
             SportsAndLevelTrainer::where('user_id',$admin->id)->delete();
 
             for($x=0; $x < count($request->level_id); $x++ ){
@@ -204,6 +203,8 @@ class TrainerController extends Controller
                 ]);
             }
         }
+        $admin->save();
+
         return redirect()->route('trainer.index')->with('message','تم تعديل المدرب بنجاح ');
 
     }

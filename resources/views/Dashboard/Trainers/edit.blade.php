@@ -112,9 +112,11 @@
                                                         <label for="projectinput3">   الالعاب  </label>
                                                         <select name="sport_id" id="sport_id" class="form-control">
                                                             <option value="">اختر لعبه </option>
-
+                                                           @php
+                                                            $userSportId = $user->sport_and_level_trainer->isEmpty() ? 0  : $user->sport_and_level_trainer[0]->sport_id ;
+                                                           @endphp
                                                             @foreach($sports as $sport)
-                                                                <option @if($user->sport_and_level_trainer[0]->sport_id==$sport->id) selected @endif value="{{$sport->id}}">{{$sport->name}}</option>
+                                                                <option @if( $userSportId  ==$sport->id) selected @endif value="{{$sport->id}}">{{$sport->name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -123,7 +125,6 @@
                                                     <div class="form-group">
                                                         <label for="projectinput3"> المستويات  </label>
                                                         <select name="level_id[]" id="level_id" class="form-control select2-placeholder-multiple"  multiple="multiple" >
-                                                            <option> </option>
                                                         </select>
                                                     </div>
                                                 </div>
