@@ -26,7 +26,6 @@ class StoreStadiumRequest extends FormRequest
         return [
             "name"=>"required",
             "branch_id"=>"required",
-            "sport_id"=>"required",
             "type"=>"required",
 
         ];
@@ -37,7 +36,6 @@ class StoreStadiumRequest extends FormRequest
         return [
             'name.required'=>'اسم الملعب مطلوب ',
             'branch_id.required'=>'الفرع مطلوب ',
-            'sport_id.required'=>'اللعبه مطلوب ',
             'type.required'=>'نوع الملعب  مطلوب ',
 
         ];

@@ -70,6 +70,10 @@ class AttendancePlayersController extends Controller
             return redirect()->back()->with('message','تم تسجيل انصراف الاعب');
 
         }
+        if(!$checkAttend->isEmpty()){
+            return redirect()->back()->with('error','تم تسجيل حضور الاعب مسبقا');
+
+        }
     }
 
     /**

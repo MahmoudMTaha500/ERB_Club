@@ -35,7 +35,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminMiddleware', 'auth' =>
     route::get('get-price-list', "\App\Http\Controllers\PackagesController@getPriceList")->name('get-price-list');
     route::get('get-price', "\App\Http\Controllers\PackagesController@getPrice")->name('get-price');
     route::get('get-price-list-player', "\App\Http\Controllers\PriceListController@getPriceList")->name('get-price-list-player');
-
+    route::get('get-stadium',"\App\Http\Controllers\StadiumController@getStadiums")->name('get-stadium');
+    route::get('get-trainers',"\App\Http\Controllers\TrainerController@getTrainers")->name('get-trainers');
+    route::get('get-players',"\App\Http\Controllers\PlayersController@getPlayers")->name('get-players');
    /*
     *  Routes Full Calender for Stadiums and Trainers
     */

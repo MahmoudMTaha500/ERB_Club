@@ -5,12 +5,12 @@
         <div class="content-wrapper">
             <div class="content-header row">
                 <div class="content-header-left col-md-6 col-12 mb-2">
-                    <h3 class="content-header-title">قسم الخضور و الانصراف للاعبيين </h3>
+                    <h3 class="content-header-title">قسم الحضور و الانصراف للمدربين </h3>
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{url('/admin')}}">لوحة التحكم</a></li>
-                                <li class="breadcrumb-item active">كل الخضور و الانصراف للاعبيين </li>
+                                <li class="breadcrumb-item active">كل الحضور و الانصراف للمدربين </li>
                             </ol>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                     <div id="recent-transactions" class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">الخضور و الانصراف للاعبيين  ({{$trainers->total()}})</h4>
+                                <h4 class="card-title">الحضور و الانصراف للمدربين  ({{$trainers->total()}})</h4>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -53,12 +53,21 @@
 
                                             <th class="border-top-0">   انصراف</th>
 
-
-                                            <th class="border-top-0">مشاهده التفاصيل </th>
+                                            <th class="border-top-0">   من</th>
+                                            <th class="border-top-0">   الي</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @forelse($trainers as $trainer )
+                                            @php
+                                                $checkIn = null;
+                                                $checkOut = null;
+                                                  $attendance =   \App\Models\TrainerAttendance::where('trainer_id',$trainer->id)->first() ;
+                                                 if(isset($attendance)){
+                                                    $checkIn = $attendance->check_in;
+                                                    $checkOut = $attendance->check_out;
+                                                 }
+                                            @endphp
 
                                             <tr class="row1" data-id="{{ $trainer->id }}" >
                                                 <td>{{$trainer->traniers->name}}</td>
@@ -68,7 +77,10 @@
                                                         @csrf
                                                         <input type="hidden" name="trainer_id" value="{{$trainer->id}}">
 
-                                                        <button class="btn btn-success" name="check" value="in"> حضور </button>
+                                                        <button class="btn btn-success"
+                                                                @if($checkIn)disabled @endif
+
+                                                                name="check" value="in"> حضور </button>
                                                     </form>
                                                 </td>
                                                 <td>
@@ -76,12 +88,14 @@
                                                         @csrf
                                                         <input type="hidden" name="trainer_id" value="{{$trainer->id}}">
 
-                                                        <button class="btn btn-danger" name="check" value="out"> انصراف </button>
+                                                        <button class="btn btn-danger"
+                                                                @if($checkOut || !$checkIn)disabled @endif
+                                                                name="check" value="out"> انصراف </button>
                                                     </form>
                                                 </td>
-                                   <td>
-                                       <button class="btn btn-bitbucket"> <i class="la la-eye"></i> </button>
-                                   </td>
+                                                <td>{{$checkIn?? '---'}}</td>
+                                                <td>{{$checkOut ?? '---'}}</td>
+
                                             </tr>
 
 

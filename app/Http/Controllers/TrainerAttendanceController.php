@@ -68,7 +68,7 @@ class   TrainerAttendanceController extends Controller
             return redirect()->back()->with('message','تم تسجيل انصراف المدرب');
 
         }
-        if($checkAttend){
+        if(!$checkAttend->isEmpty()){
             return redirect()->back()->with('error','هذا المدرب سجل حضور بالفعل');
 
         }

@@ -54,7 +54,6 @@
                                             <th class="border-top-0">  اسم الملعب</th>
                                             <th class="border-top-0">  الفرع</th>
 
-                                            <th class="border-top-0">   اللعبه</th>
                                             <th class="border-top-0">    قابل لايجار </th>
                                             <th class="border-top-0">    سعر الساعه </th>
 
@@ -71,9 +70,7 @@
                                                 <td>
                                                  {{ $stadium->branches->name }}
                                                 </td>
-                                                <td>
-                                                 {{ $stadium->sports->name }}
-                                                </td>
+
                                                 <td>
                                                  {{ $stadium->type == 1 ? 'نعم': 'لا'  }}
                                                 </td>

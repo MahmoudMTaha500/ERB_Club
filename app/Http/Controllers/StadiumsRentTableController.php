@@ -27,7 +27,7 @@ class StadiumsRentTableController extends Controller
         $players = Players::get();
         $users = User::where('is_trainer' ,'1')->get();
         $sports = Sports::get();
-        $stadiums = Stadium::get();
+        $stadiums = Stadium::where('type','1')->get();
         return  view('Dashboard.StadiumsRentTables.index',compact('players','users','sports','stadiums'));
 
     }
@@ -71,28 +71,41 @@ class StadiumsRentTableController extends Controller
      */
     public function store(StoreStadiumsRentTableRequest $request)
     {
-        $from = $request->day." ". $request->from;
-        $to = $request->day." ". $request->to;
-        $name = $request->name;
-        $type = 'strange';
-        if($request->user_id){
-            $user = User::find($request->user_id);
-            $name = $user->name;
-            $type = 'trainer';
+        $day =  Carbon::parse($request->day);
+        $counter = 1 ;
+        $weekRepeater=0;
+
+        $number = $request->number ? $request->number : 1;
+
+        while($counter <= $number) {
+            $ReceivedDay = $day->addWeeks($weekRepeater)->format('Y-m-d');
+            if(!$weekRepeater){$weekRepeater=1;}
+
+            $from = $ReceivedDay . " " . $request->from;
+            $to = $ReceivedDay . " " . $request->to;
+            $name = $request->name;
+            $type = 'strange';
+            if ($request->user_id) {
+                $user = User::find($request->user_id);
+                $name = $user->name;
+                $type = 'trainer';
+
+            }
+
+            $event = StadiumsRentTable::create([
+                'stadium_id' => $request->stadium_id,
+                'user_id' => $request->user_id,
+                'name' => $name,
+                'type' => $type,
+                'date' => $request->day,
+                'price' => $request->hour_rate,
+                'time_from' => $from,
+                'time_to' => $to,
+                'number' => $number,
+            ]);
+            $counter++;
 
         }
-
-        $event =    StadiumsRentTable::create([
-            'stadium_id'=>$request->stadium_id,
-            'user_id'=>$request->user_id,
-            'name'=>$name,
-            'type'=>$type,
-            'date'=>$request->day,
-            'price'=>$request->hour_rate,
-            'time_from'=>$from,
-            'time_to'=>$to,
-        ]);
-
         $data = StadiumsRentTable::get();
         return response()->json($data);
     }

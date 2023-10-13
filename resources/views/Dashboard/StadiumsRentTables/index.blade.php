@@ -173,16 +173,22 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6" >
+                                                        <div class="col-md-4" >
                                                             <div class="form-group">
                                                                 <label for="projectinput2"> من الساعه </label>
                                                                 <input class="form-control" type="time" name="form" id="from_date">
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6" >
+                                                        <div class="col-md-4" >
                                                             <div class="form-group">
                                                                 <label for="projectinput2"> الي الساعه </label>
                                                                 <input class="form-control" type="time" name="to" id="to_date">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4" >
+                                                            <div class="form-group">
+                                                                <label for="projectinput2">  عدد المرات </label>
+                                                                <input class="form-control" type="number" name="number" id="number">
                                                             </div>
                                                         </div>
 
@@ -240,6 +246,11 @@
                 checkfromType();
             });
 
+            function resetForm() {
+
+                document.getElementById("form_id").reset();
+
+            }
 
             $.ajaxSetup({
                 headers: {
@@ -258,7 +269,7 @@
                     start: moment().subtract(30, 'days'), // set the start date of the visible range to 30 days ago
                     end: moment().add(30, 'days') // set the end date of the visible range to 30 days in the future
                 },
-                eventLimit: false,
+                // eventLimit: false,
 
 
                 timezone: 'Egypt', // set timezone to Egypt
@@ -276,7 +287,10 @@
                 selectHelper: true,
 
                 select: function ( start, end, allDay) {
+                    $('#saveEvent').off("click"); // Added off click there
+
                     $("#calendarModal").modal("show");
+
                     $("#saveEvent").click(function () {
                         var day = $.fullCalendar.formatDate(start, 'Y-MM-DD ');
                         var stadium_id = $('#stadium_id').val();
@@ -286,19 +300,9 @@
                         var name = $("#name").val();
 
 
-                        // var date_from= new Date(day+$("#from_date").val());
                         var date_from= $("#from_date").val();
-                            // var date_format_from = date_from.toLocaleString();
                         var date_to= $("#to_date").val();
-                        // var date_to= new Date(day+$("#to_date").val());
-                        // var date_format_to = date_to.toLocaleString();
-
-
-
-                        // var from_date = $.fullCalendar.formatDate(start, 'Y-MM-DD HH:mm:ss');
-                        // var to_date = $.fullCalendar.formatDate(end, 'Y-MM-DD HH:mm:ss');
-
-
+                        var number = $('#number').val();
 
                             var Route = "{{route('store-stadium')}}";
                             jQuery.ajax({
@@ -313,12 +317,14 @@
 
                                     day : day,
                                     from: date_from,
-                                    to: date_to
+                                    to: date_to,
+                                    number: number,
                                 },
                                 success: function (data) {
                                     calendar.fullCalendar('refetchEvents');
+                                    alert("تم اضافه موعد جديد  ");
+                                    resetForm();
                                     $("#calendarModal").modal("hide");
-
                                 }
 
                             });

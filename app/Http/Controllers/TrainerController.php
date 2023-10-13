@@ -225,4 +225,24 @@ class TrainerController extends Controller
 
 
     }
+    /**
+     * Get trainers For the Calendar  from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function  getTrainers(Request $request){
+        $trainers = User::whereHas('sport_and_level_trainer' , function ($query) use ($request){
+            $query->where('level_id',$request->level_id)->where('sport_id',$request->sport_id);
+        })->get();
+        $option  = "
+      <option value=0  >اختر مدرب   </option> ";
+        foreach ($trainers as  $trainer){
+            $option .= "
+      <option value=$trainer->id  > $trainer->name </option> ";
+
+        }
+        return     \Response::json(['data'=>$option])  ;
+
+    }
 }

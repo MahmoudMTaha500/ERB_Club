@@ -116,42 +116,49 @@
                                             >
                                                 @csrf
                                                 <div class="form-body">
+
+
                                                     <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="projectinput2">  الفرع</label>
+                                                                <select class=" form-control" id="branch_id"  name="branch_id" >
+                                                                    <option value="0"> حدد الفرع</option>
+                                                                    @foreach($branches as $branch)
+                                                                        <option value="{{$branch->id}}">{{$branch->name}}</option>
+
+                                                                    @endforeach
+                                                                </select>
+
+                                                            </div>
+                                                        </div>
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="projectinput2"> الملعب </label>
                                                                 <select
                                                                     class=" form-control"
                                                                     name="stadium_id" id="stadium_id">
-                                                                    @foreach($stadiums as $stadium)
-                                                                        <option
-                                                                            value="{{$stadium->id}}">{{$stadium->name}}</option>
 
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
 
-                                                    </div>
-                                                    <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
-                                                                <label for="projectinput3">   الالعاب  </label>
-                                                                <select name="sport_id" id="sport_id" class="form-control">
-                                                                    <option value="">اختر لعبه </option>
-
-                                                                    @foreach($sports as $sport)
-                                                                        <option value="{{$sport->id}}">{{$sport->name}}</option>
-                                                                    @endforeach
+                                                                <label for="projectinput2">  اللعبه</label>
+                                                                <select class=" form-control  "    id="sport_id" name="sport_id" >
+                                                                    <option value=""></option>
                                                                 </select>
+
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
                                                             <div class="form-group">
-                                                                <label for="projectinput3"> المستويات  </label>
-                                                                <select name="level_id" id="level_id" class=" form-control " style="width: 100% !important;" >
-                                                                    <option> </option>
+                                                                <label for="projectinput2">     المستويات</label>
+                                                                <select class=" form-control" id="level_id" name="level_id" >
+                                                                    <option value="" selected>اختر مستوي </option>
                                                                 </select>
+
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
@@ -160,11 +167,7 @@
                                                                 <select
                                                                     class=" form-control"
                                                                     name="user_id" id="user_id">
-                                                                    @foreach($users as $user)
-                                                                        <option
-                                                                            value="{{$user->id}}">{{$user->name}}</option>
 
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -175,13 +178,27 @@
                                                                     class="select2 form-control " multiple="multiple"
                                                                     name="player_id"
                                                                     id="player_id">
-                                                                    @foreach($players as $player)
-                                                                        <option
-                                                                            value="{{$player->id}}">{{$player->name}}</option>
 
-                                                                    @endforeach
                                                                 </select>
 
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4" >
+                                                            <div class="form-group">
+                                                                <label for="projectinput2"> من الساعه </label>
+                                                                <input class="form-control" type="time" name="form" id="from_date">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4" >
+                                                            <div class="form-group">
+                                                                <label for="projectinput2"> الي الساعه </label>
+                                                                <input class="form-control" type="time" name="to" id="to_date">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4" >
+                                                            <div class="form-group">
+                                                                <label for="projectinput2">  عدد المرات </label>
+                                                                <input class="form-control" type="number" name="number" id="number">
                                                             </div>
                                                         </div>
 
@@ -217,86 +234,167 @@
 
     <script>
         $(document).ready(function () {
+            $('#branch_id').on('change', function () {
+                var ids =$("#branch_id").val();
+
+                var  route = "{{route('get-sports')}}";
+                $.ajax(route,   // request url
+                    {
+                        type: 'GET',  // http method
+                        data: { "branch_id[]": ids },
+                        success: function (data, status, xhr) {// success callback function
+                            $("#sport_id").html(data.data);
+
+                        }
+                    });
+                getStadiums(ids);
+            });
             $('#sport_id').on('change', function () {
-                var id =$(this).val();
+                var ids =$("#sport_id").val();
                 var  route = "{{route('get-levels')}}";
                 $.ajax(route,   // request url
                     {
                         type: 'GET',  // http method
-                        data: { "sport_id": id },
+                        data: { "sport_id": ids },
                         success: function (data, status, xhr) {// success callback function
                             $("#level_id").html(data.data);
 
                         }
                     });
             });
+            $("#level_id").on('change',function(){
+                var level_id = $("#level_id").val();
+                var sport_id = $("#sport_id").val();
+                getTrainers(sport_id, level_id);
+                getPlayers(sport_id, level_id);
+
+            } )
+function getStadiums(branch_id){
+    var  route = "{{route('get-stadium')}}";
+    $.ajax(route,   // request url
+        {
+            type: 'GET',  // http method
+            data: { "branch_id": branch_id },
+            success: function (data, status, xhr) {// success callback function
+                $("#stadium_id").html(data.data);
+
+            }
+        });
+}
+   function getTrainers(sport_id, level_id)
+   {
+       var  route = "{{route('get-trainers')}}";
+
+       $.ajax(route,   // request url
+           {
+               type: 'GET',  // http method
+               data: { "sport_id": sport_id,"level_id":level_id },
+               success: function (data, status, xhr) {// success callback function
+                   $("#user_id").html(data.data);
+
+               }
+           });
+   }
+      function getPlayers(sport_id, level_id)
+      {
+          var  route = "{{route('get-players')}}";
+
+          $.ajax(route,   // request url
+              {
+                  type: 'GET',  // http method
+                  data: { "sport_id": sport_id,"level_id":level_id },
+                  success: function (data, status, xhr) {// success callback function
+                      $("#player_id").html(data.data);
+
+                  }
+              });
+      }
+            function resetForm() {
+
+                document.getElementById("form_id").reset();
+
+            }
+            function saveEventCalendar(start){
+                $("#saveEvent").click(function () {
+                    var day = $.fullCalendar.formatDate(start, 'Y-MM-DD ');
+
+                    var stadium_id = $('#stadium_id').val();
+                    var player_id = $('#player_id').select2("val");
+                    var user_id = $('#user_id').val();
+                    var sport_id = $('#sport_id').val();
+                    var level_id = $('#level_id').val();
+                    var number = $('#number').val();
+                    var hour_from= $("#from_date").val();
+                    var hour_to= $("#to_date").val();
+
+                    if (user_id) {
+                        var Route = "{{route('store-event')}}";
+                        jQuery.ajax({
+                            url: Route,
+                            type: "POST",
+                            dataType: 'json',
+                            data: {
+                                stadium_id: stadium_id,
+                                player_id: player_id,
+                                user_id: user_id,
+                                sport_id: sport_id,
+                                level_id: level_id,
+                                day : day,
+                                from: hour_from,
+                                to: hour_to,
+                                number: number
+                            },
+                            success: function (data) {
+                                // location.reload();
+                                calendar.fullCalendar('refetchEvents');
+                                alert("تم اضافه موعد جديد  ");
+
+                                resetForm();
+                                $("#calendarModal").modal("hide");
 
 
+                            }
+
+                        });
+                    }
+
+                });
+            }
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
+
             var calendar = $('#calendar').fullCalendar({
                 editable: true,
+                validRange: {
+                    start: moment().format('YYYY-MM-DD'),
+                    end: '2100-01-01' // hard coded goodness unfortunately
+                },
+                visibleRange: {
+                    start: moment().subtract(30, 'days'), // set the start date of the visible range to 30 days ago
+                    end: moment().add(30, 'days') // set the end date of the visible range to 30 days in the future
+                },
                 header: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
-                slotDuration: '00:05:00',
 
                 events: "{{ route('trainer-and-player.create') }}",
                 selectable: true,
+                timezone: 'Egypt', // set timezone to Egypt
+                defaultView: 'month', // set the default view to month
+                defaultDate: moment(),
                 selectHelper: true,
+                slotDuration: '00:05:00',
 
                 select: function ( start, end, allDay) {
-                    $("#calendarModal").modal("show");
-                    $("#saveEvent").click(function () {
-                        console.log(start);
-                        var day = $.fullCalendar.formatDate(start, 'Y-MM-DD ');
-                        var stadium_id = $('#stadium_id').val();
-                        var player_id = $('#player_id').select2("val");
-                        var user_id = $('#user_id').val();
-                        var sport_id = $('#sport_id').val();
-                        var level_id = $('#level_id').val();
-                        var from = $('#from').val();
-                        var from_date = $.fullCalendar.formatDate(start, 'Y-MM-DD HH:mm:ss');
-
-                        var to = $('#to').val();
-                        var to_date = $.fullCalendar.formatDate(end, 'Y-MM-DD HH:mm:ss');
-
-
-                        if (user_id) {
-                            var Route = "{{route('store-event')}}";
-                            jQuery.ajax({
-                                url: Route,
-                                type: "POST",
-                                dataType: 'json',
-                                data: {
-                                    stadium_id: stadium_id,
-                                    player_id: player_id,
-                                    user_id: user_id,
-                                    sport_id: sport_id,
-                                    level_id: level_id,
-                                    day : day,
-                                     from: from_date,
-                                    to: to_date
-                                },
-                                success: function (data) {
-                                    calendar.fullCalendar('refetchEvents');
-                                    alert("تم اضافه موعد جديد  ");
-                                    $("#calendarModal").modal("hide");
-                                    location.reload();
-
-                                }
-
-                            });
-                        }
-
-                    });
-
+                        $('#saveEvent').off("click"); // Added off click there
+                        $("#calendarModal").modal("show");
+                        saveEventCalendar(start);
                 },
                 editable: true,
                 eventResize: function (event, delta) {

@@ -7,6 +7,7 @@ use App\Models\Sports;
 use App\Models\Stadium;
 use App\Http\Requests\StoreStadiumRequest;
 use App\Http\Requests\UpdateStadiumRequest;
+use Illuminate\Http\Request;
 
 class StadiumController extends Controller
 {
@@ -30,9 +31,8 @@ class StadiumController extends Controller
     public function create()
     {
         $branches = Branchs::get();
-        $sports = Sports::get();
 
-        return view('Dashboard.Stadiums.create', compact('sports', 'branches'));
+        return view('Dashboard.Stadiums.create', compact('branches'));
 
     }
 
@@ -48,7 +48,6 @@ class StadiumController extends Controller
         Stadium::create(
             [
                 'branch_id' => $request->branch_id,
-                'sport_id' => $request->sport_id,
                 'name' => $request->name,
                 'type' => $request->type,
                 'hour_rate' => $request->hour_rate
@@ -76,10 +75,9 @@ class StadiumController extends Controller
     public function edit(Stadium $stadium)
     {
         $branches = Branchs::get();
-        $sports = Sports::get();
 
 
-        return view('Dashboard.Stadiums.edit',compact('stadium','branches','sports'));
+        return view('Dashboard.Stadiums.edit',compact('stadium','branches'));
     }
 
     /**
@@ -94,7 +92,6 @@ class StadiumController extends Controller
         Stadium::where('id',$stadium->id)->update(
             [
                 'branch_id' => $request->branch_id,
-                'sport_id' => $request->sport_id,
                 'name' => $request->name,
                 'type' => $request->type,
                 'hour_rate' => $request->hour_rate
@@ -112,6 +109,26 @@ class StadiumController extends Controller
     {
         $stadium->delete();
         return redirect()->route('stadium.index')->with('message','تم حذف الملعب ');
+
+    }
+
+    /**
+     * Get  the Stadiums for the calendar
+     *
+     * @param \App\Models\Stadium $stadium
+     * @return \Illuminate\Http\Response
+     */
+    public function getStadiums(Request $request){
+
+        $stadiums = Stadium::where('branch_id',$request->branch_id)->get();
+        $option  = "
+      <option value=0  >اختر الملعب   </option> ";
+        foreach ($stadiums as  $stadium){
+            $option .= "
+      <option value=$stadium->id  > $stadium->name </option> ";
+
+        }
+        return     \Response::json(['data'=>$option])  ;
 
     }
 }

@@ -23,6 +23,7 @@ class CreateStadiumsRentTablesTable extends Migration
             $table->timestamp('date')->nullable();
             $table->timestamp('time_from')->nullable();
             $table->timestamp('time_to')->nullable();
+            $table->timestamp('number')->nullable();
 
             $table->timestamps();
         });

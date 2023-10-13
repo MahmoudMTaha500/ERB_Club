@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branchs;
 use App\Models\EventTrainerPlayers;
 use App\Models\Players;
 use App\Models\Sports;
@@ -11,7 +12,7 @@ use App\Http\Requests\StoreTrainerAndPlayerRequest;
 use App\Http\Requests\UpdateTrainerAndPlayerRequest;
 use App\Models\User;
 use http\Env\Request;
-
+use Carbon\Carbon;
 class TrainerAndPlayerController extends Controller
 {
     /**
@@ -24,8 +25,9 @@ class TrainerAndPlayerController extends Controller
         $players = Players::get();
         $users = User::where('is_trainer' ,'1')->get();
         $sports = Sports::get();
+        $branches = Branchs::get();
         $stadiums = Stadium::get();
-        return  view('Dashboard.TrainerAndPlayers.index',compact('players','users','sports','stadiums'));
+        return  view('Dashboard.TrainerAndPlayers.index',compact('branches','stadiums'));
 
     }
 
@@ -64,22 +66,35 @@ class TrainerAndPlayerController extends Controller
      */
     public function store(StoreTrainerAndPlayerRequest $request)
     {
-//        dd($request->all());
-     $event =    TrainerAndPlayer::create([
-            'stadium_id'=>$request->stadium_id,
-            'trainer_id'=>$request->user_id,
-            'sport_id'=>$request->sport_id,
-            'level_id'=>$request->level_id,
-            'date'=>$request->day,
-            'time_from'=>$request->from,
-            'time_to'=>$request->to,
-        ]);
-        foreach ($request->player_id as $player ){
-            EventTrainerPlayers::create([
-                'player_id'=>$player,
-                'event_id'=>$event->id,
+       $day =  Carbon::parse($request->day);
+     $counter = 1 ;
+     $weekRepeater=0;
+
+     $number = $request->number ? $request->number : 1;
+        while($counter <= $number){
+$ReceivedDay = $day->addWeeks($weekRepeater)->format('Y-m-d');
+if(!$weekRepeater){$weekRepeater=1;}
+            $from = $ReceivedDay." ". $request->from;
+            $to = $ReceivedDay." ". $request->to;
+            $event =    TrainerAndPlayer::create([
+                'stadium_id'=>$request->stadium_id,
+                'trainer_id'=>$request->user_id,
+                'sport_id'=>$request->sport_id,
+                'level_id'=>$request->level_id,
+                'date'=>$ReceivedDay,
+                'time_from'=>$from,
+                'time_to'=>$to,
+                'number'=>$number,
             ]);
-        }
+            foreach ($request->player_id as $player ){
+                EventTrainerPlayers::create([
+                    'player_id'=>$player,
+                    'event_id'=>$event->id,
+                ]);
+            }
+$counter++;
+
+     }
         $data = TrainerAndPlayer::get();
         return response()->json($data);
     }

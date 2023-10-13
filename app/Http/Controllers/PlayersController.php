@@ -299,4 +299,18 @@ class PlayersController extends Controller
 
     }
 
+    public function getPlayers(Request $request){
+        $players = Players::where('level_id',$request->level_id)->where('sport_id',$request->sport_id)->get();
+        $option  = "
+      <option value=0  >اختر لاعب   </option> ";
+        foreach ($players as  $player){
+            $option .= "
+      <option value=$player->id  > $player->name </option> ";
+
+        }
+        return     \Response::json(['data'=>$option])  ;
+
+
+    }
+
 }

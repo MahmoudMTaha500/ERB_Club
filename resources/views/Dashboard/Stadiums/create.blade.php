@@ -55,18 +55,7 @@
 
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="projectinput2">   اللعبه </label>
-                                                        <select class="select2-placeholder-multiple form-control"  id="sport_id" name="sport_id" >
-                                                            @foreach($sports as $sport)
-                                                                <option value="{{$sport->id}}">{{$sport->name}}</option>
 
-                                                            @endforeach
-                                                        </select>
-
-                                                    </div>
-                                                </div>
                                                 <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label>قابل لايجار </label>
@@ -82,7 +71,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-4"></div>
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label> سعر ساعه الايجار  </label>
                                                         <input type="number"  class="form-control"  id="hour_rate" disabled name="hour_rate">
