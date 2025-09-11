@@ -17,3 +17,17 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Order processing routes with Saga pattern
+Route::middleware('auth:api')->group(function () {
+    Route::post('/orders/process', [App\Http\Controllers\OrderController::class, 'processOrder']);
+    Route::get('/orders/saga/{sagaId}/status', [App\Http\Controllers\OrderController::class, 'getOrderStatus']);
+});
+
+// Demo routes (no auth required for demo purposes)
+Route::prefix('demo')->group(function () {
+    Route::post('/setup', [App\Http\Controllers\DemoController::class, 'setupDemo']);
+    Route::post('/successful-order', [App\Http\Controllers\DemoController::class, 'demoSuccessfulOrder']);
+    Route::post('/failed-order', [App\Http\Controllers\DemoController::class, 'demoFailedOrder']);
+    Route::get('/status', [App\Http\Controllers\DemoController::class, 'getSystemStatus']);
+});

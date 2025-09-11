@@ -18,6 +18,25 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        
+        // Saga Events
+        \App\Services\Saga\Events\SagaStepCompleted::class => [
+            \App\Listeners\OrderProcessingListener::class . '@handleSagaStepCompleted',
+        ],
+        \App\Services\Saga\Events\SagaStepFailed::class => [
+            \App\Listeners\OrderProcessingListener::class . '@handleSagaStepFailed',
+        ],
+        
+        // Order Processing Events
+        \App\Events\OrderProcessingStarted::class => [
+            \App\Listeners\OrderProcessingListener::class . '@handleOrderProcessingStarted',
+        ],
+        \App\Events\OrderProcessingCompleted::class => [
+            \App\Listeners\OrderProcessingListener::class . '@handleOrderProcessingCompleted',
+        ],
+        \App\Events\OrderProcessingFailed::class => [
+            \App\Listeners\OrderProcessingListener::class . '@handleOrderProcessingFailed',
+        ],
     ];
 
     /**
